@@ -36,9 +36,9 @@ export default function Explore({ items, subPath }: IProps) {
       sx={{ maxWidth: 1000 }}
     >
       {items.map(({ id, attributes }: any) => {
-        const { card, image, title, slug } = attributes;
+        const { image, titre, slug, vignette } = attributes;
         const { alternativeText, url } =
-          card?.data?.attributes ?? image?.data?.attributes ?? {};
+          vignette?.data?.attributes ?? image?.data?.attributes ?? {};
 
         if (!url) return null;
 
@@ -52,10 +52,10 @@ export default function Explore({ items, subPath }: IProps) {
                     : `/${subPath}/${slug}`
                   : slug
               }
-              imageAlt={alternativeText ?? `Item - ${title}`}
+              imageAlt={alternativeText ?? `Item - ${titre}`}
               imageSrc={`${API_URL}${url}`}
-              label={title}
-              title={title}
+              label={titre}
+              title={titre}
             />
           </Grid>
         );

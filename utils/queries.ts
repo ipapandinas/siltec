@@ -6,10 +6,10 @@ export const queryCollections = () => gql`
       data {
         id
         attributes {
-          title
+          titre
           description
-          color
-          card {
+          couleur
+          vignette {
             data {
               attributes {
                 alternativeText
@@ -39,11 +39,10 @@ export const queryProduct = (id: string) => gql`
       data {
         id
         attributes {
-          title
+          titre
           designer
           description
-          collection
-          brand
+          marque
           image {
             data {
               attributes {
@@ -57,14 +56,14 @@ export const queryProduct = (id: string) => gql`
           collection {
             data {
               attributes {
-                title
+                titre
               }
             }
           }
           typology {
             data {
               attributes {
-                title
+                titre
               }
             }
           }
@@ -88,11 +87,10 @@ export const queryProducts = (collection: string, typology: string) => gql`
       data {
         id
         attributes {
-          title
+          titre
           designer
           description
-          collection
-          brand
+          marque
           image {
             data {
               attributes {
@@ -106,14 +104,14 @@ export const queryProducts = (collection: string, typology: string) => gql`
           collection {
             data {
               attributes {
-                title
+                titre
               }
             }
           }
           typology {
             data {
               attributes {
-                title
+                titre
               }
             }
           }
@@ -132,7 +130,7 @@ export const queryTypologies = (collection: string) => gql`
       data {
         id
         attributes {
-          title
+          titre
           image {
             data {
               attributes {
@@ -146,7 +144,7 @@ export const queryTypologies = (collection: string) => gql`
           collections {
             data {
               attributes {
-                title
+                titre
               }
             }
           }

@@ -9,7 +9,7 @@ export default async function CollectionsSection() {
   return (
     <div>
       {collections.slice(0, 2).map(({ id, attributes }, idx) => {
-        const { color, description, image, title } = attributes;
+        const { couleur, description, image, titre } = attributes;
         const { alternativeText, url } = image.data?.attributes ?? {};
 
         if (!url) return null;
@@ -17,14 +17,14 @@ export default async function CollectionsSection() {
         return (
           <CollectionBlock
             key={id}
-            color={color ?? COLOR_PRIMARY_MAIN}
+            color={couleur ?? COLOR_PRIMARY_MAIN}
             description={description ?? ""}
-            imageAlt={alternativeText ?? `Collection - ${title}`}
+            imageAlt={alternativeText ?? `Collection - ${titre}`}
             imageHref={`${API_URL}${url}`}
             isRtl={idx % 2 === 1}
             linkHref="/c/bureaux"
-            linkTitle={`Collection - ${title}`}
-            title={title}
+            linkTitle={`Collection - ${titre}`}
+            title={titre}
           />
         );
       })}

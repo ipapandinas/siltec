@@ -3,10 +3,10 @@ import { IImage } from "./IImage";
 export interface ICollection {
   id: string;
   attributes: {
-    title: string;
+    titre: string;
     description: string | null;
-    color: string | null;
-    card: {
+    couleur: string | null;
+    vignette: {
       data: IImage;
     };
     image: {

@@ -4,10 +4,7 @@ import { IImage } from "./IImage";
 export interface ITypoligy {
   id: string;
   attributes: {
-    title: string;
-    card: {
-      data: IImage | null;
-    };
+    titre: string;
     image: {
       data: IImage | null;
     };

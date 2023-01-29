@@ -5,14 +5,10 @@ import { ITypoligy } from "./ITypology";
 export interface IProduct {
   id: string;
   attributes: {
-    title: string;
+    titre: string;
     designer: string;
     description: string;
-    collection: string;
-    brand: string;
-    card: {
-      data: IImage | null;
-    };
+    marque: string;
     image: {
       data: IImage | null;
     };

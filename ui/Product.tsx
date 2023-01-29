@@ -10,10 +10,9 @@ interface IProps {
 }
 
 export default function Product({ product }: IProps) {
-  const { brand, collection, designer, image, title, typology } =
-    product.attributes;
+  const { designer, image, marque, titre, typology } = product.attributes;
   const { alternativeText, url } = image?.data?.attributes ?? {};
-  const typo = typology.data.attributes.title;
+  const typo = typology.data.attributes.titre;
 
   return (
     <Box
@@ -40,10 +39,10 @@ export default function Product({ product }: IProps) {
           }}
         >
           <Typography fontWeight="bold" textTransform="capitalize" variant="h3">
-            {title}
+            {titre}
           </Typography>
           <Typography textTransform="capitalize" variant="body1">
-            {brand}
+            {marque}
           </Typography>
         </Box>
         <Box
@@ -59,12 +58,6 @@ export default function Product({ product }: IProps) {
             textTransform="capitalize"
             variant="body1"
           >{`Typologie: ${typo}`}</Typography>
-          {collection && (
-            <Typography
-              textTransform="capitalize"
-              variant="body1"
-            >{`Collection: ${collection}`}</Typography>
-          )}
           {designer && (
             <Typography
               textTransform="capitalize"
