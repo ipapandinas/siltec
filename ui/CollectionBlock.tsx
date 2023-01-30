@@ -25,6 +25,7 @@ export default function CollectionBlock({
   linkTitle,
   title,
 }: IProps) {
+  console.log({ imageHref });
   return (
     <Link href={linkHref} title={linkTitle}>
       <Box

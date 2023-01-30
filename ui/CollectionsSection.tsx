@@ -20,7 +20,7 @@ export default async function CollectionsSection() {
             color={couleur ?? COLOR_PRIMARY_MAIN}
             description={description ?? ""}
             imageAlt={alternativeText ?? `Collection - ${titre}`}
-            imageHref={`${API_URL}${url}`}
+            imageHref={url}
             isRtl={idx % 2 === 1}
             linkHref="/c/bureaux"
             linkTitle={`Collection - ${titre}`}

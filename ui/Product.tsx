@@ -23,12 +23,7 @@ export default function Product({ product }: IProps) {
         gap: "8rem",
       }}
     >
-      {url && (
-        <img
-          alt={alternativeText ?? "Product image"}
-          src={`${API_URL}${url}`}
-        />
-      )}
+      {url && <img alt={alternativeText ?? "Product image"} src={url} />}
       <Box>
         <Box
           sx={{

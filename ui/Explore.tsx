@@ -53,7 +53,7 @@ export default function Explore({ items, subPath }: IProps) {
                   : slug
               }
               imageAlt={alternativeText ?? `Item - ${titre}`}
-              imageSrc={`${API_URL}${url}`}
+              imageSrc={url}
               label={titre}
               title={titre}
             />

@@ -153,3 +153,128 @@ export const queryTypologies = (collection: string) => gql`
     }
   }
 `;
+
+const BRAND_DATA_QUERY = `
+  data {
+    id
+    attributes {
+      nom
+      vedette
+      logo {
+        data {
+          attributes {
+            alternativeText
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const queryAllBrands = () => gql`
+  {
+    brands {
+      ${BRAND_DATA_QUERY}
+    }
+  }
+`;
+
+export const queryFeaturedBrands = () => gql`
+  {
+    brands(filters: { vedette: { eq: true } }) {
+      ${BRAND_DATA_QUERY}
+    }
+  }
+`;
+
+const PROJECT_DATA_QUERY = `
+  data {
+    id
+    attributes {
+      titre
+      description
+      vignette {
+        data {
+          attributes {
+            alternativeText
+            url
+          }
+        }
+      }
+      medias {
+        data {
+          attributes {
+            alternativeText
+            url
+          }
+        }
+      }
+      couleur
+      rank
+      slug
+      createdAt
+    }
+  }
+`;
+
+export const queryProjects = () => gql`
+  {
+    projects(sort: ["rank:ASC"]) {
+      ${PROJECT_DATA_QUERY}
+    }
+  }
+`;
+
+export const queryProject = (id: string) => gql`
+  {
+    project(id: "${id}") {
+      ${PROJECT_DATA_QUERY}
+    }
+  }
+`;
+
+const NEWS_DATA_QUERY = `
+  data {
+    id
+    attributes {
+      titre
+      corps
+      vignette {
+        data {
+          attributes {
+            alternativeText
+            url
+          }
+        }
+      }
+      medias {
+        data {
+          attributes {
+            alternativeText
+            url
+          }
+        }
+      }
+      rank
+      slug
+      createdAt
+    }
+  }
+`;
+
+export const queryNews = () => gql`
+  {
+    news(sort: ["rank:ASC"]) {
+      ${NEWS_DATA_QUERY}
+    }
+  }
+`;
+
+export const querySingleNews = (id: string) => gql`
+  {
+    new(id: "${id}") {
+      ${NEWS_DATA_QUERY}
+    }
+  }
+`;
