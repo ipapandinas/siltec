@@ -36,6 +36,9 @@ export const theme = createTheme({
     error: {
       main: "#D90111",
     },
+    background: {
+      default: "#f6f6f6",
+    },
   },
   typography: {
     htmlFontSize: 10,
