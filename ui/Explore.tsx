@@ -1,7 +1,6 @@
 "use client";
 
 import { IImage } from "#/interfaces/IImage";
-import { API_URL } from "#/utils/constants";
 import { Grid } from "@mui/material";
 
 import Card from "./Card";
@@ -31,9 +30,8 @@ export default function Explore({ items, subPath }: IProps) {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      rowSpacing={8}
-      columnSpacing={16}
-      sx={{ maxWidth: 1000 }}
+      rowSpacing={16}
+      columnSpacing={9}
     >
       {items.map(({ id, attributes }: any) => {
         const { image, titre, slug, vignette } = attributes;
@@ -43,7 +41,7 @@ export default function Explore({ items, subPath }: IProps) {
         if (!url) return null;
 
         return (
-          <Grid item key={id} lg={6} md={6} sm={6}>
+          <Grid item key={id} lg={4} md={4} sm={6}>
             <Card
               href={
                 subPath

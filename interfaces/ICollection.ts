@@ -16,3 +16,12 @@ export interface ICollection {
     slug: string;
   };
 }
+
+export interface ICollectionSinglePage {
+  id: string;
+  attributes: {
+    titre: string;
+    sousTitre: string;
+    couleur: string;
+  };
+}

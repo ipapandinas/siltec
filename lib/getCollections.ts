@@ -1,8 +1,8 @@
 import request from "graphql-request";
 
 import { GRAPHQL_API_URL } from "#/utils/constants";
-import { queryCollections } from "#/utils/queries";
-import { ICollection } from "#/interfaces/ICollection";
+import { queryCollections, queryCollectionSinglePage } from "#/utils/queries";
+import { ICollection, ICollectionSinglePage } from "#/interfaces/ICollection";
 
 export const getCollections = async () => {
   try {
@@ -16,6 +16,24 @@ export const getCollections = async () => {
   } catch (err: any) {
     throw new Error(
       `Collections could not have been fetched - Detail: ${
+        err?.message ? err.message : JSON.stringify(err)
+      }`
+    );
+  }
+};
+
+export const getCollectionSinglePage = async () => {
+  try {
+    const gql = queryCollectionSinglePage();
+    return (
+      await request<{ hubDeCollection: { data: ICollectionSinglePage } }>(
+        GRAPHQL_API_URL,
+        gql
+      )
+    ).hubDeCollection.data;
+  } catch (err: any) {
+    throw new Error(
+      `Collection single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
     );

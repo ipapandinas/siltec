@@ -1,33 +1,46 @@
 import { getCollections } from "#/lib/getCollections";
-import { API_URL, COLOR_PRIMARY_MAIN } from "#/utils/constants";
+import { COLOR_PRIMARY_MAIN } from "#/utils/constants";
 
 import CollectionBlock from "./CollectionBlock";
+import MobileCollectionBlock from "./MobileCollectionBlock";
 
 export default async function CollectionsSection() {
   const collections = await getCollections();
 
   return (
-    <div>
+    <>
       {collections.slice(0, 2).map(({ id, attributes }, idx) => {
-        const { couleur, description, image, titre } = attributes;
+        const { couleur, description, image, slug, titre } = attributes;
         const { alternativeText, url } = image.data?.attributes ?? {};
 
         if (!url) return null;
 
         return (
-          <CollectionBlock
-            key={id}
-            color={couleur ?? COLOR_PRIMARY_MAIN}
-            description={description ?? ""}
-            imageAlt={alternativeText ?? `Collection - ${titre}`}
-            imageHref={url}
-            isRtl={idx % 2 === 1}
-            linkHref="/c/bureaux"
-            linkTitle={`Collection - ${titre}`}
-            title={titre}
-          />
+          <>
+            <MobileCollectionBlock
+              key={id}
+              color={couleur ?? COLOR_PRIMARY_MAIN}
+              imageAlt={alternativeText ?? `Collection - ${titre}`}
+              imageHref={url}
+              isRtl={idx % 2 === 1}
+              linkHref={`/c/${slug}`}
+              linkTitle={`Collection - ${titre}`}
+              title={titre}
+            />
+            <CollectionBlock
+              key={id}
+              color={couleur ?? COLOR_PRIMARY_MAIN}
+              description={description ?? ""}
+              imageAlt={alternativeText ?? `Collection - ${titre}`}
+              imageHref={url}
+              isRtl={idx % 2 === 1}
+              linkHref={`/c/${slug}`}
+              linkTitle={`Collection - ${titre}`}
+              title={titre}
+            />
+          </>
         );
       })}
-    </div>
+    </>
   );
 }

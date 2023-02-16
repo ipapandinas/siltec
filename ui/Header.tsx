@@ -18,6 +18,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import AppLink from "./AppLink";
 import NavItem from "./NavItem";
 import MobileDrawer from "./MobileDrawer";
+import { UP_LG, UP_SM } from "#/utils/constants";
+import AppImage from "./AppImage";
 
 function ElevationScroll(props: { children: any; mobileMenuOpen: boolean }) {
   const { children, mobileMenuOpen } = props;
@@ -37,7 +39,6 @@ export default function Header() {
     disableHysteresis: true,
     threshold: 100,
   });
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleMobileOpen = () => {
@@ -69,25 +70,53 @@ export default function Header() {
               margin: "0 auto",
               width: "100%",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: { xs: "flex-end", lg: "center" },
               alignItems: "center",
               padding: { xs: "2.4rem", lg: "4rem" },
+              position: "relative",
             }}
           >
-            <AppLink href="/" title="Page d'accueil">
-              <Image
-                alt="Siltec logo"
-                src="/siltec.png"
-                width={isSmallScreen ? 90 : 180}
-                height={isSmallScreen ? 45 : 90}
-              />
-            </AppLink>
+            <Box
+              sx={{
+                position: "absolute",
+                left: "4rem",
+              }}
+            >
+              <AppLink href="/" title="Page d'accueil">
+                <Box
+                  sx={{
+                    display: "none",
+                    [UP_LG]: { display: "block" },
+                  }}
+                >
+                  <AppImage
+                    alt="Siltec logo"
+                    src="/siltec.png"
+                    width={180}
+                    height={90}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: "block",
+                    [UP_LG]: { display: "none" },
+                  }}
+                >
+                  <AppImage
+                    alt="Siltec logo"
+                    src="/siltec.png"
+                    width={70}
+                    height={35}
+                  />
+                </Box>
+              </AppLink>
+            </Box>
             <Box
               sx={{
                 display: { xs: "none", lg: "flex" },
                 justifyContent: "center",
                 alignItems: "center",
-                gap: "8rem",
+                gap: "6.4rem",
               }}
             >
               <NavItem
@@ -145,23 +174,6 @@ export default function Header() {
                 minimize={minimizeNav}
                 title="Contact"
               />
-            </Box>
-            <Box
-              sx={{
-                display: { xs: "none", lg: "block", paddingRight: "12px" },
-              }}
-            >
-              <AppLink
-                href="https://www.instagram.com/siltecmobilier"
-                title="Instagram Siltec"
-              >
-                <InstagramIcon
-                  fontSize="large"
-                  sx={{
-                    path: { fill: "#010101" },
-                  }}
-                />
-              </AppLink>
             </Box>
             <Box
               sx={{

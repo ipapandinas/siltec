@@ -1,8 +1,12 @@
 import request from "graphql-request";
 
 import { GRAPHQL_API_URL } from "#/utils/constants";
-import { queryProject, queryProjects } from "#/utils/queries";
-import { IProject } from "#/interfaces/IProject";
+import {
+  queryProject,
+  queryProjects,
+  queryProjectSinglePage,
+} from "#/utils/queries";
+import { IProject, IProjectSinglePage } from "#/interfaces/IProject";
 
 export const getProjects = async () => {
   try {
@@ -28,6 +32,24 @@ export const getProject = async (id: string) => {
   } catch (err: any) {
     throw new Error(
       `Project could not have been fetched - Detail: ${
+        err?.message ? err.message : JSON.stringify(err)
+      }`
+    );
+  }
+};
+
+export const getProjectSinglePage = async () => {
+  try {
+    const gql = queryProjectSinglePage();
+    return (
+      await request<{ hubDeRealisation: { data: IProjectSinglePage } }>(
+        GRAPHQL_API_URL,
+        gql
+      )
+    ).hubDeRealisation.data;
+  } catch (err: any) {
+    throw new Error(
+      `Project single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
     );

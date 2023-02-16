@@ -3,13 +3,11 @@
 import Image from "next/image";
 import Slider from "react-slick";
 
-const IMAGES = [
-  "/assets/carroussel/arflex.png",
-  "/assets/carroussel/tropico.png",
-  "/assets/carroussel/tokio.png",
-];
+interface Props {
+  list: string[];
+}
 
-export default function Carrousel() {
+export default function Carrousel({ list }: Props) {
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -22,7 +20,7 @@ export default function Carrousel() {
 
   return (
     <Slider {...sliderSettings}>
-      {IMAGES.map((src, idx) => (
+      {list.map((src, idx) => (
         <Image
           key={idx}
           alt={`carrousel-image-${idx}`}

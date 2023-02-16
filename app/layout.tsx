@@ -4,6 +4,7 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import NorthIcon from "@mui/icons-material/North";
 import ScrollToTop from "react-scroll-to-top";
+import "cal-sans";
 
 import { theme } from "#/theme";
 import createEmotionCache from "#/theme/createEmotionCache";
@@ -11,6 +12,7 @@ import Header from "#/ui/Header";
 import Footer from "#/ui/Footer";
 
 import "./globals.css";
+import styles from "./page.module.css";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -29,7 +31,7 @@ export default function RootLayout({
           <CssBaseline />
           <body>
             <Header />
-            {children}
+            <main className={styles.main}>{children}</main>
             <Footer />
             <ScrollToTop
               smooth

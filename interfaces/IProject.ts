@@ -17,3 +17,12 @@ export interface IProject {
     createdAt: string;
   };
 }
+
+export interface IProjectSinglePage {
+  id: string;
+  attributes: {
+    titre: string;
+    sousTitre: string;
+    couleur: string;
+  };
+}

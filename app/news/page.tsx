@@ -1,11 +1,11 @@
-import { getCollections, getCollectionSinglePage } from "#/lib/getCollections";
+import { getNews, getNewsSinglePage } from "#/lib/getNews";
 import Container from "#/ui/Container";
 import Explore from "#/ui/Explore";
 import SinglePageHeader from "#/ui/SinglePageHeader";
 
-export default async function Collections() {
-  const pageData = await getCollectionSinglePage();
-  const collections = await getCollections();
+export default async function News() {
+  const pageData = await getNewsSinglePage();
+  const news = await getNews();
 
   const { couleur, sousTitre, titre } = pageData.attributes;
 
@@ -15,7 +15,7 @@ export default async function Collections() {
         <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
       </Container>
       <Container>
-        <Explore items={[...collections, ...collections]} subPath="c" />
+        <Explore items={news} subPath="n" />
       </Container>
     </div>
   );

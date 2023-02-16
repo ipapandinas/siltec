@@ -100,6 +100,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+#container:last-child {
+  margin-bottom: 12rem;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -135,4 +139,12 @@ a {
   margin-top: 0.8rem;
   border-radius: 50%;
   opacity: 0.5 !important;
+}
+
+.MuiButton-root {
+  border-radius: 8rem !important;
+}
+
+.MuiCardContent-root {
+  padding: 0.8rem !important;
 }

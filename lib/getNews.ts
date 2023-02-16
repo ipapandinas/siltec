@@ -1,8 +1,12 @@
 import request from "graphql-request";
 
 import { GRAPHQL_API_URL } from "#/utils/constants";
-import { queryNews, querySingleNews } from "#/utils/queries";
-import { INews } from "#/interfaces/INews";
+import {
+  queryNews,
+  querySingleNews,
+  queryNewsSinglePage,
+} from "#/utils/queries";
+import { INews, INewsSinglePage } from "#/interfaces/INews";
 
 export const getNews = async () => {
   try {
@@ -26,6 +30,24 @@ export const getSingleNews = async (id: string) => {
   } catch (err: any) {
     throw new Error(
       `Single news could not have been fetched - Detail: ${
+        err?.message ? err.message : JSON.stringify(err)
+      }`
+    );
+  }
+};
+
+export const getNewsSinglePage = async () => {
+  try {
+    const gql = queryNewsSinglePage();
+    return (
+      await request<{ hubDActualite: { data: INewsSinglePage } }>(
+        GRAPHQL_API_URL,
+        gql
+      )
+    ).hubDActualite.data;
+  } catch (err: any) {
+    throw new Error(
+      `News single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
     );

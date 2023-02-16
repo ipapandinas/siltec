@@ -16,3 +16,12 @@ export interface INews {
     createdAt: string;
   };
 }
+
+export interface INewsSinglePage {
+  id: string;
+  attributes: {
+    titre: string;
+    sousTitre: string;
+    couleur: string;
+  };
+}

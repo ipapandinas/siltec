@@ -25,21 +25,21 @@ export default function Card({
   title,
 }: IProps) {
   return (
-    <MuiCard sx={{ maxWidth: 400 }}>
+    <MuiCard sx={{ width: "100%" }} elevation={0}>
       <Link href={href} title={title}>
         <CardActionArea>
           <CardMedia
             component="img"
-            height="240"
+            height="380"
             image={imageSrc}
             alt={imageAlt}
+            sx={{ objectFit: "cover" }}
           />
           <CardContent>
             <Typography
-              fontWeight="bold"
               textAlign="center"
               textTransform="capitalize"
-              variant="h5"
+              variant="body1"
               component="div"
             >
               {label}

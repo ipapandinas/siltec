@@ -33,6 +33,20 @@ export const queryCollections = () => gql`
   }
 `;
 
+export const queryCollectionSinglePage = () => gql`
+  {
+    hubDeCollection {
+      data {
+        attributes {
+          couleur
+          sousTitre
+          titre
+        }
+      }
+    }
+  }
+`;
+
 export const queryProduct = (id: string) => gql`
   {
     product(id: "${id}") {
@@ -43,6 +57,14 @@ export const queryProduct = (id: string) => gql`
           designer
           description
           marque
+          medias {
+            data {
+              attributes {
+                alternativeText
+                url
+              }
+            }
+          }
           image {
             data {
               attributes {
@@ -234,6 +256,20 @@ export const queryProject = (id: string) => gql`
   }
 `;
 
+export const queryProjectSinglePage = () => gql`
+  {
+    hubDeRealisation {
+      data {
+        attributes {
+          couleur
+          sousTitre
+          titre
+        }
+      }
+    }
+  }
+`;
+
 const NEWS_DATA_QUERY = `
   data {
     id
@@ -275,6 +311,43 @@ export const querySingleNews = (id: string) => gql`
   {
     new(id: "${id}") {
       ${NEWS_DATA_QUERY}
+    }
+  }
+`;
+
+export const queryNewsSinglePage = () => gql`
+  {
+    hubDActualite {
+      data {
+        attributes {
+          couleur
+          sousTitre
+          titre
+        }
+      }
+    }
+  }
+`;
+
+export const queryAboutSinglePage = () => gql`
+  {
+    quiSommesNous {
+      data {
+        attributes {
+          couleur
+          description
+          sousTitre
+          titre
+          trombinoscope {
+            data {
+              attributes {
+                alternativeText
+                url
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

@@ -65,7 +65,7 @@ const MobileDrawerItem = (props: {
                 fontWeight="bold"
                 textTransform="uppercase"
                 variant="body1"
-                sx={{ "white-space": "nowrap" }}
+                sx={{ whiteSpace: "nowrap" }}
               >
                 {text}
               </Typography>

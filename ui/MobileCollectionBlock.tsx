@@ -1,15 +1,13 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-
 import { UP_LG } from "#/utils/constants";
+import { Box, Typography } from "@mui/material";
 
 import AppImage from "./AppImage";
 import AppLink from "./AppLink";
 
 interface IProps {
   color: string;
-  description: string;
   imageAlt: string;
   imageHref: string;
   isRtl?: boolean;
@@ -18,9 +16,8 @@ interface IProps {
   title: string;
 }
 
-export default function CollectionBlock({
+export default function MobileCollectionBlock({
   color,
-  description,
   imageAlt,
   imageHref,
   isRtl = false,
@@ -31,55 +28,45 @@ export default function CollectionBlock({
   return (
     <Box
       sx={{
-        display: "none",
-        [UP_LG]: {
-          display: "block",
-          alignSelf: isRtl ? "flex-end" : "flex-start",
-        },
+        display: "block",
+        [UP_LG]: { display: "none" },
       }}
     >
       <AppLink href={linkHref} title={linkTitle}>
         <Box
           sx={{
             display: "flex",
+            alignItems: "center",
             justifyContent: "center",
             flexDirection: isRtl ? "row-reverse" : "row",
+            width: "100%",
+            height: "auto",
+            position: "relative",
           }}
         >
           <AppImage
             alt={imageAlt}
             src={imageHref}
-            width={600}
-            height={600}
+            width={400}
+            height={400}
             style={{ objectFit: "cover" }}
           />
           <Box
             sx={{
-              width: 600,
-              height: 600,
+              width: 264,
+              height: 264,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              background: color,
-              position: "relative",
-              borderTopLeftRadius: isRtl ? "50%" : 0,
-              borderBottomLeftRadius: isRtl ? "50%" : 0,
-              borderTopRightRadius: isRtl ? 0 : "50%",
-              borderBottomRightRadius: isRtl ? 0 : "50%",
-              padding: "0 8rem",
+              background: `${color}bb`,
+              position: "absolute",
+              borderRadius: "50%",
+              padding: "0 1.6rem",
             }}
           >
             <Typography textTransform="uppercase" variant="h3">
               {title}
-            </Typography>
-            <Typography
-              maxWidth="40rem"
-              mt="2.4rem"
-              textAlign="center"
-              variant="body1"
-            >
-              {description}
             </Typography>
           </Box>
         </Box>

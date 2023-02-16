@@ -12,6 +12,9 @@ export interface IProduct {
     image: {
       data: IImage | null;
     };
+    medias: {
+      data: IImage[] | null;
+    };
     rank: number;
     slug: string;
     collection: {

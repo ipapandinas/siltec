@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 
 import {
   COLOR_PRIMARY_LIGHT,
@@ -7,7 +7,7 @@ import {
   COLOR_SECONDARY_MAIN,
 } from "#/utils/constants";
 
-export const theme = createTheme({
+const customTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -28,6 +28,7 @@ export const theme = createTheme({
     secondary: {
       main: COLOR_SECONDARY_MAIN,
       light: COLOR_SECONDARY_LIGHT,
+      dark: "#ce2a37",
     },
     warning: {
       main: "#FEDB55",
@@ -42,8 +43,11 @@ export const theme = createTheme({
   },
   typography: {
     htmlFontSize: 10,
+    fontFamily: "Cal Sans",
     allVariants: {
       color: "#010101",
     },
   },
 });
+
+export const theme = responsiveFontSizes(customTheme);

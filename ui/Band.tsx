@@ -17,6 +17,10 @@ export default function Band({ color, text }: IProps) {
         color: "#fff",
         textAlign: "center",
         padding: "0 16rem",
+        margin: "0 auto",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Typography color="#fff" textTransform="capitalize" variant="h5">

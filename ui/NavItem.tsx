@@ -58,8 +58,8 @@ export default function NavItem({
             },
 
             ".minimize": {
-              "-webkit-transform": "scale(0.1)",
-              "-ms-transform": "scale(0.1)",
+              WebkitTransform: "scale(0.1)",
+              msTransform: "scale(0.1)",
               transform: "scale(0.1)",
             },
           }}
@@ -78,7 +78,7 @@ export default function NavItem({
           fontWeight="bold"
           textTransform="uppercase"
           variant="body1"
-          sx={{ "white-space": "nowrap" }}
+          sx={{ whiteSpace: "nowrap" }}
         >
           {label}
         </Typography>
