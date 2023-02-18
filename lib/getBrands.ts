@@ -10,7 +10,7 @@ export const getAllBrands = async () => {
     return (await request<{ brands: { data: IBrand[] } }>(GRAPHQL_API_URL, gql))
       .brands.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Brands could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -24,7 +24,7 @@ export const getFeaturedBrands = async () => {
     return (await request<{ brands: { data: IBrand[] } }>(GRAPHQL_API_URL, gql))
       .brands.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Featured brands could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`

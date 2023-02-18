@@ -15,7 +15,7 @@ export const getProjects = async () => {
       await request<{ projects: { data: IProject[] } }>(GRAPHQL_API_URL, gql)
     ).projects.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Projects could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -30,7 +30,7 @@ export const getProject = async (id: string) => {
       await request<{ project: { data: IProject } }>(GRAPHQL_API_URL, gql)
     ).project.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Project could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -48,7 +48,7 @@ export const getProjectSinglePage = async () => {
       )
     ).hubDeRealisation.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Project single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`

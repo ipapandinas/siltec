@@ -7,6 +7,8 @@ export default async function Projects() {
   const pageData = await getProjectSinglePage();
   const projects = await getProjects();
 
+  if (!pageData) return null; //todo: 404
+
   const { couleur, sousTitre, titre } = pageData.attributes;
 
   return (

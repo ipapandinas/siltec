@@ -14,7 +14,7 @@ export const getCollections = async () => {
       )
     ).collections.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Collections could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -32,7 +32,7 @@ export const getCollectionSinglePage = async () => {
       )
     ).hubDeCollection.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Collection single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`

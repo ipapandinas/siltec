@@ -11,7 +11,7 @@ export const getProducts = async (collection: string, typology: string) => {
       await request<{ products: { data: IProduct[] } }>(GRAPHQL_API_URL, gql)
     ).products.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Products could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -26,10 +26,11 @@ export const getProduct = async (id: string) => {
       await request<{ product: { data: IProduct } }>(GRAPHQL_API_URL, gql)
     ).product.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Product could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
     );
+    return null;
   }
 };

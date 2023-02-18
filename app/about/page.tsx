@@ -7,6 +7,8 @@ import Content from "./content";
 export default async function About() {
   const pageData = await getAboutSinglePage();
 
+  if (!pageData) return null; //todo: 404
+
   const { couleur, description, sousTitre, titre, trombinoscope } =
     pageData.attributes;
 

@@ -7,6 +7,8 @@ export default async function News() {
   const pageData = await getNewsSinglePage();
   const news = await getNews();
 
+  if (!pageData) return null; //todo: 404
+
   const { couleur, sousTitre, titre } = pageData.attributes;
 
   return (

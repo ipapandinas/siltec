@@ -14,7 +14,7 @@ export const getAboutSinglePage = async () => {
       )
     ).quiSommesNous.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `About single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`

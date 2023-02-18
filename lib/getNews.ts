@@ -14,7 +14,7 @@ export const getNews = async () => {
     return (await request<{ news: { data: INews[] } }>(GRAPHQL_API_URL, gql))
       .news.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `News could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -28,7 +28,7 @@ export const getSingleNews = async (id: string) => {
     return (await request<{ new: { data: INews } }>(GRAPHQL_API_URL, gql)).new
       .data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Single news could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
@@ -46,7 +46,7 @@ export const getNewsSinglePage = async () => {
       )
     ).hubDActualite.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `News single page could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`

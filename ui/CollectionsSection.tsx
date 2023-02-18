@@ -7,6 +7,8 @@ import MobileCollectionBlock from "./MobileCollectionBlock";
 export default async function CollectionsSection() {
   const collections = await getCollections();
 
+  if (!collections) return null; //todo: 404
+
   return (
     <>
       {collections.slice(0, 2).map(({ id, attributes }, idx) => {

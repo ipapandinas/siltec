@@ -11,7 +11,7 @@ export const getTypologies = async (collection: string) => {
       await request<{ typologies: { data: ITypoligy[] } }>(GRAPHQL_API_URL, gql)
     ).typologies.data;
   } catch (err: any) {
-    throw new Error(
+    console.error(
       `Typologies could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
