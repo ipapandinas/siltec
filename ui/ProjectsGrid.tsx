@@ -12,8 +12,8 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      spacing={8}
-      sx={{ maxWidth: 1000 }}
+      rowSpacing={16}
+      columnSpacing={9}
     >
       {projects.slice(0, 3).map(({ id, attributes }, idx) => {
         const { slug, titre, vignette } = attributes;
@@ -25,9 +25,9 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
           <Grid
             item
             key={id}
-            xs={12}
-            sm={6}
+            lg={4}
             md={4}
+            sm={6}
             sx={{ display: "flex", justifyContent: "center" }}
           >
             <Card

@@ -27,7 +27,18 @@ export default function Card({
   return (
     <MuiCard sx={{ width: "100%" }} elevation={0}>
       <Link href={href} title={title}>
-        <CardActionArea>
+        <CardActionArea
+          sx={{
+            "& img": {
+              transition: "transform 0.4s ease",
+            },
+            ":hover": {
+              "& img": {
+                transform: "scale(1.2)",
+              },
+            },
+          }}
+        >
           <CardMedia
             component="img"
             height="380"

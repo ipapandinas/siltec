@@ -23,7 +23,12 @@ export default function Band({ color, text }: IProps) {
         justifyContent: "center",
       }}
     >
-      <Typography color="#fff" textTransform="capitalize" variant="h5">
+      <Typography
+        color="#fff"
+        fontWeight="bold"
+        textTransform="capitalize"
+        variant="h5"
+      >
         {text}
       </Typography>
     </Box>

@@ -12,6 +12,7 @@ import AppLink from "./AppLink";
 import Container from "./Container";
 
 interface Props extends MuiBoxProps {
+  containerId?: string;
   title?: string;
   description?: string;
   href?: string;
@@ -19,12 +20,13 @@ interface Props extends MuiBoxProps {
 }
 
 export default function Section(props: Props) {
-  const { children, description, href, title } = props;
+  const { children, containerId, description, href, title } = props;
   const propsCopy = { ...props };
   const theme = useTheme();
 
   return (
     <Container
+      id={containerId}
       sx={{
         display: "flex",
         flexDirection: "column",

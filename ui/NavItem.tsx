@@ -1,6 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
 import { Box, Typography } from "@mui/material";
+import AppLink from "./AppLink";
+import AppImage from "./AppImage";
 
 interface IProps {
   color: string;
@@ -26,7 +26,7 @@ export default function NavItem({
   title,
 }: IProps) {
   return (
-    <Link href={href} title={title}>
+    <AppLink href={href} title={title}>
       <Box
         sx={{
           display: "flex",
@@ -65,7 +65,7 @@ export default function NavItem({
           }}
         >
           {
-            <Image
+            <AppImage
               className={minimize ? "minimize" : ""}
               alt={imageAlt}
               src={imageHref}
@@ -83,6 +83,6 @@ export default function NavItem({
           {label}
         </Typography>
       </Box>
-    </Link>
+    </AppLink>
   );
 }

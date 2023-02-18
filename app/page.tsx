@@ -3,9 +3,11 @@ import Carrousel from "#/ui/Carroussel";
 import CollectionsSection from "#/ui/CollectionsSection";
 import Container from "#/ui/Container";
 import FeaturedBrand from "#/ui/FeaturedBrand";
-import RoundWrapper from "#/ui/RoundWrapper";
 import ProjectsSection from "#/ui/ProjectsSection";
+import RoundWrapper from "#/ui/RoundWrapper";
+import ScrollDown from "#/ui/ScrollDown";
 import Section from "#/ui/Section";
+import SiltecChip from "#/ui/SiltecChip";
 
 const CARROUSEL_IMAGES = [
   "/assets/carroussel/arflex.png",
@@ -16,13 +18,20 @@ const CARROUSEL_IMAGES = [
 export default function Home() {
   return (
     <>
+      <SiltecChip />
       <Carrousel list={CARROUSEL_IMAGES} />
+      <ScrollDown />
 
-      <Container bgcolor="secondary.light" bgcolorSize="lg">
+      <Container
+        bgcolor="secondary.light"
+        bgcolorSize="lg"
+        id="firstContainer"
+        sx={{ maxWidth: "1100px" }}
+      >
         <FeaturedBrand
           bgcolor="secondary.light"
           href="https://www.arflex.it/"
-          logoSrc="/assets/brands/arflex.png"
+          logoSrc="/assets/brands/arflex.svg"
           name="Arflex"
         />
       </Container>
@@ -42,6 +51,7 @@ export default function Home() {
         <ProjectsSection />
       </Section>
       <Section
+        containerId="lastContainer"
         title="Nos marques"
         // loadMore={() => {
         //   console.log("todo");

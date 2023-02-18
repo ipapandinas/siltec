@@ -3,7 +3,6 @@
 import {
   Box,
   Divider as MUIDivider,
-  Grid,
   IconButton,
   Typography,
   useTheme,

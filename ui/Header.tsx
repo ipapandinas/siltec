@@ -1,15 +1,7 @@
 "use client";
 
 import { cloneElement, useState } from "react";
-import Image from "next/image";
-import {
-  AppBar,
-  Box,
-  IconButton,
-  Toolbar,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, useTheme } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -66,20 +58,20 @@ export default function Header() {
         >
           <Toolbar
             sx={{
-              maxWidth: "1600px",
+              maxWidth: "1800px",
               margin: "0 auto",
               width: "100%",
               display: "flex",
               justifyContent: { xs: "flex-end", lg: "center" },
               alignItems: "center",
-              padding: { xs: "2.4rem", lg: "4rem" },
+              padding: { xs: "2.4rem", lg: "4rem 8rem" },
               position: "relative",
             }}
           >
             <Box
               sx={{
                 position: "absolute",
-                left: "4rem",
+                left: "8rem",
               }}
             >
               <AppLink href="/" title="Page d'accueil">

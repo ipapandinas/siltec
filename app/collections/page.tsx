@@ -14,7 +14,7 @@ export default async function Collections() {
       <Container>
         <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
       </Container>
-      <Container>
+      <Container id="lastContainer">
         <Explore items={[...collections, ...collections]} subPath="c" />
       </Container>
     </div>

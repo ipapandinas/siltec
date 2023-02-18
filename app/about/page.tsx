@@ -15,7 +15,7 @@ export default async function About() {
       <Container>
         <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
       </Container>
-      <Container>
+      <Container id="lastContainer">
         <Content description={description} trombinoscope={trombinoscope} />
       </Container>
     </div>

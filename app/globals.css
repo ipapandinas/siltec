@@ -100,8 +100,12 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-#container:last-child {
-  margin-bottom: 12rem;
+#firstContainer {
+  margin-top: 7.2rem;
+}
+
+#lastContainer {
+  margin-bottom: 8rem;
 }
 
 a {
@@ -117,11 +121,24 @@ a {
 
 .slick-slider {
   width: 100%;
+  height: calc(100vh - 240px);
+  max-height: 1000px;
   margin: 0 auto;
+}
+
+.slick-slider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, black 200%);
 }
 
 .slick-dots {
   bottom: 2.4rem;
+  left: -0.4rem;
 }
 
 .slick-dots li.slick-active button::before {
@@ -139,6 +156,13 @@ a {
   margin-top: 0.8rem;
   border-radius: 50%;
   opacity: 0.5 !important;
+}
+
+.slick-slide img {
+  width: 100%;
+  height: calc(100vh - 240px);
+  max-height: 1000px;
+  object-fit: cover;
 }
 
 .MuiButton-root {

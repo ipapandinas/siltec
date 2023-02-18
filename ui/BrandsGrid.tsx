@@ -12,7 +12,7 @@ interface IProps {
 
 export default function BrandsGrid({ list }: IProps) {
   return (
-    <Grid container spacing={4} justifyContent="center">
+    <Grid container rowSpacing={12} columnSpacing={4} justifyContent="center">
       {list.map(({ id, attributes }) => {
         const { nom, logo } = attributes;
         const { url } = logo.data?.attributes ?? {};

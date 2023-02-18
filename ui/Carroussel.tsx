@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Slider from "react-slick";
+
+import AppImage from "./AppImage";
 
 interface Props {
   list: string[];
@@ -9,11 +10,11 @@ interface Props {
 
 export default function Carrousel({ list }: Props) {
   const sliderSettings = {
-    dots: true,
+    arrows: true,
     infinite: true,
     autoplay: true,
     speed: 1000,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
@@ -21,7 +22,7 @@ export default function Carrousel({ list }: Props) {
   return (
     <Slider {...sliderSettings}>
       {list.map((src, idx) => (
-        <Image
+        <AppImage
           key={idx}
           alt={`carrousel-image-${idx}`}
           src={src}

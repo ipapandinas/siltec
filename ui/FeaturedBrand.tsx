@@ -27,12 +27,12 @@ export default function FeaturedBrand({
         gap: "3.2rem",
       }}
     >
-      <Box sx={{ marginLeft: { xs: "0", lg: "6.4rem" } }}>
+      <Box sx={{ marginLeft: { xs: "0", lg: "2.4rem" } }}>
         <AppImage
           alt={`${name} logo`}
           src={logoSrc}
-          width={230}
-          height={70}
+          width={280}
+          height={100}
           loadMode="md"
         />
       </Box>
@@ -44,8 +44,8 @@ export default function FeaturedBrand({
           justifyContent: "center",
           background: theme.palette.background.default,
           padding: { xs: "2.4rem 4rem", lg: "2.4rem 8rem" },
-          borderRadius: "8rem",
-          marginLeft: { xs: 0, lg: "24rem" },
+          borderRadius: "12rem",
+          marginLeft: { xs: 0, lg: "12rem" },
         }}
       >
         <Typography

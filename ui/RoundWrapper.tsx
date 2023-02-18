@@ -18,9 +18,9 @@ export default function RoundWrapper(props: Props) {
         flexDirection: { xs: "column", lg: "row" },
         justifyContent: "center",
         alignItems: "center",
-        padding: { xs: "1.6rem", lg: "4rem 6.4rem" },
+        padding: { xs: "1.6rem", lg: "4rem" },
         position: "relative",
-        borderRadius: { xs: "4rem", lg: "12rem" },
+        borderRadius: { xs: "4rem", lg: "14rem" },
         width: "100%",
         ...propsCopy.sx,
       }}

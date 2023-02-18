@@ -5,7 +5,7 @@ import Band from "./Band";
 
 interface IProps {
   color: string;
-  subtitle: string;
+  subtitle?: string;
   title: string;
 }
 
@@ -21,9 +21,11 @@ export default function SinglePageHeader({ color, subtitle, title }: IProps) {
       }}
     >
       <Band color={color} text={title} />
-      <Typography variant="body1" mt="3.2rem">
-        {subtitle}
-      </Typography>
+      {subtitle && (
+        <Typography variant="body1" mt="3.2rem">
+          {subtitle}
+        </Typography>
+      )}
     </Box>
   );
 }

@@ -4,7 +4,8 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import NorthIcon from "@mui/icons-material/North";
 import ScrollToTop from "react-scroll-to-top";
-import "cal-sans";
+import { Raleway } from "@next/font/google";
+const raleway = Raleway({ subsets: ["latin"] });
 
 import { theme } from "#/theme";
 import createEmotionCache from "#/theme/createEmotionCache";
@@ -25,6 +26,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <style jsx global>{`
+        html {
+          font-family: ${raleway.style.fontFamily};
+        }
+      `}</style>
       <head />
       <CacheProvider value={emotionCache}>
         <ThemeProvider theme={theme}>

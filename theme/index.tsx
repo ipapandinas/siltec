@@ -43,7 +43,6 @@ const customTheme = createTheme({
   },
   typography: {
     htmlFontSize: 10,
-    fontFamily: "Cal Sans",
     allVariants: {
       color: "#010101",
     },

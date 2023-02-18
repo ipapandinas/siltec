@@ -35,6 +35,7 @@ export default function CollectionBlock({
         [UP_LG]: {
           display: "block",
           alignSelf: isRtl ? "flex-end" : "flex-start",
+          width: "100%",
         },
       }}
     >
@@ -44,19 +45,22 @@ export default function CollectionBlock({
             display: "flex",
             justifyContent: "center",
             flexDirection: isRtl ? "row-reverse" : "row",
+            img: {
+              width: "50% !important",
+            },
           }}
         >
           <AppImage
             alt={imageAlt}
             src={imageHref}
             width={600}
-            height={600}
+            height={620}
             style={{ objectFit: "cover" }}
           />
           <Box
             sx={{
-              width: 600,
-              height: 600,
+              width: "50%",
+              height: 620,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
