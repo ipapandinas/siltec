@@ -18,9 +18,8 @@ export default async function CollectionsSection() {
         if (!url) return null;
 
         return (
-          <>
+          <div key={id}>
             <MobileCollectionBlock
-              key={id}
               color={couleur ?? COLOR_PRIMARY_MAIN}
               imageAlt={alternativeText ?? `Collection - ${titre}`}
               imageHref={url}
@@ -30,7 +29,6 @@ export default async function CollectionsSection() {
               title={titre}
             />
             <CollectionBlock
-              key={id}
               color={couleur ?? COLOR_PRIMARY_MAIN}
               description={description ?? ""}
               imageAlt={alternativeText ?? `Collection - ${titre}`}
@@ -40,7 +38,7 @@ export default async function CollectionsSection() {
               linkTitle={`Collection - ${titre}`}
               title={titre}
             />
-          </>
+          </div>
         );
       })}
     </>

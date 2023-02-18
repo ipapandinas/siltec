@@ -37,8 +37,10 @@ export default function Home() {
       </Container>
 
       <Section>
-        {/* @ts-expect-error Server Component */}
-        <CollectionsSection />
+        <div>
+          {/* @ts-expect-error Server Component */}
+          <CollectionsSection />
+        </div>
       </Section>
 
       <Section
@@ -47,8 +49,10 @@ export default function Home() {
         href="/projects"
         sx={{ dipslay: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        {/* @ts-expect-error Server Component */}
-        <ProjectsSection />
+        <div>
+          {/* @ts-expect-error Server Component */}
+          <ProjectsSection />
+        </div>
       </Section>
       <Section
         containerId="lastContainer"
@@ -58,8 +62,10 @@ export default function Home() {
         // }}
       >
         <RoundWrapper bgcolor="background.default">
-          {/* @ts-expect-error Server Component */}
-          <BrandsSection />
+          <div style={{ width: "100%" }}>
+            {/* @ts-expect-error Server Component */}
+            <BrandsSection />
+          </div>
         </RoundWrapper>
       </Section>
     </>
