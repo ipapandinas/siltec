@@ -8,7 +8,7 @@ interface Props {
   list: string[];
 }
 
-export default function Carrousel({ list }: Props) {
+export default function Carroussel({ list }: Props) {
   const sliderSettings = {
     arrows: true,
     infinite: true,
@@ -24,7 +24,7 @@ export default function Carrousel({ list }: Props) {
       {list.map((src, idx) => (
         <AppImage
           key={idx}
-          alt={`carrousel-image-${idx}`}
+          alt={`carroussel-image-${idx}`}
           src={src}
           width={1200}
           height={800}

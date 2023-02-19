@@ -73,6 +73,14 @@ export const queryProduct = (id: string) => gql`
               }
             }
           }
+          document {
+            data {
+              attributes {
+                alternativeText
+                url
+              }
+            }
+          }
           rank
           slug
           collection {

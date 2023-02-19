@@ -60,12 +60,13 @@ const Divider = () => {
 
 const SiteMap = () => {
   return (
-    <Box sx={{ paddingTop: "20px", textAlign: "center" }}>
+    <Box sx={{ paddingTop: "20px", textAlign: "center", width: "300px" }}>
       <SiteMapItem text="Collections" link="/collections" />
       <SiteMapItem text="Réalisations" link="/projects" />
       <SiteMapItem text="Qui sommes-nous?" link="/about" />
       <SiteMapItem text="Actualités" link="/news" />
       <SiteMapItem text="Contact" link="/contact" />
+      <SiteMapItem text="Nos marques" link="/brands" />
     </Box>
   );
 };
@@ -163,7 +164,7 @@ export default function Footer() {
               <AppLink href="/" title="Page d'accueil">
                 <AppImage
                   alt="Siltec logo"
-                  src="/siltec.png"
+                  src="/siltec.svg"
                   width={90}
                   height={45}
                 />

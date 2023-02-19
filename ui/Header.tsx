@@ -83,7 +83,7 @@ export default function Header() {
                 >
                   <AppImage
                     alt="Siltec logo"
-                    src="/siltec.png"
+                    src="/siltec.svg"
                     width={180}
                     height={90}
                   />
@@ -96,7 +96,7 @@ export default function Header() {
                 >
                   <AppImage
                     alt="Siltec logo"
-                    src="/siltec.png"
+                    src="/siltec.svg"
                     width={70}
                     height={35}
                   />
@@ -115,7 +115,7 @@ export default function Header() {
                 color={theme.palette.primary.main}
                 href="/collections"
                 imageAlt="Collections navigation logo"
-                imageHref="/assets/nav/chaise.png"
+                imageHref="/assets/nav/collections.svg"
                 imageHeight={80}
                 imageWidth={40}
                 label="Collections"
@@ -126,7 +126,7 @@ export default function Header() {
                 color={theme.palette.secondary.main}
                 href="/projects"
                 imageAlt="Réalisations navigation logo"
-                imageHref="/assets/nav/table.png"
+                imageHref="/assets/nav/realisations.svg"
                 imageHeight={75}
                 imageWidth={75}
                 label="Réalisations"
@@ -137,7 +137,7 @@ export default function Header() {
                 color={theme.palette.warning.main}
                 href="/about"
                 imageAlt="Info navigation logo"
-                imageHref="/assets/nav/C.png"
+                imageHref="/assets/nav/QSN.svg"
                 imageHeight={80}
                 imageWidth={63}
                 label="Qui sommes-nous?"
@@ -148,7 +148,7 @@ export default function Header() {
                 color={theme.palette.secondary.light}
                 href="/news"
                 imageAlt="Actualités navigation logo"
-                imageHref="/assets/nav/fauteuil.png"
+                imageHref="/assets/nav/actu.svg"
                 imageHeight={80}
                 imageWidth={73}
                 label="Actualités"
@@ -159,7 +159,7 @@ export default function Header() {
                 color={theme.palette.primary.light}
                 href="/contact"
                 imageAlt="Contact navigation logo"
-                imageHref="/assets/nav/lampe.png"
+                imageHref="/assets/nav/contact.svg"
                 imageHeight={80}
                 imageWidth={55}
                 label="Contact"

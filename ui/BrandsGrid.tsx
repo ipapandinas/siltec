@@ -4,7 +4,6 @@ import { IBrand } from "#/interfaces/IBrand";
 import { Grid } from "@mui/material";
 
 import AppImage from "./AppImage";
-import AppLink from "./AppLink";
 
 interface IProps {
   list: IBrand[];

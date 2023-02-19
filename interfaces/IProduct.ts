@@ -1,5 +1,5 @@
 import { ICollection } from "./ICollection";
-import { IImage } from "./IImage";
+import { IDocument, IImage } from "./IImage";
 import { ITypoligy } from "./ITypology";
 
 export interface IProduct {
@@ -9,6 +9,9 @@ export interface IProduct {
     designer: string;
     description: string;
     marque: string;
+    document: {
+      data: IDocument | null;
+    };
     image: {
       data: IImage | null;
     };

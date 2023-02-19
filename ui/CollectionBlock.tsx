@@ -55,6 +55,7 @@ export default function CollectionBlock({
             src={imageHref}
             width={600}
             height={620}
+            loadMode="lg"
             style={{ objectFit: "cover" }}
           />
           <Box

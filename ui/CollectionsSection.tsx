@@ -1,17 +1,17 @@
-import { getCollections } from "#/lib/getCollections";
+import { ICollection } from "#/interfaces/ICollection";
 import { COLOR_PRIMARY_MAIN } from "#/utils/constants";
 
 import CollectionBlock from "./CollectionBlock";
 import MobileCollectionBlock from "./MobileCollectionBlock";
 
-export default async function CollectionsSection() {
-  const collections = await getCollections();
-
-  if (!collections) return null; //todo: 404
-
+export default function CollectionsSection({
+  collections,
+}: {
+  collections: ICollection[];
+}) {
   return (
-    <>
-      {collections.slice(0, 2).map(({ id, attributes }, idx) => {
+    <div>
+      {collections.map(({ id, attributes }, idx) => {
         const { couleur, description, image, slug, titre } = attributes;
         const { alternativeText, url } = image.data?.attributes ?? {};
 
@@ -41,6 +41,6 @@ export default async function CollectionsSection() {
           </div>
         );
       })}
-    </>
+    </div>
   );
 }

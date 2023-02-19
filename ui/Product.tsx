@@ -1,23 +1,34 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import ReactMarkdown from "react-markdown";
+import { Box, IconButton, Typography } from "@mui/material";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { IProduct } from "#/interfaces/IProduct";
 
 import AppImage from "./AppImage";
 import Container from "./Container";
-import Carrousel from "./Carroussel";
+import Carroussel from "./Carroussel";
+import AppLink from "./AppLink";
 
 interface IProps {
   product: IProduct;
 }
 
 export default function Product({ product }: IProps) {
-  const { designer, image, marque, medias, titre, typology } =
-    product.attributes;
+  const {
+    description,
+    document,
+    designer,
+    image,
+    marque,
+    medias,
+    titre,
+    typology,
+  } = product.attributes;
   const { alternativeText, url } = image?.data?.attributes ?? {};
   const typo = typology.data.attributes.titre;
 
-  const carrouselList = medias?.data?.map(({ attributes }) => attributes.url);
+  const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
 
   return (
     <>
@@ -27,7 +38,9 @@ export default function Product({ product }: IProps) {
             display: "flex",
             alignItems: "flex-start",
             justifyContent: "center",
-            gap: "8rem",
+            img: {
+              width: "50% !important",
+            },
           }}
         >
           {url && (
@@ -40,7 +53,13 @@ export default function Product({ product }: IProps) {
               style={{ objectFit: "cover" }}
             />
           )}
-          <Box>
+          <Box
+            sx={{
+              width: "50% !important",
+              padding: "4rem",
+              bgcolor: "#fff",
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -56,36 +75,85 @@ export default function Product({ product }: IProps) {
               >
                 {titre}
               </Typography>
-              <Typography textTransform="capitalize" variant="body1">
+              <Typography color="#667" textTransform="capitalize" variant="h4">
                 {marque}
               </Typography>
             </Box>
             <Box
+              sx={{
+                marginTop: "4rem",
+                textAlign: "justify",
+              }}
+            >
+              <ReactMarkdown>{description}</ReactMarkdown>
+            </Box>
+            {/* {document && document.data && (
+                <AppLink href={document.data.attributes.url}>
+                  <IconButton
+                    aria-label="Télécharger le PDF"
+                    component="label"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.8rem",
+                      borderRadius: "0.8rem",
+                      width: "fit-content",
+                      marginTop: "0.8rem",
+                      path: { fill: "#010101" },
+                    }}
+                  >
+                    <PictureAsPdfIcon />
+                    <Typography textTransform="capitalize" variant="body1">
+                      Télécharger le PDF
+                    </Typography>
+                  </IconButton>
+                </AppLink>
+              )} */}
+            <Box
               mt="8rem"
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                justifyContent: "center",
+                justifyContent: "space-between",
+                alignItems: "center",
+                img: {
+                  width: "100% !important",
+                },
               }}
             >
-              <Typography
-                textTransform="capitalize"
-                variant="body1"
-              >{`Typologie: ${typo}`}</Typography>
-              {designer && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                }}
+              >
                 <Typography
                   textTransform="capitalize"
                   variant="body1"
-                >{`Designer: ${designer}`}</Typography>
-              )}
+                >{`Typologie: ${typo}`}</Typography>
+                {designer && (
+                  <Typography
+                    textTransform="capitalize"
+                    variant="body1"
+                  >{`Designer: ${designer}`}</Typography>
+                )}
+              </Box>
+              <AppLink href="/" title="Page d'accueil">
+                <AppImage
+                  alt="Siltec logo"
+                  src="/siltec.svg"
+                  width={70}
+                  height={40}
+                />
+              </AppLink>
             </Box>
           </Box>
         </Box>
       </Container>
-      {carrouselList && (
+      {carrousselList && (
         <Container>
-          <Carrousel list={carrouselList} />
+          <Carroussel list={carrousselList} />
         </Container>
       )}
     </>
