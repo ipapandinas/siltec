@@ -22,11 +22,14 @@ export default function Product({ product }: IProps) {
     image,
     marque,
     medias,
+    picto,
     titre,
     typology,
   } = product.attributes;
   const { alternativeText, url } = image?.data?.attributes ?? {};
-  const typo = typology.data.attributes.titre;
+  const { alternativeText: altPicto, url: urlPicto } =
+    picto?.data?.attributes ?? {};
+  const typo = typology.data?.attributes.titre;
 
   const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
 
@@ -71,23 +74,30 @@ export default function Product({ product }: IProps) {
               <Typography
                 fontWeight="bold"
                 textTransform="capitalize"
-                variant="h3"
+                variant="h5"
               >
                 {titre}
               </Typography>
-              <Typography color="#667" textTransform="capitalize" variant="h4">
+              <Typography color="#667" textTransform="capitalize" variant="h6">
                 {marque}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                marginTop: "4rem",
-                textAlign: "justify",
-              }}
-            >
-              <ReactMarkdown>{description}</ReactMarkdown>
-            </Box>
-            {/* {document && document.data && (
+            {description && (
+              <Box
+                sx={{
+                  marginTop: "4rem",
+                  textAlign: "justify",
+                }}
+              >
+                <ReactMarkdown>{description}</ReactMarkdown>
+              </Box>
+            )}
+            {document && document.data && (
+              <Box
+                sx={{
+                  marginTop: "1.6rem",
+                }}
+              >
                 <AppLink href={document.data.attributes.url}>
                   <IconButton
                     aria-label="Télécharger le PDF"
@@ -108,9 +118,27 @@ export default function Product({ product }: IProps) {
                     </Typography>
                   </IconButton>
                 </AppLink>
-              )} */}
+              </Box>
+            )}
+            {urlPicto && (
+              <Box
+                sx={{
+                  marginTop: "4rem",
+                  img: { width: "50% !important", height: "auto" },
+                }}
+              >
+                <AppImage
+                  alt={altPicto ?? "Product picto"}
+                  src={urlPicto}
+                  width={200}
+                  height={200}
+                  loadMode="md"
+                  style={{ objectFit: "cover" }}
+                />
+              </Box>
+            )}
             <Box
-              mt="8rem"
+              mt="4rem"
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -120,25 +148,29 @@ export default function Product({ product }: IProps) {
                 },
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography
-                  textTransform="capitalize"
-                  variant="body1"
-                >{`Typologie: ${typo}`}</Typography>
-                {designer && (
-                  <Typography
-                    textTransform="capitalize"
-                    variant="body1"
-                  >{`Designer: ${designer}`}</Typography>
-                )}
-              </Box>
+              {(designer || typo) && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                  }}
+                >
+                  {typo && (
+                    <Typography
+                      textTransform="capitalize"
+                      variant="body1"
+                    >{`Typologie: ${typo}`}</Typography>
+                  )}
+                  {designer && (
+                    <Typography
+                      textTransform="capitalize"
+                      variant="body1"
+                    >{`Designer: ${designer}`}</Typography>
+                  )}
+                </Box>
+              )}
               <AppLink href="/" title="Page d'accueil">
                 <AppImage
                   alt="Siltec logo"

@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import Band from "./Band";
 
 interface IProps {
-  color: string;
+  color?: string | null;
   subtitle?: string;
   title: string;
 }

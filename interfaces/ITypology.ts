@@ -1,7 +1,7 @@
 import { ICollection } from "./ICollection";
 import { IImage } from "./IImage";
 
-export interface ITypoligy {
+export interface ITypology {
   id: string;
   attributes: {
     titre: string;

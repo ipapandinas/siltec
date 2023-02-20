@@ -1,15 +1,22 @@
-import request from "graphql-request";
-
 import { GRAPHQL_API_URL } from "#/utils/constants";
 import { queryProducts, queryProduct } from "#/utils/queries";
 import { IProduct } from "#/interfaces/IProduct";
 
 export const getProducts = async (collection: string, typology: string) => {
   try {
-    const gql = queryProducts(collection, typology);
-    return (
-      await request<{ products: { data: IProduct[] } }>(GRAPHQL_API_URL, gql)
-    ).products.data;
+    const query = queryProducts(collection, typology);
+    return await fetch(GRAPHQL_API_URL, {
+      cache: "no-store",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => response.json())
+      .then((content: { data: { products: { data: IProduct[] } } }) => {
+        return content.data.products.data;
+      });
   } catch (err: any) {
     console.error(
       `Products could not have been fetched - Detail: ${
@@ -21,10 +28,20 @@ export const getProducts = async (collection: string, typology: string) => {
 
 export const getProduct = async (id: string) => {
   try {
-    const gql = queryProduct(id);
-    return (
-      await request<{ product: { data: IProduct } }>(GRAPHQL_API_URL, gql)
-    ).product.data;
+    const query = queryProduct(id);
+    return await fetch(GRAPHQL_API_URL, {
+      cache: "no-store",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => response.json())
+      .then(
+        (content: { data: { product: { data: IProduct } } }) =>
+          content.data.product.data
+      );
   } catch (err: any) {
     console.error(
       `Product could not have been fetched - Detail: ${

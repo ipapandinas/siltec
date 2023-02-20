@@ -6,9 +6,6 @@ export interface ICollection {
     titre: string;
     description: string | null;
     couleur: string | null;
-    vignette: {
-      data: IImage;
-    };
     image: {
       data: IImage | null;
     };

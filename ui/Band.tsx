@@ -1,9 +1,10 @@
 "use client";
 
+import { COLOR_PRIMARY_MAIN } from "#/utils/constants";
 import { Box, Typography } from "@mui/material";
 
 interface IProps {
-  color: string;
+  color?: string | null;
   text: string;
 }
 
@@ -13,7 +14,7 @@ export default function Band({ color, text }: IProps) {
       sx={{
         width: "100%",
         height: "4rem",
-        background: color,
+        background: color ?? COLOR_PRIMARY_MAIN,
         color: "#fff",
         textAlign: "center",
         padding: "0 16rem",
@@ -26,8 +27,12 @@ export default function Band({ color, text }: IProps) {
       <Typography
         color="#fff"
         fontWeight="bold"
-        textTransform="capitalize"
         variant="h5"
+        sx={{
+          ":first-letter": {
+            textTransform: "capitalize",
+          },
+        }}
       >
         {text}
       </Typography>

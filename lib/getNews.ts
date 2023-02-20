@@ -10,9 +10,20 @@ import { INews, INewsSinglePage } from "#/interfaces/INews";
 
 export const getNews = async () => {
   try {
-    const gql = queryNews();
-    return (await request<{ news: { data: INews[] } }>(GRAPHQL_API_URL, gql))
-      .news.data;
+    const query = queryNews();
+    return await fetch(GRAPHQL_API_URL, {
+      cache: "no-store",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => response.json())
+      .then(
+        (content: { data: { news: { data: INews[] } } }) =>
+          content.data.news.data
+      );
   } catch (err: any) {
     console.error(
       `News could not have been fetched - Detail: ${
@@ -24,9 +35,19 @@ export const getNews = async () => {
 
 export const getSingleNews = async (id: string) => {
   try {
-    const gql = querySingleNews(id);
-    return (await request<{ new: { data: INews } }>(GRAPHQL_API_URL, gql)).new
-      .data;
+    const query = querySingleNews(id);
+    return await fetch(GRAPHQL_API_URL, {
+      cache: "no-store",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => response.json())
+      .then(
+        (content: { data: { new: { data: INews } } }) => content.data.new.data
+      );
   } catch (err: any) {
     console.error(
       `Single news could not have been fetched - Detail: ${

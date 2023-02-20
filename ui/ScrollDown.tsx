@@ -9,7 +9,6 @@ export default function ScrollDown() {
     const element = document.getElementById("firstContainer");
     if (element) {
       const top = element.getBoundingClientRect().top + window.scrollY - 160;
-      console.log({ elTop: element.getBoundingClientRect().top, top });
       window.scrollTo({ top, behavior: "smooth" });
     }
   };

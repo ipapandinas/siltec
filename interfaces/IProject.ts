@@ -5,11 +5,11 @@ export interface IProject {
   attributes: {
     titre: string;
     description: string | null;
-    vignette: {
+    image: {
       data: IImage;
     };
     medias: {
-      data: IImage | null;
+      data: IImage[] | null;
     };
     couleur: string | null;
     rank: number;

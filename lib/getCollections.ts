@@ -1,5 +1,9 @@
 import { GRAPHQL_API_URL } from "#/utils/constants";
-import { queryCollections, queryCollectionSinglePage } from "#/utils/queries";
+import {
+  queryCollections,
+  queryCollectionSinglePage,
+  queryCollectionTitle,
+} from "#/utils/queries";
 import { ICollection, ICollectionSinglePage } from "#/interfaces/ICollection";
 
 export const getCollections = async () => {
@@ -47,6 +51,32 @@ export const getCollectionSinglePage = async () => {
   } catch (err: any) {
     console.error(
       `Collection single page could not have been fetched - Detail: ${
+        err?.message ? err.message : JSON.stringify(err)
+      }`
+    );
+  }
+};
+
+export const getCollectionTitle = async (slug: string) => {
+  try {
+    const query = queryCollectionTitle(slug);
+    return await fetch(GRAPHQL_API_URL, {
+      cache: "no-store",
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+      }),
+    })
+      .then((response) => response.json())
+      .then((content: { data: { collections: { data: ICollection[] } } }) => {
+        const collections = content.data.collections.data;
+        if (collections.length > 0) return collections[0].attributes.titre;
+        return undefined;
+      });
+  } catch (err: any) {
+    console.error(
+      `Collections could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
     );

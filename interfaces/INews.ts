@@ -5,11 +5,11 @@ export interface INews {
   attributes: {
     titre: string;
     corps: string | null;
-    vignette: {
+    image: {
       data: IImage;
     };
     medias: {
-      data: IImage | null;
+      data: IImage[] | null;
     };
     rank: number;
     slug: string;

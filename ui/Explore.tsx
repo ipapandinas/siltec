@@ -5,25 +5,17 @@ import { Grid } from "@mui/material";
 
 import Card from "./Card";
 
-interface IItem {
-  id: string;
-  attributes: {
-    title: string;
-    card: {
-      data: IImage;
-    } | null;
-    image: {
-      data: IImage;
-    };
-  };
-}
-
 interface IProps {
+  isLeafPage?: boolean;
   items: any;
   subPath?: string;
 }
 
-export default function Explore({ items, subPath }: IProps) {
+export default function Explore({
+  isLeafPage = false,
+  items,
+  subPath,
+}: IProps) {
   return (
     <Grid
       container
@@ -34,9 +26,8 @@ export default function Explore({ items, subPath }: IProps) {
       columnSpacing={9}
     >
       {items.map(({ id, attributes }: any) => {
-        const { image, titre, slug, vignette } = attributes;
-        const { alternativeText, url } =
-          vignette?.data?.attributes ?? image?.data?.attributes ?? {};
+        const { image, titre, slug } = attributes;
+        const { alternativeText, url } = image?.data?.attributes ?? {};
 
         if (!url) return null;
 
@@ -44,11 +35,8 @@ export default function Explore({ items, subPath }: IProps) {
           <Grid item key={id} lg={4} md={4} sm={6}>
             <Card
               href={
-                subPath
-                  ? subPath === "p"
-                    ? `/p/${id}`
-                    : `/${subPath}/${slug}`
-                  : slug
+                `${subPath ? `/${subPath}` : ""}` +
+                `${isLeafPage ? `/${id}` : `/${slug}`}`
               }
               imageAlt={alternativeText ?? `Item - ${titre}`}
               imageSrc={url}

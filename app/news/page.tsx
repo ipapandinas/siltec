@@ -17,7 +17,7 @@ export default async function News() {
         <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
       </Container>
       <Container id="lastContainer">
-        <Explore items={news} subPath="n" />
+        <Explore items={news} subPath="news" isLeafPage />
       </Container>
     </div>
   );

@@ -1,18 +1,21 @@
 import { ICollection } from "./ICollection";
 import { IDocument, IImage } from "./IImage";
-import { ITypoligy } from "./ITypology";
+import { ITypology } from "./ITypology";
 
 export interface IProduct {
   id: string;
   attributes: {
     titre: string;
-    designer: string;
-    description: string;
-    marque: string;
+    designer: string | null;
+    description: string | null;
+    marque: string | null;
     document: {
       data: IDocument | null;
     };
     image: {
+      data: IImage | null;
+    };
+    picto: {
       data: IImage | null;
     };
     medias: {
@@ -21,10 +24,10 @@ export interface IProduct {
     rank: number;
     slug: string;
     collection: {
-      data: ICollection;
+      data: ICollection | null;
     };
     typology: {
-      data: ITypoligy;
+      data: ITypology | null;
     };
   };
 }

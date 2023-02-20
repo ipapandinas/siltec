@@ -23,8 +23,6 @@ export default async function Home() {
   const collections = data?.collections.data;
   const projects = data?.projects.data;
 
-  console.log({ data });
-
   return (
     <>
       <SiltecChip />
@@ -131,7 +129,7 @@ const getContent = async () => {
             id
             attributes {
               titre
-              vignette {
+              image {
                 data {
                   attributes {
                     alternativeText

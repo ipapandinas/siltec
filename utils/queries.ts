@@ -9,14 +9,6 @@ export const queryCollections = () => gql`
           titre
           description
           couleur
-          vignette {
-            data {
-              attributes {
-                alternativeText
-                url
-              }
-            }
-          }
           image {
             data {
               attributes {
@@ -47,6 +39,19 @@ export const queryCollectionSinglePage = () => gql`
   }
 `;
 
+export const queryCollectionTitle = (slug: string) => gql`
+  {
+    collections(filters: { slug: { eq: "${slug}" } }, pagination: {pageSize: 1}) {
+      data {
+        attributes {
+          titre
+          slug
+        }
+      }
+    }
+  }
+`;
+
 export const queryProduct = (id: string) => gql`
   {
     product(id: "${id}") {
@@ -58,6 +63,14 @@ export const queryProduct = (id: string) => gql`
           description
           marque
           medias {
+            data {
+              attributes {
+                alternativeText
+                url
+              }
+            }
+          }
+          picto {
             data {
               attributes {
                 alternativeText
@@ -184,6 +197,19 @@ export const queryTypologies = (collection: string) => gql`
   }
 `;
 
+export const queryTypologyTitle = (slug: string) => gql`
+  {
+    typologies(filters: { slug: { eq: "${slug}" } }, pagination: {pageSize: 1}) {
+      data {
+        attributes {
+          titre
+          slug
+        }
+      }
+    }
+  }
+`;
+
 const BRAND_DATA_QUERY = `
   data {
     id
@@ -224,7 +250,7 @@ const PROJECT_DATA_QUERY = `
     attributes {
       titre
       description
-      vignette {
+      image {
         data {
           attributes {
             alternativeText
@@ -284,7 +310,7 @@ const NEWS_DATA_QUERY = `
     attributes {
       titre
       corps
-      vignette {
+      image {
         data {
           attributes {
             alternativeText
