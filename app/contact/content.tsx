@@ -72,7 +72,7 @@ export default function Content() {
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: "4rem",
+          gap: "5.6rem",
         }}
       >
         <Box

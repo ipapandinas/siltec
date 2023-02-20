@@ -1,16 +1,14 @@
 "use client";
 
-import { cloneElement, useState } from "react";
+import { cloneElement, useEffect, useState } from "react";
 import { AppBar, Box, IconButton, Toolbar, useTheme } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 
 import AppLink from "./AppLink";
 import NavItem from "./NavItem";
 import MobileDrawer from "./MobileDrawer";
-import { UP_LG, UP_SM } from "#/utils/constants";
 import AppImage from "./AppImage";
 
 function ElevationScroll(props: { children: any; mobileMenuOpen: boolean }) {
@@ -32,6 +30,7 @@ export default function Header() {
     threshold: 100,
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isGif, setIsGif] = useState(true);
 
   const handleMobileOpen = () => {
     setMobileMenuOpen(true);
@@ -40,6 +39,14 @@ export default function Header() {
   const handleMobileClose = () => {
     setMobileMenuOpen(false);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsGif(false);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <Box
@@ -75,32 +82,12 @@ export default function Header() {
               }}
             >
               <AppLink href="/" title="Page d'accueil">
-                <Box
-                  sx={{
-                    display: "none",
-                    [UP_LG]: { display: "block" },
-                  }}
-                >
-                  <AppImage
-                    alt="Siltec logo"
-                    src="/siltec.svg"
-                    width={180}
-                    height={90}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: "block",
-                    [UP_LG]: { display: "none" },
-                  }}
-                >
-                  <AppImage
-                    alt="Siltec logo"
-                    src="/siltec.svg"
-                    width={70}
-                    height={35}
-                  />
-                </Box>
+                <AppImage
+                  alt="Siltec logo"
+                  src={isGif ? "/siltec.gif" : "/siltec.svg"}
+                  width={180}
+                  height={90}
+                />
               </AppLink>
             </Box>
             <Box

@@ -46,7 +46,9 @@ export default function Card({
             alt={imageAlt}
             sx={{ objectFit: "cover" }}
           />
-          <CardContent>
+          <CardContent
+            sx={{ position: "relative", zIndex: 1000, background: "#fff" }}
+          >
             <Typography
               textAlign="center"
               textTransform="capitalize"

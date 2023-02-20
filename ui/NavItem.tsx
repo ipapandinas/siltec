@@ -34,6 +34,12 @@ export default function NavItem({
           alignItems: "center",
           gap: "1.6rem",
           width: "12rem",
+          ":hover": {
+            "#label": {
+              opacity: 1,
+              color: "#000",
+            },
+          },
         }}
       >
         <Box
@@ -75,10 +81,11 @@ export default function NavItem({
           }
         </Box>
         <Typography
+          id="label"
           fontWeight="bold"
           textTransform="uppercase"
           variant="body1"
-          sx={{ whiteSpace: "nowrap" }}
+          sx={{ whiteSpace: "nowrap", opacity: 0.7 }}
         >
           {label}
         </Typography>

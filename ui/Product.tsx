@@ -6,7 +6,6 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { IProduct } from "#/interfaces/IProduct";
 
 import AppImage from "./AppImage";
-import Container from "./Container";
 import Carroussel from "./Carroussel";
 import AppLink from "./AppLink";
 
@@ -34,160 +33,158 @@ export default function Product({ product }: IProps) {
   const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
 
   return (
-    <>
-      <Container>
+    <Box>
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "flex-end",
+          img: {
+            width: "50% !important",
+          },
+        }}
+      >
+        {url && (
+          <AppImage
+            alt={alternativeText ?? "Product image"}
+            src={url}
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        )}
         <Box
           sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            img: {
-              width: "50% !important",
-            },
+            width: "50% !important",
+            padding: "4rem",
+            bgcolor: "#fff",
+            height: "100%",
           }}
         >
-          {url && (
-            <AppImage
-              alt={alternativeText ?? "Product image"}
-              src={url}
-              width={600}
-              height={600}
-              loadMode="lg"
-              style={{ objectFit: "cover" }}
-            />
-          )}
           <Box
             sx={{
-              width: "50% !important",
-              padding: "4rem",
-              bgcolor: "#fff",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
+            <Typography
+              fontWeight="bold"
+              textTransform="capitalize"
+              variant="h5"
+            >
+              {titre}
+            </Typography>
+            <Typography color="#667" textTransform="capitalize" variant="h6">
+              {marque}
+            </Typography>
+          </Box>
+          {description && (
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
+                marginTop: "4rem",
+                textAlign: "justify",
               }}
             >
-              <Typography
-                fontWeight="bold"
-                textTransform="capitalize"
-                variant="h5"
-              >
-                {titre}
-              </Typography>
-              <Typography color="#667" textTransform="capitalize" variant="h6">
-                {marque}
-              </Typography>
+              <ReactMarkdown>{description}</ReactMarkdown>
             </Box>
-            {description && (
-              <Box
-                sx={{
-                  marginTop: "4rem",
-                  textAlign: "justify",
-                }}
-              >
-                <ReactMarkdown>{description}</ReactMarkdown>
-              </Box>
-            )}
-            {document && document.data && (
-              <Box
-                sx={{
-                  marginTop: "1.6rem",
-                }}
-              >
-                <AppLink href={document.data.attributes.url}>
-                  <IconButton
-                    aria-label="Télécharger le PDF"
-                    component="label"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.8rem",
-                      borderRadius: "0.8rem",
-                      width: "fit-content",
-                      marginTop: "0.8rem",
-                      path: { fill: "#010101" },
-                    }}
-                  >
-                    <PictureAsPdfIcon />
-                    <Typography textTransform="capitalize" variant="body1">
-                      Télécharger le PDF
-                    </Typography>
-                  </IconButton>
-                </AppLink>
-              </Box>
-            )}
-            {urlPicto && (
-              <Box
-                sx={{
-                  marginTop: "4rem",
-                  img: { width: "50% !important", height: "auto" },
-                }}
-              >
-                <AppImage
-                  alt={altPicto ?? "Product picto"}
-                  src={urlPicto}
-                  width={200}
-                  height={200}
-                  loadMode="md"
-                  style={{ objectFit: "cover" }}
-                />
-              </Box>
-            )}
+          )}
+          {document && document.data && (
             <Box
-              mt="4rem"
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                img: {
-                  width: "100% !important",
-                },
+                marginTop: "1.6rem",
               }}
             >
-              {(designer || typo) && (
-                <Box
+              <AppLink href={document.data.attributes.url}>
+                <IconButton
+                  aria-label="Télécharger le PDF"
+                  component="label"
                   sx={{
                     display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "0.8rem",
+                    borderRadius: "0.8rem",
+                    width: "fit-content",
+                    marginTop: "0.8rem",
+                    path: { fill: "#010101" },
                   }}
                 >
-                  {typo && (
-                    <Typography
-                      textTransform="capitalize"
-                      variant="body1"
-                    >{`Typologie: ${typo}`}</Typography>
-                  )}
-                  {designer && (
-                    <Typography
-                      textTransform="capitalize"
-                      variant="body1"
-                    >{`Designer: ${designer}`}</Typography>
-                  )}
-                </Box>
-              )}
-              <AppLink href="/" title="Page d'accueil">
-                <AppImage
-                  alt="Siltec logo"
-                  src="/siltec.svg"
-                  width={70}
-                  height={40}
-                />
+                  <PictureAsPdfIcon />
+                  <Typography textTransform="capitalize" variant="body1">
+                    Télécharger le PDF
+                  </Typography>
+                </IconButton>
               </AppLink>
             </Box>
+          )}
+          {urlPicto && (
+            <Box
+              sx={{
+                marginTop: "4rem",
+                img: { width: "50% !important", height: "auto" },
+              }}
+            >
+              <AppImage
+                alt={altPicto ?? "Product picto"}
+                src={urlPicto}
+                width={200}
+                height={200}
+                loadMode="md"
+                style={{ objectFit: "cover" }}
+              />
+            </Box>
+          )}
+          <Box
+            mt="4rem"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              img: {
+                width: "100% !important",
+              },
+            }}
+          >
+            {(designer || typo) && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                }}
+              >
+                {typo && (
+                  <Typography
+                    textTransform="capitalize"
+                    variant="body1"
+                  >{`Typologie: ${typo}`}</Typography>
+                )}
+                {designer && (
+                  <Typography
+                    textTransform="capitalize"
+                    variant="body1"
+                  >{`Designer: ${designer}`}</Typography>
+                )}
+              </Box>
+            )}
+            <AppLink href="/" title="Page d'accueil">
+              <AppImage
+                alt="Siltec logo"
+                src="/siltec.svg"
+                width={70}
+                height={40}
+              />
+            </AppLink>
           </Box>
         </Box>
-      </Container>
+      </Box>
       {carrousselList && (
-        <Container>
+        <Box marginTop="16rem">
           <Carroussel list={carrousselList} />
-        </Container>
+        </Box>
       )}
-    </>
+    </Box>
   );
 }

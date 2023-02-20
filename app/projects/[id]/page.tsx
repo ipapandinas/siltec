@@ -1,6 +1,7 @@
 import { getProject } from "#/lib/getProjects";
+import Band from "#/ui/Band";
+import Breadcrumbs from "#/ui/Breadcrumbs";
 import Container from "#/ui/Container";
-import SinglePageHeader from "#/ui/SinglePageHeader";
 
 import Content from "./content";
 
@@ -15,7 +16,13 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <Container>
-        <SinglePageHeader color={couleur} title={titre} />
+        <Band color={couleur} text={titre} />
+        <div style={{ marginTop: "4rem" }}>
+          <Breadcrumbs
+            list={[{ name: "Réalisations", href: "/projects" }]}
+            pageName={titre}
+          />
+        </div>
       </Container>
       <Container id="lastContainer">
         <Content description={description} medias={medias} />

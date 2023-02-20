@@ -100,6 +100,7 @@ export const queryProduct = (id: string) => gql`
             data {
               attributes {
                 titre
+                slug
               }
             }
           }
@@ -107,6 +108,7 @@ export const queryProduct = (id: string) => gql`
             data {
               attributes {
                 titre
+                slug
               }
             }
           }
