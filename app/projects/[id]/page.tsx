@@ -15,7 +15,7 @@ export default async function Page({ params }: any) {
 
   return (
     <div>
-      <Container>
+      <Container id="lastContainer">
         <Band color={couleur} text={titre} />
         <div style={{ marginTop: "4rem" }}>
           <Breadcrumbs
@@ -23,9 +23,9 @@ export default async function Page({ params }: any) {
             pageName={titre}
           />
         </div>
-      </Container>
-      <Container id="lastContainer">
-        <Content description={description} medias={medias} />
+        <div style={{ marginTop: "8rem" }}>
+          <Content description={description} medias={medias} />
+        </div>
       </Container>
     </div>
   );

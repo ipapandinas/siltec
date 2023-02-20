@@ -14,11 +14,11 @@ export default async function About() {
 
   return (
     <div>
-      <Container>
-        <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
-      </Container>
       <Container id="lastContainer">
-        <Content description={description} trombinoscope={trombinoscope} />
+        <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
+        <div style={{ marginTop: "8rem" }}>
+          <Content description={description} trombinoscope={trombinoscope} />
+        </div>
       </Container>
     </div>
   );

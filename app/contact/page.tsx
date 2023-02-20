@@ -5,11 +5,11 @@ import Content from "./content";
 export default async function Contact() {
   return (
     <div>
-      <Container>
-        <SinglePageHeader color="#C9F5F0" title="Contact" />
-      </Container>
       <Container id="lastContainer">
-        <Content />
+        <SinglePageHeader color="#C9F5F0" title="Contact" />
+        <div style={{ marginTop: "8rem" }}>
+          <Content />
+        </div>
       </Container>
     </div>
   );

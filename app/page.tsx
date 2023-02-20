@@ -35,12 +35,7 @@ export default async function Home() {
         </>
       )}
 
-      <Container
-        bgcolor="secondary.light"
-        bgcolorSize="lg"
-        id="firstContainer"
-        sx={{ maxWidth: "1100px" }}
-      >
+      <Container bgcolor="secondary.light" bgcolorSize="lg" id="firstContainer">
         <FeaturedBrand
           bgcolor="secondary.light"
           href="https://www.arflex.it/"
@@ -56,6 +51,15 @@ export default async function Home() {
           </div>
         </Section>
       )}
+
+      <Container bgcolor="secondary.light" bgcolorSize="lg" id="firstContainer">
+        <FeaturedBrand
+          bgcolor="primary.main"
+          href="https://www.wittmann.at//"
+          logoSrc="/assets/brands/wittmann.svg"
+          name="Wittmann"
+        />
+      </Container>
 
       {projects !== undefined && projects.length > 0 && (
         <Section
@@ -143,10 +147,7 @@ const getContent = async () => {
             }
           }
         }
-        brands(
-          filters: { vedette: { eq: true } }
-          pagination: { pageSize: 8 }
-        ) {
+        brands(filters: { vedette: { eq: true } }) {
           data {
             id
             attributes {

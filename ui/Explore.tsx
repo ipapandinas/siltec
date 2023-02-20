@@ -22,7 +22,7 @@ export default function Explore({
       direction="row"
       justifyContent="center"
       alignItems="center"
-      rowSpacing={16}
+      rowSpacing={12}
       columnSpacing={9}
     >
       {items.map(({ id, attributes }: any) => {

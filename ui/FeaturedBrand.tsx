@@ -28,13 +28,21 @@ export default function FeaturedBrand({
       }}
     >
       <Box sx={{ marginLeft: { xs: "0", lg: "2.4rem" } }}>
-        <AppImage
-          alt={`${name} logo`}
-          src={logoSrc}
-          width={280}
-          height={100}
-          loadMode="md"
-        />
+        <AppLink
+          aria-label={`${name} website`}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          title={`${name} website`}
+        >
+          <AppImage
+            alt={`${name} logo`}
+            src={logoSrc}
+            width={300}
+            height={120}
+            loadMode="md"
+          />
+        </AppLink>
       </Box>
       <Box
         sx={{

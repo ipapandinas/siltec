@@ -35,7 +35,7 @@ export default function BrandsGrid({ list }: IProps) {
               alt={`${nom} logo`}
               src={url}
               width={115}
-              height={35}
+              height={40}
               loadMode="sm"
             />
           </Grid>

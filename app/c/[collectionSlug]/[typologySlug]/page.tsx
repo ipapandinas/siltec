@@ -13,11 +13,13 @@ export default async function Page({ params }: any) {
   const typologyTitle = await getTypologyTitle(typologySlug);
   const products = await getProducts(collectionSlug, typologySlug);
 
+  if (!products) return null; //todo: 404
+
   const pageName = typologyTitle ?? typologySlug;
 
   return (
     <div>
-      <Container>
+      <Container id="lastContainer">
         <Band color={COLOR_SECONDARY_MAIN} text={pageName} />
         <div style={{ marginTop: "4rem" }}>
           <Breadcrumbs
@@ -31,9 +33,9 @@ export default async function Page({ params }: any) {
             pageName={pageName}
           />
         </div>
-      </Container>
-      <Container>
-        <Explore items={products} subPath="p" isLeafPage />
+        <div style={{ marginTop: "8rem" }}>
+          <Explore items={products} subPath="p" isLeafPage />
+        </div>
       </Container>
     </div>
   );

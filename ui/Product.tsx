@@ -90,7 +90,7 @@ export default function Product({ product }: IProps) {
               <ReactMarkdown>{description}</ReactMarkdown>
             </Box>
           )}
-          {document && document.data && (
+          {/* {document && document.data && (
             <Box
               sx={{
                 marginTop: "1.6rem",
@@ -117,7 +117,7 @@ export default function Product({ product }: IProps) {
                 </IconButton>
               </AppLink>
             </Box>
-          )}
+          )} */}
           {urlPicto && (
             <Box
               sx={{

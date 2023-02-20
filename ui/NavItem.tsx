@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { Box, Typography } from "@mui/material";
 import AppLink from "./AppLink";
 import AppImage from "./AppImage";
@@ -10,6 +11,7 @@ interface IProps {
   imageHeight: number;
   imageWidth: number;
   label: string;
+  logoStyle?: CSSProperties;
   minimize: boolean;
   title: string;
 }
@@ -22,6 +24,7 @@ export default function NavItem({
   imageHeight,
   imageWidth,
   label,
+  logoStyle,
   minimize,
   title,
 }: IProps) {
@@ -77,6 +80,7 @@ export default function NavItem({
               src={imageHref}
               width={imageWidth}
               height={imageHeight}
+              style={logoStyle}
             />
           }
         </Box>

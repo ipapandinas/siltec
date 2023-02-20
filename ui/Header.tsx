@@ -128,6 +128,7 @@ export default function Header() {
                 imageHeight={80}
                 imageWidth={63}
                 label="Qui sommes-nous?"
+                logoStyle={{ marginRight: 10 }}
                 minimize={minimizeNav}
                 title="Qui sommes-nous?"
               />

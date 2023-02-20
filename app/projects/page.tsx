@@ -8,16 +8,17 @@ export default async function Projects() {
   const projects = await getProjects();
 
   if (!pageData) return null; //todo: 404
+  if (!projects) return null; //todo: 404
 
   const { couleur, sousTitre, titre } = pageData.attributes;
 
   return (
     <div>
-      <Container>
-        <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
-      </Container>
       <Container id="lastContainer">
-        <Explore items={projects} subPath="projects" isLeafPage />
+        <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
+        <div style={{ marginTop: "8rem" }}>
+          <Explore items={projects} subPath="projects" isLeafPage />
+        </div>
       </Container>
     </div>
   );
