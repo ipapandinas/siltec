@@ -10,6 +10,7 @@ import {
   alpha,
   useTheme,
 } from "@mui/material";
+import PinterestIcon from "@mui/icons-material/Pinterest";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -179,6 +180,12 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
             margin: 0,
           }}
         >
+          <SocialIcon
+            ariaLabel="Pinterest Siltec"
+            link="https://www.pinterest.com/siltec/"
+          >
+            <PinterestIcon />
+          </SocialIcon>
           <SocialIcon
             ariaLabel="Instagram Siltec"
             link="https://www.instagram.com/siltecmobilier"

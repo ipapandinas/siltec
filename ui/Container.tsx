@@ -29,8 +29,8 @@ export default function Container(props: Props) {
     >
       <Box
         sx={{
-          maxWidth: { xs: "100%", xl: "1326px" },
-          width: { xs: "100%", xl: "1326px" },
+          maxWidth: { xs: "100%", lg: "1326px" },
+          width: { xs: "100%", lg: "1326px" },
           padding: { xs: "4.8rem 1.2rem", lg: "8rem 4rem" },
           ...propsCopy.sx,
         }}

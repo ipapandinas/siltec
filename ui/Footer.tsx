@@ -7,6 +7,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import PinterestIcon from "@mui/icons-material/Pinterest";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -122,6 +123,12 @@ export default function Footer() {
               Nos contacts
             </Typography>
             <Box>
+              <SocialButton
+                ariaLabel="Pinterest Siltec"
+                link="https://www.pinterest.com/siltec/"
+              >
+                <PinterestIcon />
+              </SocialButton>
               <SocialButton
                 ariaLabel="Instagram Siltec"
                 link="https://www.instagram.com/siltecmobilier"

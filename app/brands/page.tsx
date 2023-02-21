@@ -5,13 +5,14 @@ import Content from "./content";
 
 export default async function Brands() {
   const brands = await getAllBrands();
+  console.log({ brands });
 
   if (!brands) return null; //todo: 404
 
   return (
     <div>
       <Container>
-        <SinglePageHeader color="#C9F5F0" title="Abécédaire de nos marques" />
+        <SinglePageHeader color="#FEDB55" title="Abécédaire de nos marques" />
       </Container>
       <Container id="lastContainer">
         <Content brands={brands} />

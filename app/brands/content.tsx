@@ -15,7 +15,7 @@ export default function Content({ brands }: Props) {
       .map(({ attributes }) => attributes.nom);
 
     const brandNamesByFirstLetter: { [key: string]: string[] } = {};
-    for (let i = 65; i <= 90; i++) {
+    for (let i = 38; i <= 90; i++) {
       // ASCII codes for A to Z
       const letter = String.fromCharCode(i);
       brandNamesByFirstLetter[letter] = [];
@@ -43,11 +43,27 @@ export default function Content({ brands }: Props) {
             md={3}
             sx={{ display: "flex", gap: "4rem" }}
           >
-            <Typography variant="h3">{key}</Typography>
+            <Typography
+              variant="h3"
+              sx={{
+                width: "4.8rem",
+              }}
+            >
+              {key}
+            </Typography>
             <List sx={{ paddingTop: "2.4rem" }}>
               {value.map((name: string, idx: number) => (
                 <ListItemText key={idx}>
-                  <Typography variant="h6">{name}</Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      ":first-letter": {
+                        textTransform: "capitalize",
+                      },
+                    }}
+                  >
+                    {name}
+                  </Typography>
                 </ListItemText>
               ))}
             </List>

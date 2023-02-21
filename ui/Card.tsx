@@ -47,13 +47,23 @@ export default function Card({
             sx={{ objectFit: "cover" }}
           />
           <CardContent
-            sx={{ position: "relative", zIndex: 1000, background: "#fff" }}
+            sx={{
+              position: "relative",
+              zIndex: 1000,
+              background: "#fff",
+              paddingX: "1.6rem !important",
+            }}
           >
             <Typography
               textAlign="center"
               textTransform="capitalize"
               variant="body1"
               component="div"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               {label}
             </Typography>

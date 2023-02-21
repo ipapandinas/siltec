@@ -7,6 +7,7 @@ import AppLink from "./AppLink";
 import RoundWrapper from "./RoundWrapper";
 
 interface IProps {
+  address: string;
   bgcolor: string;
   href: string;
   logoSrc: string;
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 export default function FeaturedBrand({
+  address,
   bgcolor,
   href,
   logoSrc,
@@ -65,7 +67,7 @@ export default function FeaturedBrand({
           SHOWROOM
         </Typography>
         <Typography textAlign="center" variant="body1">
-          53 rue de Miromesnil, 75008 PARIS
+          {address}
         </Typography>
         <Typography textAlign="center" variant="body1">
           +33 1 42 66 09 13

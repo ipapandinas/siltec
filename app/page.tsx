@@ -30,6 +30,18 @@ export default async function Home() {
         <>
           <Carroussel
             list={carroussel.map(({ attributes }) => attributes.url)}
+            sx={{
+              ":after": {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background:
+                  "linear-gradient(to bottom, transparent 0%, black 1200%)",
+              },
+            }}
           />
           <ScrollDown />
         </>
@@ -37,6 +49,7 @@ export default async function Home() {
 
       <Container bgcolor="secondary.light" bgcolorSize="lg" id="firstContainer">
         <FeaturedBrand
+          address="53 rue de Miromesnil, 75008 PARIS"
           bgcolor="secondary.light"
           href="https://www.arflex.it/"
           logoSrc="/assets/brands/arflex.svg"
@@ -54,6 +67,7 @@ export default async function Home() {
 
       <Container bgcolor="secondary.light" bgcolorSize="lg" id="firstContainer">
         <FeaturedBrand
+          address="51 rue de Miromesnil, 75008 PARIS"
           bgcolor="primary.main"
           href="https://www.wittmann.at//"
           logoSrc="/assets/brands/wittmann.svg"
@@ -147,12 +161,12 @@ const getContent = async () => {
             }
           }
         }
-        brands(filters: { vedette: { eq: true } }) {
+        brands(filters: { premium: { eq: true } }) {
           data {
             id
             attributes {
               nom
-              vedette
+              premium
               logo {
                 data {
                   attributes {

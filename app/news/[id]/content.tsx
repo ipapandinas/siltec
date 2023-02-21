@@ -1,28 +1,54 @@
 "use client";
 
-import { Box, Container } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 
 import { IImage } from "#/interfaces/IImage";
 import Carroussel from "#/ui/Carroussel";
+import Container from "#/ui/Container";
 
 interface Props {
+  titre: string;
   description?: string | null;
   medias?: {
     data: IImage[] | null;
   };
 }
 
-export default function Content({ description, medias }: Props) {
+export default function Content({ titre, description, medias }: Props) {
   const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
 
   return (
-    <>
+    <Box>
+      {carrousselList && (
+        <Box
+          sx={{
+            ".slick-slider": {
+              width: "66% !important",
+              height: "auto",
+              maxHeight: "1000px",
+              objectFit: "cover",
+              margin: "0 auto",
+            },
+
+            ".slick-slide img": {
+              height: "400px",
+            },
+          }}
+        >
+          <Carroussel list={carrousselList} />
+        </Box>
+      )}
+      {titre && (
+        <Typography variant="h4" textAlign="center" sx={{ marginTop: "8rem" }}>
+          {titre}
+        </Typography>
+      )}
       {description && (
         <Box
           sx={{
             width: "850px",
-            margin: "0 auto",
+            margin: "4rem auto 0",
             h1: {
               marginBottom: "1.6rem",
             },
@@ -35,11 +61,6 @@ export default function Content({ description, medias }: Props) {
           <ReactMarkdown>{description}</ReactMarkdown>
         </Box>
       )}
-      {carrousselList && (
-        <Container sx={{ marginTop: "12rem" }}>
-          <Carroussel list={carrousselList} />
-        </Container>
-      )}
-    </>
+    </Box>
   );
 }

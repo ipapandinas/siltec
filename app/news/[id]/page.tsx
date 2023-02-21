@@ -24,7 +24,7 @@ export default async function Page({ params }: any) {
           />
         </div>
         <div style={{ marginTop: "8rem" }}>
-          <Content description={corps} medias={medias} />
+          <Content titre={titre} description={corps} medias={medias} />
         </div>
       </Container>
     </div>

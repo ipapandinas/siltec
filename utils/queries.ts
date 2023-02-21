@@ -217,7 +217,7 @@ const BRAND_DATA_QUERY = `
     id
     attributes {
       nom
-      vedette
+      premium
       logo {
         data {
           attributes {
@@ -232,7 +232,7 @@ const BRAND_DATA_QUERY = `
 
 export const queryAllBrands = () => gql`
   {
-    brands {
+    brands(pagination: { pageSize: 200 }) {
       ${BRAND_DATA_QUERY}
     }
   }
@@ -240,7 +240,7 @@ export const queryAllBrands = () => gql`
 
 export const queryFeaturedBrands = () => gql`
   {
-    brands(filters: { vedette: { eq: true } }) {
+    brands(filters: { premium: { eq: true } }) {
       ${BRAND_DATA_QUERY}
     }
   }

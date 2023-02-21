@@ -40,14 +40,6 @@ export default function Header() {
     setMobileMenuOpen(false);
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsGif(false);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <Box
       sx={{
@@ -84,9 +76,16 @@ export default function Header() {
               <AppLink href="/" title="Page d'accueil">
                 <AppImage
                   alt="Siltec logo"
-                  src={isGif ? "/siltec.gif" : "/siltec.svg"}
-                  width={180}
-                  height={90}
+                  src={isGif ? "/siltec.gif" : "/siltec.jpg"}
+                  width={140}
+                  height={70}
+                  onLoad={() => {
+                    const interval = setInterval(() => {
+                      setIsGif(false);
+                    }, 900);
+
+                    return () => clearInterval(interval);
+                  }}
                 />
               </AppLink>
             </Box>
@@ -103,8 +102,8 @@ export default function Header() {
                 href="/collections"
                 imageAlt="Collections navigation logo"
                 imageHref="/assets/nav/collections.svg"
-                imageHeight={80}
-                imageWidth={40}
+                imageHeight={65}
+                imageWidth={30}
                 label="Collections"
                 minimize={minimizeNav}
                 title="Collections"
@@ -114,8 +113,8 @@ export default function Header() {
                 href="/projects"
                 imageAlt="Réalisations navigation logo"
                 imageHref="/assets/nav/realisations.svg"
-                imageHeight={75}
-                imageWidth={75}
+                imageHeight={60}
+                imageWidth={60}
                 label="Réalisations"
                 minimize={minimizeNav}
                 title="Réalisations"
@@ -125,10 +124,10 @@ export default function Header() {
                 href="/about"
                 imageAlt="Info navigation logo"
                 imageHref="/assets/nav/QSN.svg"
-                imageHeight={80}
-                imageWidth={63}
+                imageHeight={65}
+                imageWidth={60}
                 label="Qui sommes-nous?"
-                logoStyle={{ marginRight: 10 }}
+                logoStyle={{ marginRight: 5 }}
                 minimize={minimizeNav}
                 title="Qui sommes-nous?"
               />
@@ -137,8 +136,8 @@ export default function Header() {
                 href="/news"
                 imageAlt="Actualités navigation logo"
                 imageHref="/assets/nav/actu.svg"
-                imageHeight={80}
-                imageWidth={73}
+                imageHeight={65}
+                imageWidth={63}
                 label="Actualités"
                 minimize={minimizeNav}
                 title="Actualités"
@@ -148,8 +147,8 @@ export default function Header() {
                 href="/contact"
                 imageAlt="Contact navigation logo"
                 imageHref="/assets/nav/contact.svg"
-                imageHeight={80}
-                imageWidth={55}
+                imageHeight={65}
+                imageWidth={45}
                 label="Contact"
                 minimize={minimizeNav}
                 title="Contact"
