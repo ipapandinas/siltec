@@ -4,10 +4,3 @@ export interface IImage {
     url: string;
   };
 }
-
-export interface IDocument {
-  attributes: {
-    alternativeText: string | null;
-    url: string;
-  };
-}

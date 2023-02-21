@@ -65,7 +65,7 @@ export default async function Home() {
         </Section>
       )}
 
-      <Container bgcolor="secondary.light" bgcolorSize="lg" id="firstContainer">
+      <Container bgcolor="secondary.light" bgcolorSize="lg">
         <FeaturedBrand
           address="51 rue de Miromesnil, 75008 PARIS"
           bgcolor="primary.main"

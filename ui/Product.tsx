@@ -16,7 +16,6 @@ interface IProps {
 export default function Product({ product }: IProps) {
   const {
     description,
-    document,
     designer,
     image,
     marque,

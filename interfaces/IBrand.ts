@@ -4,7 +4,7 @@ export interface IBrand {
   id: string;
   attributes: {
     nom: string;
-    premium: boolean;
+    premium: boolean | null;
     logo: {
       data: IImage | null;
     };
