@@ -232,7 +232,7 @@ export const queryAllBrands = () => gql`
 
 export const queryFeaturedBrands = () => gql`
   {
-    brands(filters: { premium: { eq: true } }) {
+    brands(filters: { premium: { eq: true } }, pagination: { pageSize: 20 }) {
       ${BRAND_DATA_QUERY}
     }
   }

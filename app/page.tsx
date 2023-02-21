@@ -161,7 +161,10 @@ const getContent = async () => {
             }
           }
         }
-        brands(filters: { premium: { eq: true } }) {
+        brands(
+          filters: { premium: { eq: true } }
+          pagination: { pageSize: 20 }
+        ) {
           data {
             id
             attributes {
