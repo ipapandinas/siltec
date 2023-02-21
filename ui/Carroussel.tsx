@@ -35,6 +35,7 @@ export default function Carroussel(props: Props) {
             src={src}
             width={1200}
             height={800}
+            loadMode="lg"
           />
         </Box>
       ))}

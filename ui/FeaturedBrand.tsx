@@ -42,7 +42,7 @@ export default function FeaturedBrand({
             src={logoSrc}
             width={300}
             height={120}
-            loadMode="md"
+            loadMode="lg"
           />
         </AppLink>
       </Box>
