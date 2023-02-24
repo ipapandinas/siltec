@@ -17,7 +17,6 @@ export default function Band({ color, text }: IProps) {
         background: color ?? COLOR_PRIMARY_MAIN,
         color: "#fff",
         textAlign: "center",
-        padding: "0 16rem",
         margin: "0 auto",
         display: "flex",
         alignItems: "center",
@@ -28,6 +27,7 @@ export default function Band({ color, text }: IProps) {
         color="#fff"
         fontWeight="bold"
         variant="h5"
+        textAlign="center"
         sx={{
           ":first-letter": {
             textTransform: "capitalize",

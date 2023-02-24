@@ -71,19 +71,22 @@ export default function Content() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
           alignItems: "center",
           gap: "5.6rem",
         }}
       >
         <Box
           sx={{
-            width: "850px",
+            width: { xs: "100%", lg: "850px" },
             margin: "0 auto",
             h1: {
               marginBottom: "1.6rem",
+              textAlign: { xs: "center", lg: "justify" },
             },
             h2: {
               marginBottom: "1.6rem",
+              textAlign: { xs: "center", lg: "justify" },
             },
             p: { textAlign: "justify", textJustify: "inter-word" },
           }}
@@ -125,7 +128,7 @@ export default function Content() {
           display: "flex",
           justifyContent: "center",
           position: "relative",
-          img: { width: "80%", height: "auto" },
+          img: { width: { xs: "100%", lg: "80%" }, height: "auto" },
         }}
       >
         <AppImage alt="" src="/assets/maps.png" width={600} height={400} />

@@ -22,8 +22,7 @@ export default function BrandsGrid({ list }: IProps) {
           <Grid
             key={id}
             item
-            xs={12}
-            sm={6}
+            xs={6}
             md={3}
             sx={{
               display: "flex",

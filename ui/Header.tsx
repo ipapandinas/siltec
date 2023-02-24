@@ -70,7 +70,7 @@ export default function Header() {
             <Box
               sx={{
                 position: "absolute",
-                left: "8rem",
+                left: { xs: "2.4rem", lg: "8rem" },
               }}
             >
               <AppLink href="/" title="Page d'accueil">
@@ -156,7 +156,7 @@ export default function Header() {
             </Box>
             <Box
               sx={{
-                display: { xs: "block", lg: "none", paddingRight: "12px" },
+                display: { xs: "block", lg: "none" },
               }}
             >
               <IconButton
@@ -174,14 +174,14 @@ export default function Header() {
                   <MenuIcon
                     fontSize="large"
                     sx={{
-                      path: { fill: "#010101" },
+                      path: { fill: "#093f4d" },
                     }}
                   />
                 ) : (
                   <CloseIcon
                     fontSize="large"
                     sx={{
-                      path: { fill: "#010101" },
+                      path: { fill: "#093f4d" },
                     }}
                   />
                 )}

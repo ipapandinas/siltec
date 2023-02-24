@@ -22,7 +22,7 @@ export default function SinglePageHeader({ color, subtitle, title }: IProps) {
     >
       <Band color={color} text={title} />
       {subtitle && (
-        <Typography variant="body1" mt="3.2rem">
+        <Typography textAlign="center" variant="body1" mt="3.2rem">
           {subtitle}
         </Typography>
       )}

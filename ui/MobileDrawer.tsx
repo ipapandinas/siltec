@@ -43,14 +43,16 @@ const SocialIcon = (props: {
 const MobileDrawerItem = (props: {
   link: string;
   children?: any;
+  onClose: any;
   text?: string;
 }) => {
-  const { children, link, text } = props;
+  const { children, link, onClose, text } = props;
 
   return (
     <AppLink href={link}>
       <ListItem disablePadding>
         <ListItemButton
+          onClick={onClose}
           sx={{
             paddingY: 0,
             height: "8rem",
@@ -110,7 +112,11 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
           paddingBottom: "4rem",
         }}
       >
-        <MobileDrawerItem text="Collections" link={`/collections`}>
+        <MobileDrawerItem
+          onClose={onClose}
+          text="Collections"
+          link={`/collections`}
+        >
           <Box
             sx={{
               height: "4rem",
@@ -120,7 +126,11 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
             }}
           />
         </MobileDrawerItem>
-        <MobileDrawerItem text="Réalisations" link={`/projects`}>
+        <MobileDrawerItem
+          onClose={onClose}
+          text="Réalisations"
+          link={`/projects`}
+        >
           <Box
             sx={{
               height: "4rem",
@@ -130,7 +140,11 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
             }}
           />
         </MobileDrawerItem>
-        <MobileDrawerItem text="Qui sommes-nous?" link={`/about`}>
+        <MobileDrawerItem
+          onClose={onClose}
+          text="Qui sommes-nous?"
+          link={`/about`}
+        >
           <Box
             sx={{
               height: "4rem",
@@ -140,7 +154,7 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
             }}
           />
         </MobileDrawerItem>
-        <MobileDrawerItem text="Actualités" link={`/news`}>
+        <MobileDrawerItem onClose={onClose} text="Actualités" link={`/news`}>
           <Box
             sx={{
               height: "4rem",
@@ -150,7 +164,7 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
             }}
           />
         </MobileDrawerItem>
-        <MobileDrawerItem text="Contact" link={`/contact`}>
+        <MobileDrawerItem onClose={onClose} text="Contact" link={`/contact`}>
           <Box
             sx={{
               height: "4rem",

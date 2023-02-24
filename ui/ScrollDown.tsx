@@ -29,7 +29,7 @@ export default function ScrollDown() {
         alignItems: "center",
         width: "5.6rem",
         height: "5.6rem",
-        bottom: "4rem",
+        bottom: { xs: "14rem", lg: "4rem" },
         zIndex: 1000,
         animation: `${blinker} 2s ease infinite`,
       }}

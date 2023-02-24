@@ -60,7 +60,7 @@ export default function Card({
               variant="body1"
               component="div"
               sx={{
-                whiteSpace: "nowrap",
+                whiteSpace: { xs: "unset", sm: "nowrap" },
                 overflow: "hidden",
                 textOverflow: "ellipsis",
               }}

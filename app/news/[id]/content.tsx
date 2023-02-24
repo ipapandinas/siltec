@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { IImage } from "#/interfaces/IImage";
 import Carroussel from "#/ui/Carroussel";
 import Container from "#/ui/Container";
+import { UP_LG } from "#/utils/constants";
 
 interface Props {
   titre: string;
@@ -24,11 +25,14 @@ export default function Content({ titre, description, medias }: Props) {
         <Box
           sx={{
             ".slick-slider": {
-              width: "66% !important",
+              width: "100% !important",
               height: "auto",
               maxHeight: "1000px",
               objectFit: "cover",
               margin: "0 auto",
+              [UP_LG]: {
+                width: "66% !important",
+              },
             },
 
             ".slick-slide img": {
@@ -47,13 +51,15 @@ export default function Content({ titre, description, medias }: Props) {
       {description && (
         <Box
           sx={{
-            width: "850px",
+            width: { xs: "100%", lg: "850px" },
             margin: "4rem auto 0",
             h1: {
               marginBottom: "1.6rem",
+              textAlign: { xs: "center", lg: "justify" },
             },
             h2: {
               marginBottom: "1.6rem",
+              textAlign: { xs: "center", lg: "justify" },
             },
             p: { textAlign: "justify", textJustify: "inter-word" },
           }}

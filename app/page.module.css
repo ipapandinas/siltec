@@ -3,7 +3,13 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  margin-top: 22rem;
+  margin-top: 9.9rem;
+}
+
+@media (min-width: 1200px) {
+  .main {
+    margin-top: 22rem;
+  }
 }
 
 .section {

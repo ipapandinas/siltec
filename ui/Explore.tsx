@@ -32,7 +32,7 @@ export default function Explore({
         if (!url) return null;
 
         return (
-          <Grid item key={id} lg={4} md={4} sm={6}>
+          <Grid item key={id} lg={4} md={4} sm={6} xs={12}>
             <Card
               href={
                 `${subPath ? `/${subPath}` : ""}` +

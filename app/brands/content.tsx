@@ -30,7 +30,7 @@ export default function Content({ brands }: Props) {
   };
 
   return (
-    <Grid container rowSpacing={12} columnSpacing={4}>
+    <Grid container rowSpacing={12} columnSpacing={8}>
       {Object.entries(handleSort()).map(([key, value]) => {
         if (value.length === 0) return;
 
@@ -38,10 +38,9 @@ export default function Content({ brands }: Props) {
           <Grid
             key={key}
             item
-            xs={12}
-            sm={6}
+            xs={6}
             md={3}
-            sx={{ display: "flex", gap: "4rem" }}
+            sx={{ display: "flex", gap: { xs: "1.6rem", lg: "4rem" } }}
           >
             <Typography
               variant="h3"

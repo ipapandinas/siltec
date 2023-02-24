@@ -11,7 +11,7 @@ import RoundWrapper from "#/ui/RoundWrapper";
 import ScrollDown from "#/ui/ScrollDown";
 import Section from "#/ui/Section";
 import SiltecChip from "#/ui/SiltecChip";
-import { GRAPHQL_API_URL } from "#/utils/constants";
+import { GRAPHQL_API_URL, UP_SM } from "#/utils/constants";
 import { IBrand } from "#/interfaces/IBrand";
 import { IProject } from "#/interfaces/IProject";
 import { IImage } from "#/interfaces/IImage";
@@ -47,7 +47,15 @@ export default async function Home() {
         </>
       )}
 
-      <Container bgcolor="secondary.light" bgcolorSize="lg" id="firstContainer">
+      <Container
+        bgcolor="secondary.light"
+        bgcolorSize="lg"
+        sx={{
+          [UP_SM]: {
+            marginTop: "7.2rem",
+          },
+        }}
+      >
         <FeaturedBrand
           address="53 rue de Miromesnil, 75008 PARIS"
           bgcolor="secondary.light"
@@ -65,7 +73,7 @@ export default async function Home() {
         </Section>
       )}
 
-      <Container bgcolor="secondary.light" bgcolorSize="lg">
+      <Container bgcolor="primary.main" bgcolorSize="lg">
         <FeaturedBrand
           address="51 rue de Miromesnil, 75008 PARIS"
           bgcolor="primary.main"
@@ -92,7 +100,11 @@ export default async function Home() {
         </Section>
       )}
       {brands !== undefined && brands.length > 0 && (
-        <Section containerId="lastContainer" title="Nos marques" href="/brands">
+        <Section
+          containerId="lastContainer"
+          title="Nos partenaires"
+          href="/brands"
+        >
           <RoundWrapper bgcolor="background.default">
             <div style={{ width: "100%" }}>
               <BrandsSection brands={brands} />

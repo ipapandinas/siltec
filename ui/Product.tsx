@@ -8,6 +8,7 @@ import { IProduct } from "#/interfaces/IProduct";
 import AppImage from "./AppImage";
 import Carroussel from "./Carroussel";
 import AppLink from "./AppLink";
+import { UP_LG } from "#/utils/constants";
 
 interface IProps {
   product: IProduct;
@@ -37,10 +38,15 @@ export default function Product({ product }: IProps) {
         sx={{
           position: "relative",
           display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
           alignItems: "flex-start",
           justifyContent: "flex-end",
           img: {
-            width: "50% !important",
+            width: { xs: "100% !important", lg: "50% !important" },
+            maxHeight: "400px",
+            [UP_LG]: {
+              maxHeight: "none",
+            },
           },
         }}
       >
@@ -54,7 +60,8 @@ export default function Product({ product }: IProps) {
         )}
         <Box
           sx={{
-            width: "50% !important",
+            width: { xs: "100% !important", lg: "50% !important" },
+            marginTop: { xs: "400px", lg: 0 },
             padding: "4rem",
             bgcolor: "#fff",
             height: "100%",
@@ -180,7 +187,7 @@ export default function Product({ product }: IProps) {
         </Box>
       </Box>
       {carrousselList && (
-        <Box marginTop="16rem">
+        <Box marginTop="16rem" sx={{ display: { xs: "none", lg: "block" } }}>
           <Carroussel list={carrousselList} />
         </Box>
       )}
