@@ -21,6 +21,7 @@ export default function ScrollDown() {
 
   return (
     <Button
+      aria-label="Scroll"
       onClick={handleClickScroll}
       sx={{
         position: "absolute",

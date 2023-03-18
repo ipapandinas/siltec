@@ -12,9 +12,6 @@ export interface IProduct {
     image: {
       data: IImage | null;
     };
-    picto: {
-      data: IImage | null;
-    };
     medias: {
       data: IImage[] | null;
     };

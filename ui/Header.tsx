@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, useEffect, useState } from "react";
+import { cloneElement, useState } from "react";
 import { AppBar, Box, IconButton, Toolbar, useTheme } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -30,7 +30,6 @@ export default function Header() {
     threshold: 100,
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isGif, setIsGif] = useState(true);
 
   const handleMobileOpen = () => {
     setMobileMenuOpen(true);
@@ -63,7 +62,7 @@ export default function Header() {
               display: "flex",
               justifyContent: { xs: "flex-end", lg: "center" },
               alignItems: "center",
-              padding: { xs: "2.4rem", lg: "4rem 8rem" },
+              padding: { xs: "2.4rem", lg: "2.4rem 8rem" },
               position: "relative",
             }}
           >
@@ -76,16 +75,9 @@ export default function Header() {
               <AppLink href="/" title="Page d'accueil">
                 <AppImage
                   alt="Siltec logo"
-                  src={isGif ? "/siltec.gif" : "/siltec.jpg"}
-                  width={140}
-                  height={70}
-                  onLoad={() => {
-                    const interval = setInterval(() => {
-                      setIsGif(false);
-                    }, 900);
-
-                    return () => clearInterval(interval);
-                  }}
+                  src="/siltec.svg"
+                  width={130}
+                  height={60}
                 />
               </AppLink>
             </Box>
@@ -102,7 +94,7 @@ export default function Header() {
                 href="/collections"
                 imageAlt="Collections navigation logo"
                 imageHref="/assets/nav/collections.svg"
-                imageHeight={65}
+                imageHeight={50}
                 imageWidth={30}
                 label="Collections"
                 minimize={minimizeNav}
@@ -113,8 +105,8 @@ export default function Header() {
                 href="/projects"
                 imageAlt="Réalisations navigation logo"
                 imageHref="/assets/nav/realisations.svg"
-                imageHeight={60}
-                imageWidth={60}
+                imageHeight={50}
+                imageWidth={30}
                 label="Réalisations"
                 minimize={minimizeNav}
                 title="Réalisations"
@@ -124,8 +116,8 @@ export default function Header() {
                 href="/about"
                 imageAlt="Info navigation logo"
                 imageHref="/assets/nav/QSN.svg"
-                imageHeight={65}
-                imageWidth={60}
+                imageHeight={50}
+                imageWidth={30}
                 label="Qui sommes-nous?"
                 logoStyle={{ marginRight: 5 }}
                 minimize={minimizeNav}
@@ -136,8 +128,8 @@ export default function Header() {
                 href="/news"
                 imageAlt="Actualités navigation logo"
                 imageHref="/assets/nav/actu.svg"
-                imageHeight={65}
-                imageWidth={63}
+                imageHeight={50}
+                imageWidth={30}
                 label="Actualités"
                 minimize={minimizeNav}
                 title="Actualités"
@@ -147,8 +139,8 @@ export default function Header() {
                 href="/contact"
                 imageAlt="Contact navigation logo"
                 imageHref="/assets/nav/contact.svg"
-                imageHeight={65}
-                imageWidth={45}
+                imageHeight={50}
+                imageWidth={20}
                 label="Contact"
                 minimize={minimizeNav}
                 title="Contact"

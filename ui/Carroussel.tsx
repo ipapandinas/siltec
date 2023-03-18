@@ -12,7 +12,7 @@ interface Props extends MuiBoxProps {
 export default function Carroussel(props: Props) {
   const propsCopy = { ...props };
   const sliderSettings = {
-    arrows: true,
+    arrows: false,
     infinite: true,
     autoplay: true,
     speed: 1000,

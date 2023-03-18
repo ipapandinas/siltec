@@ -56,13 +56,15 @@ export default function Card({
           >
             <Typography
               textAlign="center"
-              textTransform="capitalize"
               variant="body1"
               component="div"
               sx={{
                 whiteSpace: { xs: "unset", sm: "nowrap" },
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                ":first-letter": {
+                  textTransform: "capitalize",
+                },
               }}
             >
               {label}

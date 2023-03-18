@@ -48,6 +48,7 @@ export default async function Home() {
       )}
 
       <Container
+        id="firstContainer"
         bgcolor="secondary.light"
         bgcolorSize="lg"
         sx={{
@@ -65,14 +66,6 @@ export default async function Home() {
         />
       </Container>
 
-      {collections !== undefined && collections.length > 0 && (
-        <Section>
-          <div>
-            <CollectionsSection collections={collections} />
-          </div>
-        </Section>
-      )}
-
       <Container bgcolor="primary.main" bgcolorSize="lg">
         <FeaturedBrand
           address="51 rue de Miromesnil, 75008 PARIS"
@@ -83,6 +76,19 @@ export default async function Home() {
         />
       </Container>
 
+      {collections !== undefined && collections.length > 0 && (
+        <Section
+          sx={{
+            marginTop: "7.2rem",
+            padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
+          }}
+        >
+          <div>
+            <CollectionsSection collections={collections} />
+          </div>
+        </Section>
+      )}
+
       {projects !== undefined && projects.length > 0 && (
         <Section
           title="Nos réalisations"
@@ -92,6 +98,7 @@ export default async function Home() {
             dipslay: "flex",
             alignItems: "center",
             justifyContent: "center",
+            padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
           }}
         >
           <div>
@@ -104,6 +111,9 @@ export default async function Home() {
           containerId="lastContainer"
           title="Nos partenaires"
           href="/brands"
+          sx={{
+            padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
+          }}
         >
           <RoundWrapper bgcolor="background.default">
             <div style={{ width: "100%" }}>

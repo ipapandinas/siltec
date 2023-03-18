@@ -32,7 +32,7 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
           >
             <Card
               key={idx}
-              href={`/p/${slug}`}
+              href={`/projects/${id}`}
               imageAlt={alternativeText ?? `Item - ${titre}`}
               imageSrc={url}
               label={titre}

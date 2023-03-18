@@ -31,7 +31,7 @@ export default function Container(props: Props) {
         sx={{
           maxWidth: { xs: "100%", lg: "1326px" },
           width: { xs: "100%", lg: "1326px" },
-          padding: { xs: "4.8rem 2.4rem", lg: "8rem 4rem" },
+          padding: { xs: "4.8rem 2.4rem", lg: "4rem" },
           ...propsCopy.sx,
         }}
       >

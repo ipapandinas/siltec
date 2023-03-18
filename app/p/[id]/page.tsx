@@ -39,7 +39,7 @@ export default async function Page({ params }: any) {
             pageName={pageName}
           />
         </div>
-        <div style={{ marginTop: "8rem" }}>
+        <div style={{ marginTop: "4rem" }}>
           <Product product={product} />
         </div>
       </Container>

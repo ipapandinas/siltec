@@ -13,7 +13,7 @@ export default function Band({ color, text }: IProps) {
     <Box
       sx={{
         width: "100%",
-        height: "4rem",
+        height: "8rem",
         background: color ?? COLOR_PRIMARY_MAIN,
         color: "#fff",
         textAlign: "center",
@@ -26,8 +26,9 @@ export default function Band({ color, text }: IProps) {
       <Typography
         color="#fff"
         fontWeight="bold"
-        variant="h5"
+        variant="h3"
         textAlign="center"
+        textTransform="uppercase"
         sx={{
           ":first-letter": {
             textTransform: "capitalize",
