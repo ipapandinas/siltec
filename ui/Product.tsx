@@ -86,6 +86,7 @@ export default function Product({ product }: IProps) {
             width: { xs: "100% !important", lg: "auto" },
             height: { xs: "auto !important", lg: "auto" },
             maxWidth: 600,
+            maxHeight: 600,
           },
         }}
       >
