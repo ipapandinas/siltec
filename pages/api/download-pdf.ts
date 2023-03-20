@@ -16,9 +16,6 @@ interface ProductData {
 function generatePDF(productData: ProductData): any {
   // Create a new PDF document
   const doc = new PDFDocument();
-  doc.pipe(
-    fs.createWriteStream(`${productData.title.split(" ").join("_")}.pdf`)
-  );
 
   // Add dynamic content to the PDF document
   doc.font("Helvetica-Bold").fontSize(20).text("Siltec mobilier", {
