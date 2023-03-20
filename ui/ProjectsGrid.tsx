@@ -28,7 +28,14 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
             lg={4}
             md={4}
             sm={6}
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              ".MuiCard-root": {
+                borderTopLeftRadius: "4rem",
+                borderBottomRightRadius: "4rem",
+              },
+            }}
           >
             <Card
               key={idx}

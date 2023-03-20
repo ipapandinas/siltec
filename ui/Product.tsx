@@ -85,6 +85,7 @@ export default function Product({ product }: IProps) {
             borderBottomLeftRadius: { xs: "4rem", lg: "8rem" },
             width: { xs: "100% !important", lg: "auto" },
             height: { xs: "auto !important", lg: "auto" },
+            maxWidth: 600,
           },
         }}
       >
@@ -102,6 +103,7 @@ export default function Product({ product }: IProps) {
         sx={{
           position: "relative",
           width: { xs: "100% !important", lg: "40%" },
+          maxWidth: { xs: "600px", lg: "40%" },
           bottom: { xs: 50, lg: 100 },
           right: 0,
           bgcolor: "#fff",
