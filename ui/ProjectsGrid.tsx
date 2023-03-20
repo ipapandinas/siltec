@@ -16,7 +16,7 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
       columnSpacing={9}
     >
       {projects.slice(0, 3).map(({ id, attributes }, idx) => {
-        const { slug, titre, image } = attributes;
+        const { titre, image } = attributes;
         const { alternativeText, url } = image.data?.attributes ?? {};
 
         if (!url) return null;

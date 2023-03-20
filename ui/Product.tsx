@@ -40,7 +40,7 @@ export default function Product({ product }: IProps) {
         const url = window.URL.createObjectURL(new Blob([blob]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `${titre}.pdf`);
+        link.setAttribute("download", `${titre.split(" ").join("_")}.pdf`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -73,7 +73,7 @@ export default function Product({ product }: IProps) {
       >
         <PictureAsPdfIcon />
         <Typography textTransform="capitalize" variant="body1">
-          Télécharger le PDF
+          Télécharger cette fiche
         </Typography>
       </IconButton>
       <Box
