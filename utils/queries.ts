@@ -70,14 +70,6 @@ export const queryProduct = (id: string) => gql`
               }
             }
           }
-          picto {
-            data {
-              attributes {
-                alternativeText
-                url
-              }
-            }
-          }
           image {
             data {
               attributes {
@@ -88,7 +80,7 @@ export const queryProduct = (id: string) => gql`
           }
           rank
           slug
-          collection {
+          collections {
             data {
               attributes {
                 titre
@@ -96,7 +88,7 @@ export const queryProduct = (id: string) => gql`
               }
             }
           }
-          typology {
+          typologies {
             data {
               attributes {
                 titre
@@ -115,8 +107,8 @@ export const queryProducts = (collection: string, typology: string) => gql`
     products(
       filters: {
         and: [
-          { collection: { slug: { eq: "${collection}" } } }
-          { typology: { slug: { eq: "${typology}" } } }
+          { collections: { slug: { eq: "${collection}" } } }
+          { typologies: { slug: { eq: "${typology}" } } }
         ]
       }
       sort: ["rank:ASC"]
@@ -138,14 +130,14 @@ export const queryProducts = (collection: string, typology: string) => gql`
           }
           rank
           slug
-          collection {
+          collections {
             data {
               attributes {
                 titre
               }
             }
           }
-          typology {
+          typologies {
             data {
               attributes {
                 titre

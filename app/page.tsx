@@ -29,6 +29,7 @@ export default async function Home() {
       {carroussel !== undefined && carroussel.length > 0 && (
         <>
           <Carroussel
+            isHero
             list={carroussel.map(({ attributes }) => attributes.url)}
             sx={{
               ":after": {
@@ -39,7 +40,7 @@ export default async function Home() {
                 right: 0,
                 bottom: 0,
                 background:
-                  "linear-gradient(to bottom, transparent 0%, black 1200%)",
+                  "linear-gradient(to bottom, transparent 0%, black 1800%)",
               },
             }}
           />
@@ -185,7 +186,7 @@ const getContent = async () => {
         }
         brands(
           filters: { premium: { eq: true } }
-          pagination: { pageSize: 20 }
+          pagination: { pageSize: 50 }
         ) {
           data {
             id

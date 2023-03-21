@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Box, BoxProps as MuiBoxProps } from "@mui/material";
@@ -7,9 +8,13 @@ import AppImage from "./AppImage";
 
 interface Props extends MuiBoxProps {
   list: string[];
+  width?: number;
+  height?: number;
+  isHero?: boolean;
 }
 
 export default function Carroussel(props: Props) {
+  const { list, width, height, isHero = false } = props;
   const propsCopy = { ...props };
   const sliderSettings = {
     arrows: false,
@@ -21,9 +26,23 @@ export default function Carroussel(props: Props) {
     slidesToScroll: 1,
   };
 
+  const cropSrc = (src: string) => {
+    const decodedString = decodeURIComponent(src);
+
+    const uploadIndex = decodedString.indexOf("upload/");
+    if (uploadIndex >= 0) {
+      const newString =
+        decodedString.substring(0, uploadIndex + 7) +
+        `c_crop,h_${height ?? 800},q_80,w_${width ?? 1800}/` +
+        decodedString.substring(uploadIndex + 7);
+      return newString;
+    }
+    return src;
+  };
+
   return (
     <Slider {...sliderSettings}>
-      {props.list.map((src, idx) => (
+      {list.map((src, idx) => (
         <Box
           key={idx}
           sx={{
@@ -32,10 +51,12 @@ export default function Carroussel(props: Props) {
         >
           <AppImage
             alt={`carroussel-image-${idx}`}
-            src={src}
-            width={1200}
-            height={800}
-            loadMode="lg"
+            src={isHero ? cropSrc(src) : src}
+            width={width ?? 1800}
+            height={height ?? 800}
+            quality={isHero ? 100 : undefined}
+            loadMode={isHero ? "lg" : undefined}
+            unoptimized={isHero}
           />
         </Box>
       ))}

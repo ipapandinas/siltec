@@ -9,6 +9,7 @@ import { IProduct } from "#/interfaces/IProduct";
 
 import AppImage from "./AppImage";
 import Carroussel from "./Carroussel";
+import { UP_LG } from "#/utils/constants";
 
 interface IProps {
   product: IProduct;
@@ -133,7 +134,7 @@ export default function Product({ product }: IProps) {
         {description && (
           <Box
             sx={{
-              margin: "4rem 0",
+              marginTop: "4rem",
               textAlign: "justify",
             }}
           >
@@ -144,12 +145,40 @@ export default function Product({ product }: IProps) {
           <Typography
             textTransform="capitalize"
             variant="body1"
+            sx={{
+              marginTop: "1.6rem",
+            }}
           >{`Designer: ${designer}`}</Typography>
         )}
       </Box>
       {carrousselList && (
-        <Box marginTop="4rem" sx={{ display: { xs: "none", lg: "block" } }}>
-          <Carroussel list={carrousselList} />
+        <Box
+          marginTop="4rem"
+          sx={{
+            display: {
+              xs: "none",
+              lg: "block",
+            },
+            ".slick-slider": {
+              borderTopLeftRadius: { xs: "4rem", lg: "8rem" },
+              borderBottomRightRadius: { xs: "4rem", lg: "8rem" },
+              overflow: "hidden",
+              width: "85% !important",
+              height: "auto",
+              maxHeight: "1000px",
+              objectFit: "cover",
+              margin: "0 auto",
+              [UP_LG]: {
+                width: "850px !important",
+              },
+            },
+
+            ".slick-slide img": {
+              height: "400px !important",
+            },
+          }}
+        >
+          <Carroussel list={carrousselList} width={850} height={400} />
         </Box>
       )}
     </Box>

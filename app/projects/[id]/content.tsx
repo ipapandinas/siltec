@@ -25,22 +25,25 @@ export default function Content({ titre, description, medias }: Props) {
         <Box
           sx={{
             ".slick-slider": {
-              width: "100% !important",
+              borderTopLeftRadius: { xs: "4rem", lg: "8rem" },
+              borderBottomRightRadius: { xs: "4rem", lg: "8rem" },
+              overflow: "hidden",
+              width: "85% !important",
               height: "auto",
               maxHeight: "1000px",
               objectFit: "cover",
               margin: "0 auto",
               [UP_LG]: {
-                width: "66% !important",
+                width: "850px !important",
               },
             },
 
             ".slick-slide img": {
-              height: "400px",
+              height: "400px !important",
             },
           }}
         >
-          <Carroussel list={carrousselList} />
+          <Carroussel list={carrousselList} width={850} height={400} />
         </Box>
       )}
       {titre && (

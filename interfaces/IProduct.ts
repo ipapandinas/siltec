@@ -17,10 +17,10 @@ export interface IProduct {
     };
     rank: number;
     slug: string;
-    collection: {
+    collections: {
       data: ICollection | null;
     };
-    typology: {
+    typologies: {
       data: ITypology | null;
     };
   };

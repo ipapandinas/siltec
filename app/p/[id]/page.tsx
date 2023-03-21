@@ -15,9 +15,9 @@ export default async function Page({ params }: any) {
   const marque = product.attributes.marque;
   const pageName = titre + `${marque ? ` - ${marque}` : ""}`;
   const { titre: collectionTitle, slug: collectionSlug } =
-    product.attributes.collection.data?.attributes ?? {};
+    product.attributes.collections.data?.attributes ?? {};
   const { titre: typologyTitle, slug: typologySlug } =
-    product.attributes.typology.data?.attributes ?? {};
+    product.attributes.typologies.data?.attributes ?? {};
 
   return (
     <div>
