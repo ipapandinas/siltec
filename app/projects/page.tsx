@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getProjects, getProjectSinglePage } from "#/lib/getProjects";
 import Container from "#/ui/Container";
 import Explore from "#/ui/Explore";
@@ -7,8 +9,7 @@ export default async function Projects() {
   const pageData = await getProjectSinglePage();
   const projects = await getProjects();
 
-  if (!pageData) return null; //todo: 404
-  if (!projects) return null; //todo: 404
+  if (!pageData || !projects) notFound();
 
   const { couleur, sousTitre, titre } = pageData.attributes;
 

@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getAboutSinglePage } from "#/lib/getAbout";
 import Container from "#/ui/Container";
 import SinglePageHeader from "#/ui/SinglePageHeader";
@@ -7,7 +9,7 @@ import Content from "./content";
 export default async function About() {
   const pageData = await getAboutSinglePage();
 
-  if (!pageData) return null; //todo: 404
+  if (!pageData) notFound();
 
   const { couleur, description, sousTitre, titre, trombinoscope } =
     pageData.attributes;

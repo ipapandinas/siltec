@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getSingleNews } from "#/lib/getNews";
 import Band from "#/ui/Band";
 import Breadcrumbs from "#/ui/Breadcrumbs";
@@ -9,7 +11,7 @@ export default async function Page({ params }: any) {
   const { slug } = params;
   const news = await getSingleNews(slug);
 
-  if (!news) return null; //todo: 404
+  if (!news) notFound();
 
   const { corps, medias, titre } = news.attributes;
 

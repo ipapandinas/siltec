@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getNews, getNewsSinglePage } from "#/lib/getNews";
 import Container from "#/ui/Container";
 import Explore from "#/ui/Explore";
@@ -7,8 +9,7 @@ export default async function News() {
   const pageData = await getNewsSinglePage();
   const news = await getNews();
 
-  if (!pageData) return null; //todo: 404
-  if (!news) return null; //todo: 404
+  if (!pageData || !news) notFound();
 
   const { couleur, sousTitre, titre } = pageData.attributes;
 

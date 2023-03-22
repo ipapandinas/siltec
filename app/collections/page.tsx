@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getCollections, getCollectionSinglePage } from "#/lib/getCollections";
 import Container from "#/ui/Container";
 import Explore from "#/ui/Explore";
@@ -7,7 +9,7 @@ export default async function Collections() {
   const pageData = await getCollectionSinglePage();
   const collections = await getCollections();
 
-  if (!pageData || !collections) return null; //todo: 404
+  if (!pageData || !collections) notFound();
 
   const { couleur, sousTitre, titre } = pageData.attributes;
 

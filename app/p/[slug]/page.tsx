@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getProduct } from "#/lib/getProducts";
 import Band from "#/ui/Band";
 import Breadcrumbs from "#/ui/Breadcrumbs";
@@ -9,7 +11,7 @@ export default async function Page({ params }: any) {
   const { slug } = params;
   const product = await getProduct(slug);
 
-  if (!product) return null; //todo: 404
+  if (!product) notFound();
 
   const titre = product.attributes.titre;
   const marque = product.attributes.marque;

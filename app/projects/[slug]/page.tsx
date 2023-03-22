@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getProject } from "#/lib/getProjects";
 import Band from "#/ui/Band";
 import Breadcrumbs from "#/ui/Breadcrumbs";
@@ -9,7 +11,7 @@ export default async function Page({ params }: any) {
   const { slug } = params;
   const project = await getProject(slug);
 
-  if (!project) return null; //todo: 404
+  if (!project) notFound();
 
   const { couleur, description, medias, titre } = project.attributes;
 

@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getCollectionTitle } from "#/lib/getCollections";
 import { getProducts } from "#/lib/getProducts";
 import { getTypologyTitle } from "#/lib/getTypologies";
@@ -13,7 +15,7 @@ export default async function Page({ params }: any) {
   const typologyTitle = await getTypologyTitle(typologySlug);
   const products = await getProducts(collectionSlug, typologySlug);
 
-  if (!products) return null; //todo: 404
+  if (!products) notFound();
 
   const pageName = typologyTitle ?? typologySlug;
 
