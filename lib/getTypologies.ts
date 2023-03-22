@@ -6,7 +6,7 @@ export const getTypologies = async (collection: string) => {
   try {
     const query = queryTypologies(collection);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -31,7 +31,7 @@ export const getTypologyTitle = async (slug: string) => {
   try {
     const query = queryTypologyTitle(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

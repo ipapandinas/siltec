@@ -208,7 +208,7 @@ const getContent = async () => {
       }
     `;
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

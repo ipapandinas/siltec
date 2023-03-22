@@ -10,7 +10,7 @@ export const getProjects = async () => {
   try {
     const query = queryProjects();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -35,7 +35,7 @@ export const getProject = async (slug: string) => {
   try {
     const query = queryProject(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -60,7 +60,7 @@ export const getProjectSinglePage = async () => {
   try {
     const query = queryProjectSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

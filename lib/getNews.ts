@@ -12,7 +12,7 @@ export const getNews = async () => {
   try {
     const query = queryNews();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -37,7 +37,7 @@ export const getSingleNews = async (slug: string) => {
   try {
     const query = querySingleNews(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

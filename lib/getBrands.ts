@@ -6,7 +6,7 @@ export const getAllBrands = async () => {
   try {
     const query = queryAllBrands();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -31,7 +31,7 @@ export const getFeaturedBrands = async () => {
   try {
     const query = queryFeaturedBrands();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

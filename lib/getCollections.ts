@@ -10,7 +10,7 @@ export const getCollections = async () => {
   try {
     const query = queryCollections();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -35,7 +35,7 @@ export const getCollectionSinglePage = async () => {
   try {
     const query = queryCollectionSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -61,7 +61,7 @@ export const getCollectionTitle = async (slug: string) => {
   try {
     const query = queryCollectionTitle(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
