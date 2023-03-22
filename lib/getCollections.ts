@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { GRAPHQL_API_URL } from "#/utils/constants";
 import {
   queryCollections,
@@ -6,11 +8,11 @@ import {
 } from "#/utils/queries";
 import { ICollection, ICollectionSinglePage } from "#/interfaces/ICollection";
 
-export const getCollections = async () => {
+export const getCollections = cache(async () => {
   try {
     const query = queryCollections();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -29,13 +31,13 @@ export const getCollections = async () => {
       }`
     );
   }
-};
+});
 
-export const getCollectionSinglePage = async () => {
+export const getCollectionSinglePage = cache(async () => {
   try {
     const query = queryCollectionSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -55,13 +57,13 @@ export const getCollectionSinglePage = async () => {
       }`
     );
   }
-};
+});
 
-export const getCollectionTitle = async (slug: string) => {
+export const getCollectionTitle = cache(async (slug: string) => {
   try {
     const query = queryCollectionTitle(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -81,4 +83,4 @@ export const getCollectionTitle = async (slug: string) => {
       }`
     );
   }
-};
+});

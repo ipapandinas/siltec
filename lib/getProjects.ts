@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { GRAPHQL_API_URL } from "#/utils/constants";
 import {
   queryProject,
@@ -6,11 +8,11 @@ import {
 } from "#/utils/queries";
 import { IProject, IProjectSinglePage } from "#/interfaces/IProject";
 
-export const getProjects = async () => {
+export const getProjects = cache(async () => {
   try {
     const query = queryProjects();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -29,13 +31,13 @@ export const getProjects = async () => {
       }`
     );
   }
-};
+});
 
-export const getProject = async (slug: string) => {
+export const getProject = cache(async (slug: string) => {
   try {
     const query = queryProject(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -54,13 +56,13 @@ export const getProject = async (slug: string) => {
       }`
     );
   }
-};
+});
 
-export const getProjectSinglePage = async () => {
+export const getProjectSinglePage = cache(async () => {
   try {
     const query = queryProjectSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -80,4 +82,4 @@ export const getProjectSinglePage = async () => {
       }`
     );
   }
-};
+});

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import request from "graphql-request";
 
 import { GRAPHQL_API_URL } from "#/utils/constants";
@@ -8,11 +9,11 @@ import {
 } from "#/utils/queries";
 import { INews, INewsSinglePage } from "#/interfaces/INews";
 
-export const getNews = async () => {
+export const getNews = cache(async () => {
   try {
     const query = queryNews();
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -31,13 +32,13 @@ export const getNews = async () => {
       }`
     );
   }
-};
+});
 
-export const getSingleNews = async (slug: string) => {
+export const getSingleNews = cache(async (slug: string) => {
   try {
     const query = querySingleNews(slug);
     return await fetch(GRAPHQL_API_URL, {
-      cache: "no-store",
+      next: { revalidate: 60 },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -56,9 +57,9 @@ export const getSingleNews = async (slug: string) => {
       }`
     );
   }
-};
+});
 
-export const getNewsSinglePage = async () => {
+export const getNewsSinglePage = cache(async () => {
   try {
     const gql = queryNewsSinglePage();
     return (
@@ -74,4 +75,4 @@ export const getNewsSinglePage = async () => {
       }`
     );
   }
-};
+});
