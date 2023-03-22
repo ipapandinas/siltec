@@ -7,6 +7,13 @@ export const GRAPHQL_API_URL = process.env.NEXT_PUBLIC_GRAPHQL_API_URL
   ? removeURLSlash(process.env.NEXT_PUBLIC_GRAPHQL_API_URL)
   : "";
 
+export const DOWN_XXS = "@media (max-width: 320px)";
+export const DOWN_XS = "@media (max-width: 400px)";
+export const DOWN_SM = "@media (max-width: 600px)";
+export const DOWN_MD = "@media (max-width: 900px)";
+export const DOWN_LG = "@media (max-width: 1200px)";
+export const DOWN_XL = "@media (max-width: 1536px)";
+
 export const UP_SM = "@media (min-width: 600px)";
 export const UP_MD = "@media (min-width: 900px)";
 export const UP_LG = "@media (min-width: 1200px)";

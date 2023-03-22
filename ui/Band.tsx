@@ -13,7 +13,8 @@ export default function Band({ color, text }: IProps) {
     <Box
       sx={{
         width: "100%",
-        height: "8rem",
+        minHeight: "8rem",
+        height: "auto",
         background: color ?? COLOR_PRIMARY_MAIN,
         color: "#fff",
         textAlign: "center",

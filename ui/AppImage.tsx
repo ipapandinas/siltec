@@ -1,3 +1,4 @@
+import { rgbDataURL } from "#/utils/strings";
 import Image, { ImageProps } from "next/image";
 
 const BASIC_IMAGE_SIZES =
@@ -28,6 +29,8 @@ export default function AppImage(props: Props) {
       sizes={props.sizes !== undefined ? props.sizes : defaultSizes}
       priority={props.priority !== undefined ? props.priority : false}
       draggable={props.draggable !== undefined ? props.draggable : false}
+      placeholder="blur"
+      blurDataURL={rgbDataURL(233, 243, 240)}
     />
   );
 }

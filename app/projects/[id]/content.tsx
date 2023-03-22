@@ -1,12 +1,12 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ReactMarkdown from "react-markdown";
 
 import { IImage } from "#/interfaces/IImage";
-import Carroussel from "#/ui/Carroussel";
-import Container from "#/ui/Container";
-import { UP_LG } from "#/utils/constants";
+import { DOWN_LG, UP_LG } from "#/utils/constants";
+import AppImage from "#/ui/AppImage";
+import { rgbDataURL } from "#/utils/strings";
 
 interface Props {
   titre: string;
@@ -17,39 +17,48 @@ interface Props {
 }
 
 export default function Content({ titre, description, medias }: Props) {
-  const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
+  const mediasList = medias?.data?.map(({ attributes }) => attributes.url);
 
   return (
     <Box>
-      {carrousselList && (
+      {mediasList && (
         <Box
           sx={{
-            ".slick-slider": {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "4.8rem",
+            width: "85% !important",
+            margin: "8rem auto 0",
+            [UP_LG]: {
+              width: "850px !important",
+            },
+
+            img: {
               borderTopLeftRadius: { xs: "4rem", lg: "8rem" },
               borderBottomRightRadius: { xs: "4rem", lg: "8rem" },
               overflow: "hidden",
-              width: "85% !important",
-              height: "auto",
-              maxHeight: "1000px",
-              objectFit: "cover",
-              margin: "0 auto",
-              [UP_LG]: {
-                width: "850px !important",
+              maxHeight: 850,
+              width: "auto",
+              maxWidth: "100%",
+              [DOWN_LG]: {
+                height: "auto",
               },
-            },
-
-            ".slick-slide img": {
-              height: "400px !important",
             },
           }}
         >
-          <Carroussel list={carrousselList} width={850} height={400} />
+          {mediasList.map((url, idx) => (
+            <AppImage
+              key={idx}
+              alt={`image-${idx}`}
+              src={url}
+              width={850}
+              height={600}
+              quality={100}
+            />
+          ))}
         </Box>
-      )}
-      {titre && (
-        <Typography variant="h4" textAlign="center" sx={{ marginTop: "8rem" }}>
-          {titre}
-        </Typography>
       )}
       {description && (
         <Box
