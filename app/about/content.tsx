@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 
 import { IImage } from "#/interfaces/IImage";
 import AppImage from "#/ui/AppImage";
+import { rgbDataURL } from "#/utils/strings";
 
 interface Props {
   description: string;
@@ -50,6 +51,8 @@ export default function Content({ description, trombinoscope }: Props) {
             src={url}
             width={600}
             height={400}
+            placeholder="blur"
+            blurDataURL={rgbDataURL(255, 216, 209)}
           />
         </Box>
       )}

@@ -56,6 +56,8 @@ export default function Content({ titre, description, medias }: Props) {
               width={850}
               height={600}
               quality={100}
+              placeholder="blur"
+              blurDataURL={rgbDataURL(233, 243, 240)}
             />
           ))}
         </Box>

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { rgbDataURL } from "#/utils/strings";
 import { Box, BoxProps as MuiBoxProps } from "@mui/material";
 import Slider from "react-slick";
 
@@ -57,6 +58,8 @@ export default function Carroussel(props: Props) {
             quality={isHero ? 100 : undefined}
             loadMode={isHero ? "lg" : undefined}
             unoptimized={isHero}
+            placeholder="blur"
+            blurDataURL={rgbDataURL(233, 243, 240)}
           />
         </Box>
       ))}

@@ -10,6 +10,7 @@ import { IProduct } from "#/interfaces/IProduct";
 import AppImage from "./AppImage";
 import Carroussel from "./Carroussel";
 import { UP_LG } from "#/utils/constants";
+import { rgbDataURL } from "#/utils/strings";
 
 interface IProps {
   product: IProduct;
@@ -73,9 +74,7 @@ export default function Product({ product }: IProps) {
         }}
       >
         <PictureAsPdfIcon />
-        <Typography textTransform="capitalize" variant="body1">
-          Télécharger cette fiche
-        </Typography>
+        <Typography variant="body1">Télécharger cette fiche</Typography>
       </IconButton>
       <Box
         sx={{
@@ -98,6 +97,8 @@ export default function Product({ product }: IProps) {
             height={600}
             width={600}
             style={{ objectFit: "cover" }}
+            placeholder="blur"
+            blurDataURL={rgbDataURL(233, 243, 240)}
           />
         )}
       </Box>

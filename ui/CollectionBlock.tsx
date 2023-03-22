@@ -6,6 +6,7 @@ import { UP_LG } from "#/utils/constants";
 
 import AppImage from "./AppImage";
 import AppLink from "./AppLink";
+import { rgbDataURL } from "#/utils/strings";
 
 interface IProps {
   color: string;
@@ -57,6 +58,8 @@ export default function CollectionBlock({
             height={620}
             loadMode="lg"
             style={{ objectFit: "cover" }}
+            placeholder="blur"
+            blurDataURL={rgbDataURL(233, 243, 240)}
           />
           <Box
             sx={{

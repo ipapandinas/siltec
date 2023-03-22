@@ -9,6 +9,8 @@ import ReactMarkdown from "react-markdown";
 import AppImage from "#/ui/AppImage";
 import AppLink from "#/ui/AppLink";
 
+import map from "../../public/assets/maps.png";
+
 const ContactItem = (props: {
   ariaLabel: string;
   link?: string;
@@ -131,7 +133,13 @@ export default function Content() {
           img: { width: { xs: "100%", lg: "80%" }, height: "auto" },
         }}
       >
-        <AppImage alt="" src="/assets/maps.png" width={600} height={400} />
+        <AppImage
+          alt=""
+          src={map}
+          width={600}
+          height={400}
+          placeholder="blur"
+        />
       </Box>
     </>
   );
