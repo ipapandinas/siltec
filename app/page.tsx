@@ -187,6 +187,7 @@ const getContent = async () => {
         brands(
           filters: { premium: { eq: true } }
           pagination: { pageSize: 50 }
+          sort: "nom:asc"
         ) {
           data {
             id

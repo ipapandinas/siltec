@@ -216,7 +216,10 @@ const BRAND_DATA_QUERY = `
 
 export const queryAllBrands = () => gql`
   {
-    brands(pagination: { pageSize: 200 }) {
+    brands(
+      pagination: { pageSize: 200 }
+      sort: "nom:asc"
+    ) {
       ${BRAND_DATA_QUERY}
     }
   }
@@ -224,7 +227,11 @@ export const queryAllBrands = () => gql`
 
 export const queryFeaturedBrands = () => gql`
   {
-    brands(filters: { premium: { eq: true } }, pagination: { pageSize: 20 }) {
+    brands(
+      filters: { premium: { eq: true } }
+      pagination: { pageSize: 50 }
+      sort: "nom:asc"
+    ) {
       ${BRAND_DATA_QUERY}
     }
   }
