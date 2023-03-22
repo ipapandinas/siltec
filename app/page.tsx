@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { gql } from "graphql-request";
 
 import { ICollection } from "#/interfaces/ICollection";
@@ -127,7 +128,7 @@ export default async function Home() {
   );
 }
 
-const getContent = async () => {
+const getContent = cache(async () => {
   try {
     const query = gql`
       {
@@ -243,4 +244,4 @@ const getContent = async () => {
       }`
     );
   }
-};
+});

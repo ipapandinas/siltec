@@ -1,8 +1,10 @@
+import { cache } from "react";
+
 import { GRAPHQL_API_URL } from "#/utils/constants";
 import { queryAboutSinglePage } from "#/utils/queries";
 import { IAboutSinglePage } from "#/interfaces/IAbout";
 
-export const getAboutSinglePage = async () => {
+export const getAboutSinglePage = cache(async () => {
   try {
     const query = queryAboutSinglePage();
     return await fetch(GRAPHQL_API_URL, {
@@ -25,4 +27,4 @@ export const getAboutSinglePage = async () => {
       }`
     );
   }
-};
+});

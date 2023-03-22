@@ -1,8 +1,10 @@
+import { cache } from "react";
+
 import { GRAPHQL_API_URL } from "#/utils/constants";
 import { queryAllBrands, queryFeaturedBrands } from "#/utils/queries";
 import { IBrand } from "#/interfaces/IBrand";
 
-export const getAllBrands = async () => {
+export const getAllBrands = cache(async () => {
   try {
     const query = queryAllBrands();
     return await fetch(GRAPHQL_API_URL, {
@@ -25,9 +27,9 @@ export const getAllBrands = async () => {
       }`
     );
   }
-};
+});
 
-export const getFeaturedBrands = async () => {
+export const getFeaturedBrands = cache(async () => {
   try {
     const query = queryFeaturedBrands();
     return await fetch(GRAPHQL_API_URL, {
@@ -50,4 +52,4 @@ export const getFeaturedBrands = async () => {
       }`
     );
   }
-};
+});
