@@ -17,7 +17,7 @@ export default async function Projects() {
       <Container id="lastContainer">
         <SinglePageHeader color={couleur} subtitle={sousTitre} title={titre} />
         <div style={{ marginTop: "8rem" }}>
-          <Explore items={projects} subPath="projects" isLeafPage />
+          <Explore items={projects} subPath="projects" />
         </div>
       </Container>
     </div>

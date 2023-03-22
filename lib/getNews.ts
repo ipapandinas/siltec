@@ -33,9 +33,9 @@ export const getNews = async () => {
   }
 };
 
-export const getSingleNews = async (id: string) => {
+export const getSingleNews = async (slug: string) => {
   try {
-    const query = querySingleNews(id);
+    const query = querySingleNews(slug);
     return await fetch(GRAPHQL_API_URL, {
       cache: "no-store",
       method: "POST",
@@ -46,7 +46,8 @@ export const getSingleNews = async (id: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { new: { data: INews } } }) => content.data.new.data
+        (content: { data: { news: { data: INews[] } } }) =>
+          content.data.news.data[0] ?? null
       );
   } catch (err: any) {
     console.error(

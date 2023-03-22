@@ -1,6 +1,5 @@
 "use client";
 
-import { IImage } from "#/interfaces/IImage";
 import { Grid } from "@mui/material";
 
 import Card from "./Card";
@@ -11,11 +10,7 @@ interface IProps {
   subPath?: string;
 }
 
-export default function Explore({
-  isLeafPage = false,
-  items,
-  subPath,
-}: IProps) {
+export default function Explore({ items, subPath }: IProps) {
   return (
     <Grid
       container
@@ -47,10 +42,7 @@ export default function Explore({
             }}
           >
             <Card
-              href={
-                `${subPath ? `/${subPath}` : ""}` +
-                `${isLeafPage ? `/${id}` : `/${slug}`}`
-              }
+              href={`${subPath ? `/${subPath}` : ""}` + `/${slug}`}
               imageAlt={alternativeText ?? `Item - ${titre}`}
               imageSrc={url}
               label={titre}

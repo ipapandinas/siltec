@@ -6,8 +6,8 @@ import Container from "#/ui/Container";
 import Content from "./content";
 
 export default async function Page({ params }: any) {
-  const { id } = params;
-  const project = await getProject(id);
+  const { slug } = params;
+  const project = await getProject(slug);
 
   if (!project) return null; //todo: 404
 

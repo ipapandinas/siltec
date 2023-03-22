@@ -26,9 +26,9 @@ export const getProducts = async (collection: string, typology: string) => {
   }
 };
 
-export const getProduct = async (id: string) => {
+export const getProduct = async (slug: string) => {
   try {
-    const query = queryProduct(id);
+    const query = queryProduct(slug);
     return await fetch(GRAPHQL_API_URL, {
       cache: "no-store",
       method: "POST",
@@ -39,8 +39,8 @@ export const getProduct = async (id: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { product: { data: IProduct } } }) =>
-          content.data.product.data
+        (content: { data: { products: { data: IProduct[] } } }) =>
+          content.data.products.data[0] ?? null
       );
   } catch (err: any) {
     console.error(

@@ -16,7 +16,7 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
       columnSpacing={9}
     >
       {projects.slice(0, 3).map(({ id, attributes }, idx) => {
-        const { titre, image } = attributes;
+        const { titre, image, slug } = attributes;
         const { alternativeText, url } = image.data?.attributes ?? {};
 
         if (!url) return null;
@@ -39,7 +39,7 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
           >
             <Card
               key={idx}
-              href={`/projects/${id}`}
+              href={`/projects/${slug}`}
               imageAlt={alternativeText ?? `Item - ${titre}`}
               imageSrc={url}
               label={titre}

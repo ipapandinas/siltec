@@ -52,9 +52,9 @@ export const queryCollectionTitle = (slug: string) => gql`
   }
 `;
 
-export const queryProduct = (id: string) => gql`
+export const queryProduct = (slug: string) => gql`
   {
-    product(id: "${id}") {
+    products(filters: { slug: { eq: "${slug}" } }) {
       data {
         id
         attributes {
@@ -275,9 +275,9 @@ export const queryProjects = () => gql`
   }
 `;
 
-export const queryProject = (id: string) => gql`
+export const queryProject = (slug: string) => gql`
   {
-    project(id: "${id}") {
+    projects(filters: { slug: { eq: "${slug}" } }) {
       ${PROJECT_DATA_QUERY}
     }
   }
@@ -334,9 +334,9 @@ export const queryNews = () => gql`
   }
 `;
 
-export const querySingleNews = (id: string) => gql`
+export const querySingleNews = (slug: string) => gql`
   {
-    new(id: "${id}") {
+    news(filters: { slug: { eq: "${slug}" } }) {
       ${NEWS_DATA_QUERY}
     }
   }

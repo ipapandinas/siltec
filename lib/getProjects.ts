@@ -31,9 +31,9 @@ export const getProjects = async () => {
   }
 };
 
-export const getProject = async (id: string) => {
+export const getProject = async (slug: string) => {
   try {
-    const query = queryProject(id);
+    const query = queryProject(slug);
     return await fetch(GRAPHQL_API_URL, {
       cache: "no-store",
       method: "POST",
@@ -44,8 +44,8 @@ export const getProject = async (id: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { project: { data: IProject } } }) =>
-          content.data.project.data
+        (content: { data: { projects: { data: IProject[] } } }) =>
+          content.data.projects.data[0] ?? null
       );
   } catch (err: any) {
     console.error(

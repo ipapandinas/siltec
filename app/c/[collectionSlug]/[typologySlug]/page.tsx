@@ -34,7 +34,7 @@ export default async function Page({ params }: any) {
           />
         </div>
         <div style={{ marginTop: "8rem" }}>
-          <Explore items={products} subPath="p" isLeafPage />
+          <Explore items={products} subPath="p" />
         </div>
       </Container>
     </div>

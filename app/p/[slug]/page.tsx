@@ -6,8 +6,8 @@ import Product from "#/ui/Product";
 import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
 
 export default async function Page({ params }: any) {
-  const { id } = params;
-  const product = await getProduct(id);
+  const { slug } = params;
+  const product = await getProduct(slug);
 
   if (!product) return null; //todo: 404
 
