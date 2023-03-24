@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 
 export const queryCollections = () => gql`
   {
-    collections(sort: ["rank:ASC"]) {
+    collections(sort: ["rank:ASC"], pagination: { pageSize: 50 }) {
       data {
         id
         attributes {
@@ -41,7 +41,10 @@ export const queryCollectionSinglePage = () => gql`
 
 export const queryCollectionTitle = (slug: string) => gql`
   {
-    collections(filters: { slug: { eq: "${slug}" } }, pagination: {pageSize: 1}) {
+    collections(
+      filters: { slug: { eq: "${slug}" } }
+      pagination: {pageSize: 1}
+    ) {
       data {
         attributes {
           titre
@@ -111,6 +114,7 @@ export const queryProducts = (collection: string, typology: string) => gql`
           { typologies: { slug: { eq: "${typology}" } } }
         ]
       }
+      pagination: { pageSize: 50 }
       sort: ["rank:ASC"]
     ) {
       data {
@@ -154,6 +158,7 @@ export const queryTypologies = (collection: string) => gql`
   {
     typologies(
       filters: { collections: { slug: { contains: "${collection}" } } }
+      pagination: { pageSize: 50 }
       sort: ["rank:ASC"]
     ) {
       data {
@@ -269,7 +274,10 @@ const PROJECT_DATA_QUERY = `
 
 export const queryProjects = () => gql`
   {
-    projects(sort: ["rank:ASC"]) {
+    projects(
+      pagination: { pageSize: 50 }
+      sort: ["rank:ASC"]
+    ) {
       ${PROJECT_DATA_QUERY}
     }
   }
@@ -328,7 +336,10 @@ const NEWS_DATA_QUERY = `
 
 export const queryNews = () => gql`
   {
-    news(sort: ["rank:ASC"]) {
+    news(
+      sort: ["rank:ASC"]
+      pagination: { pageSize: 50 }
+    ) {
       ${NEWS_DATA_QUERY}
     }
   }
