@@ -8,6 +8,7 @@ interface ProductData {
   imageUrl: string;
   imageBuffer: Buffer;
   siltecLogoBuffer: Buffer;
+  cLogoBuffer: Buffer;
   pageUrl: string;
   brand: string;
 }
@@ -18,35 +19,44 @@ function generatePDF(productData: ProductData): any {
   const doc = new PDFDocument();
 
   // Add dynamic content to the PDF document
-  doc.font("Helvetica-Bold").fontSize(20).text("Siltec mobilier", {
-    align: "center",
-  });
-  doc
-    .font("Helvetica")
-    .fontSize(12)
-    .text("Spécialiste de l'ameublement hotellerie, residentiel, bureaux.", {
-      align: "center",
-    });
-  doc.moveDown(2);
+  doc.image(productData.siltecLogoBuffer, { width: 100 });
+  doc.moveDown(1);
   doc.image(productData.imageBuffer, {
-    width: 300,
+    fit: [470, 300],
     align: "center",
+    valign: "center",
   });
-  doc.moveDown(2);
+  doc.moveDown(1);
   doc
     .font("Helvetica-Bold")
     .fontSize(16)
+    .fillColor("#0c3e4b")
     .text(productData.title.toUpperCase(), {
       link: `https://siltec.vercel.app${productData.pageUrl}`,
+      align: "center",
     });
-  doc.font("Helvetica").text(productData.brand.toUpperCase());
-  doc.moveDown(2);
-  doc.image(productData.siltecLogoBuffer, { width: 50 });
+  doc
+    .font("Helvetica-Bold")
+    .fillColor("#0c3e4b")
+    .text(productData.brand.toUpperCase(), {
+      align: "center",
+    });
+  doc.moveDown(6);
+
+  doc.image(productData.cLogoBuffer, {
+    fit: [470, 50],
+    align: "center",
+    valign: "center",
+  });
+  doc.moveDown(0.5);
   doc
     .fontSize(12)
-    .text("51 rue de Miromesnil, 75008 Paris", { align: "right" });
-  doc.text("Mail: contact@siltec-mobilier.com", { align: "right" });
-  doc.text("Tel: +33 1 42 66 09 13", { align: "right" });
+    .fillColor("#0c3e4b")
+    .text("51 rue de Miromesnil, 75008 Paris", { align: "center" });
+  doc
+    .fillColor("#0c3e4b")
+    .text("contact@siltec-mobilier.com", { align: "center" });
+  doc.fillColor("#0c3e4b").text("Tel: +33 1 42 66 09 13", { align: "center" });
 
   doc.end();
 
@@ -65,7 +75,11 @@ export default async function handler(
   const siltecLogoResponse = await fetch(
     "https://siltec.vercel.app/siltec.jpg"
   );
+  const cLogoResponse = await fetch(
+    "https://siltec.vercel.app/android-chrome-192x192.png"
+  );
   const siltecLogoBuffer = await siltecLogoResponse.buffer();
+  const cLogoBuffer = await cLogoResponse.buffer();
 
   const productData: ProductData = {
     title: req.query.title as string,
@@ -74,6 +88,7 @@ export default async function handler(
     imageUrl,
     imageBuffer,
     siltecLogoBuffer,
+    cLogoBuffer,
   };
 
   // Generate the PDF document

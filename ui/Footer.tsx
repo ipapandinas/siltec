@@ -178,7 +178,7 @@ export default function Footer() {
               </AppLink>
               <Typography variant="body1" maxWidth="24rem" marginTop="1.6rem">
                 {
-                  "Spécialiste de l'ameublement, hotellerie, residtentiel, bureaux."
+                  "Spécialiste de l'ameublement, hotellerie, residentiel, bureaux."
                 }
               </Typography>
             </Box>

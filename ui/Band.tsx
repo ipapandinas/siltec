@@ -22,12 +22,14 @@ export default function Band({ color, text }: IProps) {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        borderRadius: { xs: "4rem", lg: "14rem" },
+        padding: { xs: "4rem 2.4rem", lg: "4rem" },
       }}
     >
       <Typography
         color="#fff"
         fontWeight="bold"
-        variant="h3"
+        variant="h2"
         textAlign="center"
         textTransform="uppercase"
         sx={{
