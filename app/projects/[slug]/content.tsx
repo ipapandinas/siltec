@@ -1,7 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Box, ImageList, ImageListItem } from "@mui/material";
+import {
+  Box,
+  ImageList,
+  ImageListItem,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 
 import { IImage } from "#/interfaces/IImage";
@@ -14,6 +20,9 @@ interface Props {
 }
 
 export default function Content({ description, medias }: Props) {
+  const theme = useTheme();
+  const isResponsive = useMediaQuery(theme.breakpoints.down("md"));
+  const nbColumns = isResponsive ? 1 : 2;
   const mediasList = medias?.data?.map(({ attributes }) => attributes.url);
 
   return (
@@ -26,7 +35,7 @@ export default function Content({ description, medias }: Props) {
       }}
     >
       {mediasList && (
-        <ImageList variant="masonry" cols={2} gap={24}>
+        <ImageList variant="masonry" cols={nbColumns} gap={24}>
           {mediasList.map((url, idx) => (
             <ImageListItem key={idx}>
               <img
