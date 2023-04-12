@@ -81,6 +81,7 @@ export default function NavItem({
               width={imageWidth}
               height={imageHeight}
               style={logoStyle}
+              loadMode="md"
             />
           }
         </Box>

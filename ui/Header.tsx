@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, useState } from "react";
+import { cloneElement, useState, useEffect } from "react";
 import { AppBar, Box, IconButton, Toolbar, useTheme } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,6 +10,8 @@ import AppLink from "./AppLink";
 import NavItem from "./NavItem";
 import MobileDrawer from "./MobileDrawer";
 import AppImage from "./AppImage";
+import { getNavigation } from "#/lib/getNavigation";
+import { DEFAULT_NAVIGATION } from "#/utils/constants";
 
 function ElevationScroll(props: { children: any; mobileMenuOpen: boolean }) {
   const { children, mobileMenuOpen } = props;
@@ -30,6 +32,8 @@ export default function Header() {
     threshold: 100,
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isNavLoading, setIsNavLoading] = useState(true);
+  const [navigation, setNavigation] = useState(DEFAULT_NAVIGATION);
 
   const handleMobileOpen = () => {
     setMobileMenuOpen(true);
@@ -38,6 +42,28 @@ export default function Header() {
   const handleMobileClose = () => {
     setMobileMenuOpen(false);
   };
+
+  useEffect(() => {
+    let shoulUpdate = true;
+
+    const loadNavigation = async () => {
+      try {
+        const res = await getNavigation();
+        if (res && shoulUpdate) {
+          setNavigation(res.attributes.pastille);
+          setIsNavLoading(false);
+        }
+      } catch (error) {
+        setIsNavLoading(false);
+        console.log(error);
+      }
+    };
+
+    loadNavigation();
+    return () => {
+      shoulUpdate = false;
+    };
+  }, []);
 
   return (
     <Box
@@ -81,71 +107,33 @@ export default function Header() {
                 />
               </AppLink>
             </Box>
-            <Box
-              sx={{
-                display: { xs: "none", lg: "flex" },
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "6.4rem",
-              }}
-            >
-              <NavItem
-                color={theme.palette.primary.main}
-                href="/collections"
-                imageAlt="Collections navigation logo"
-                imageHref="/assets/nav/collections.svg"
-                imageHeight={50}
-                imageWidth={30}
-                label="Collections"
-                minimize={minimizeNav}
-                title="Collections"
-              />
-              <NavItem
-                color={theme.palette.secondary.main}
-                href="/projects"
-                imageAlt="Réalisations navigation logo"
-                imageHref="/assets/nav/realisations.svg"
-                imageHeight={50}
-                imageWidth={30}
-                label="Réalisations"
-                minimize={minimizeNav}
-                title="Réalisations"
-              />
-              <NavItem
-                color={theme.palette.warning.main}
-                href="/about"
-                imageAlt="Info navigation logo"
-                imageHref="/assets/nav/QSN.svg"
-                imageHeight={50}
-                imageWidth={30}
-                label="Qui sommes-nous?"
-                logoStyle={{ marginRight: 5 }}
-                minimize={minimizeNav}
-                title="Qui sommes-nous?"
-              />
-              <NavItem
-                color={theme.palette.secondary.light}
-                href="/news"
-                imageAlt="Actualités navigation logo"
-                imageHref="/assets/nav/actu.svg"
-                imageHeight={50}
-                imageWidth={30}
-                label="Actualités"
-                minimize={minimizeNav}
-                title="Actualités"
-              />
-              <NavItem
-                color={theme.palette.primary.light}
-                href="/contact"
-                imageAlt="Contact navigation logo"
-                imageHref="/assets/nav/contact.svg"
-                imageHeight={50}
-                imageWidth={20}
-                label="Contact"
-                minimize={minimizeNav}
-                title="Contact"
-              />
-            </Box>
+            {
+              <Box
+                sx={{
+                  display: { xs: "none", lg: "flex" },
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "6.4rem",
+                  opacity: isNavLoading ? 0 : 1,
+                  transition: "opacity 0.5s ease 0.5s",
+                }}
+              >
+                {navigation.map(({ couleur, url, picto, titre }, idx) => (
+                  <NavItem
+                    key={idx}
+                    color={couleur}
+                    href={url}
+                    imageAlt={`${titre} - Navigation Logo`}
+                    imageHref={picto.data.attributes.url}
+                    imageHeight={50}
+                    imageWidth={30}
+                    label={titre}
+                    minimize={minimizeNav}
+                    title={titre}
+                  />
+                ))}
+              </Box>
+            }
             <Box
               sx={{
                 display: { xs: "block", lg: "none" },

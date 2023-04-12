@@ -1,3 +1,4 @@
+import { PastilleType } from "#/interfaces/INavigation";
 import { removeURLSlash } from "./strings";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL
@@ -23,3 +24,71 @@ export const COLOR_PRIMARY_MAIN = "#BFE9E4";
 export const COLOR_PRIMARY_LIGHT = "#C9F5F0";
 export const COLOR_SECONDARY_MAIN = "#FFA88A";
 export const COLOR_SECONDARY_LIGHT = "#FEDFD3";
+
+export const DEFAULT_NAVIGATION: PastilleType[] = [
+  {
+    couleur: COLOR_PRIMARY_MAIN,
+    titre: "Collections",
+    url: "/collections",
+    picto: {
+      data: {
+        attributes: {
+          alternativeText: "Collections navigation logo",
+          url: "/assets/nav/collections.svg",
+        },
+      },
+    },
+  },
+  {
+    couleur: COLOR_SECONDARY_MAIN,
+    titre: "Réalisations",
+    url: "/projects",
+    picto: {
+      data: {
+        attributes: {
+          alternativeText: "Réalisation navigation logo",
+          url: "/assets/nav/realisations.svg",
+        },
+      },
+    },
+  },
+  {
+    couleur: "#FEDB55",
+    titre: "Qui sommes-nous",
+    url: "/about",
+    picto: {
+      data: {
+        attributes: {
+          alternativeText: "About navigation logo",
+          url: "/assets/nav/QSN.svg",
+        },
+      },
+    },
+  },
+  {
+    couleur: COLOR_SECONDARY_LIGHT,
+    titre: "Actualités",
+    url: "/news",
+    picto: {
+      data: {
+        attributes: {
+          alternativeText: "News navigation logo",
+          url: "/assets/nav/actu.svg",
+        },
+      },
+    },
+  },
+  {
+    couleur: COLOR_PRIMARY_LIGHT,
+    titre: "Contact",
+    url: "/contact",
+    picto: {
+      data: {
+        attributes: {
+          alternativeText: "Contact navigation logo",
+          url: "/assets/nav/contact.svg",
+        },
+      },
+    },
+  },
+];

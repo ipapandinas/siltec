@@ -389,3 +389,27 @@ export const queryAboutSinglePage = () => gql`
     }
   }
 `;
+
+export const queryNavigation = () => gql`
+  {
+    navigation {
+      data {
+        attributes {
+          pastille {
+            couleur
+            titre
+            url
+            picto {
+              data {
+                attributes {
+                  alternativeText
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

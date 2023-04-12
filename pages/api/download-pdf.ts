@@ -19,7 +19,11 @@ function generatePDF(productData: ProductData): any {
   const doc = new PDFDocument();
 
   // Add dynamic content to the PDF document
-  doc.image(productData.siltecLogoBuffer, { width: 100 });
+  doc.image(productData.siltecLogoBuffer, {
+    fit: [470, 50],
+    align: "center",
+    valign: "center",
+  });
   doc.moveDown(1);
   doc.image(productData.imageBuffer, {
     fit: [470, 300],
@@ -50,13 +54,18 @@ function generatePDF(productData: ProductData): any {
   });
   doc.moveDown(0.5);
   doc
+    .font("Helvetica")
     .fontSize(12)
     .fillColor("#0c3e4b")
     .text("51 rue de Miromesnil, 75008 Paris", { align: "center" });
   doc
+    .font("Helvetica")
     .fillColor("#0c3e4b")
     .text("contact@siltec-mobilier.com", { align: "center" });
-  doc.fillColor("#0c3e4b").text("Tel: +33 1 42 66 09 13", { align: "center" });
+  doc
+    .font("Helvetica")
+    .fillColor("#0c3e4b")
+    .text("Tel: +33 1 42 66 09 13", { align: "center" });
 
   doc.end();
 

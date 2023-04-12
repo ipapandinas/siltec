@@ -23,13 +23,13 @@ export default function Band({ color, text }: IProps) {
         alignItems: "center",
         justifyContent: "center",
         borderRadius: { xs: "4rem", lg: "14rem" },
-        padding: { xs: "4rem 2.4rem", lg: "4rem" },
+        padding: { xs: "2.4rem", lg: "2.4rem 4rem" },
       }}
     >
       <Typography
         color="#fff"
         fontWeight="bold"
-        variant="h2"
+        variant="h3"
         textAlign="center"
         textTransform="uppercase"
         sx={{

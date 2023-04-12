@@ -85,8 +85,8 @@ export default function Product({ product }: IProps) {
             borderBottomLeftRadius: { xs: "4rem", lg: "8rem" },
             width: { xs: "100% !important", lg: "auto" },
             height: { xs: "auto !important", lg: "auto" },
-            maxWidth: 600,
-            maxHeight: 600,
+            maxWidth: 800,
+            maxHeight: 800,
           },
         }}
       >
@@ -94,8 +94,8 @@ export default function Product({ product }: IProps) {
           <AppImage
             alt={alternativeText ?? "Product image"}
             src={url}
-            height={600}
-            width={600}
+            height={800}
+            width={800}
             style={{ objectFit: "cover" }}
             placeholder="blur"
             blurDataURL={rgbDataURL(233, 243, 240)}
@@ -170,16 +170,16 @@ export default function Product({ product }: IProps) {
               objectFit: "cover",
               margin: "0 auto",
               [UP_LG]: {
-                width: "850px !important",
+                width: "800px !important",
               },
             },
 
             ".slick-slide img": {
-              height: "400px !important",
+              height: "800px !important",
             },
           }}
         >
-          <Carroussel list={carrousselList} width={850} height={400} />
+          <Carroussel list={carrousselList} width={850} height={800} />
         </Box>
       )}
     </Box>
