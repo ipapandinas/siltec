@@ -51,7 +51,7 @@ export default async function Home() {
 
       <Container
         id="firstContainer"
-        bgcolor="secondary.light"
+        bgcolor="#F2EADF"
         bgcolorSize="lg"
         sx={{
           [UP_SM]: {
@@ -61,17 +61,17 @@ export default async function Home() {
       >
         <FeaturedBrand
           address="53 rue de Miromesnil, 75008 PARIS"
-          bgcolor="secondary.light"
+          bgcolor="#F2EADF"
           href="https://www.arflex.it/"
           logoSrc="/assets/brands/arflex.svg"
           name="Arflex"
         />
       </Container>
 
-      <Container bgcolor="primary.main" bgcolorSize="lg">
+      <Container bgcolor="#F2EADF" bgcolorSize="lg">
         <FeaturedBrand
           address="51 rue de Miromesnil, 75008 PARIS"
-          bgcolor="primary.main"
+          bgcolor="#F2EADF"
           href="https://www.wittmann.at//"
           logoSrc="/assets/brands/wittmann.svg"
           name="Wittmann"

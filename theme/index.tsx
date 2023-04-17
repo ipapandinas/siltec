@@ -13,7 +13,7 @@ const customTheme = createTheme({
       styleOverrides: {
         main: {
           backgroundColor: "#f6f6f6",
-          backgroundImage: `linear-gradient(#F9F4F2, #DEF2F0)`,
+          backgroundImage: `linear-gradient(#FFFFFF, #F2EADF)`,
         },
       },
     },

@@ -413,3 +413,17 @@ export const queryNavigation = () => gql`
     }
   }
 `;
+
+export const queryContactSinglePage = () => gql`
+  {
+    contact {
+      data {
+        attributes {
+          couleur
+          sousTitre
+          titre
+        }
+      }
+    }
+  }
+`;

@@ -16,6 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { useEffect } from "react";
 import AppLink from "./AppLink";
+import { PastilleType } from "#/interfaces/INavigation";
 
 const SocialIcon = (props: {
   ariaLabel?: string;
@@ -80,8 +81,12 @@ const MobileDrawerItem = (props: {
   );
 };
 
-export default function MobileDrawer(props: { open: boolean; onClose: any }) {
-  const { open, onClose } = props;
+export default function MobileDrawer(props: {
+  navigation: PastilleType[];
+  open: boolean;
+  onClose: any;
+}) {
+  const { navigation, open, onClose } = props;
   const theme = useTheme();
 
   useEffect(() => {
@@ -112,68 +117,18 @@ export default function MobileDrawer(props: { open: boolean; onClose: any }) {
           paddingBottom: "4rem",
         }}
       >
-        <MobileDrawerItem
-          onClose={onClose}
-          text="Collections"
-          link={`/collections`}
-        >
-          <Box
-            sx={{
-              height: "4rem",
-              width: "4rem",
-              background: theme.palette.primary.main,
-              borderRadius: "50%",
-            }}
-          />
-        </MobileDrawerItem>
-        <MobileDrawerItem
-          onClose={onClose}
-          text="Réalisations"
-          link={`/projects`}
-        >
-          <Box
-            sx={{
-              height: "4rem",
-              width: "4rem",
-              background: theme.palette.secondary.main,
-              borderRadius: "50%",
-            }}
-          />
-        </MobileDrawerItem>
-        <MobileDrawerItem
-          onClose={onClose}
-          text="Qui sommes-nous?"
-          link={`/about`}
-        >
-          <Box
-            sx={{
-              height: "4rem",
-              width: "4rem",
-              background: theme.palette.warning.main,
-              borderRadius: "50%",
-            }}
-          />
-        </MobileDrawerItem>
-        <MobileDrawerItem onClose={onClose} text="Actualités" link={`/news`}>
-          <Box
-            sx={{
-              height: "4rem",
-              width: "4rem",
-              background: theme.palette.secondary.light,
-              borderRadius: "50%",
-            }}
-          />
-        </MobileDrawerItem>
-        <MobileDrawerItem onClose={onClose} text="Contact" link={`/contact`}>
-          <Box
-            sx={{
-              height: "4rem",
-              width: "4rem",
-              background: theme.palette.primary.light,
-              borderRadius: "50%",
-            }}
-          />
-        </MobileDrawerItem>
+        {navigation.map(({ couleur, url, titre }, idx) => (
+          <MobileDrawerItem key={idx} onClose={onClose} text={titre} link={url}>
+            <Box
+              sx={{
+                height: "4rem",
+                width: "4rem",
+                background: couleur,
+                borderRadius: "50%",
+              }}
+            />
+          </MobileDrawerItem>
+        ))}
       </Box>
       <Box
         sx={{

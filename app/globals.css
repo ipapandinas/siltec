@@ -122,7 +122,7 @@ a {
 
 .slick-slider {
   width: 100%;
-  height: calc(100vh - 220px);
+  height: 400px;
   max-height: 1000px;
   margin: 0 auto;
 }
@@ -151,7 +151,7 @@ a {
 
 .slick-slide img {
   width: 100%;
-  height: calc(100vh - 220px);
+  height: 400px;
   max-height: 1000px;
   object-fit: cover;
 }
@@ -162,4 +162,14 @@ a {
 
 .MuiCardContent-root {
   padding: 0.8rem !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .slick-slider {
+    height: calc(100vh - 220px);
+  }
+
+  .slick-slide img {
+    height: calc(100vh - 220px);
+  }
 }

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { getSingleNews } from "#/lib/getNews";
+import { getNewsSinglePage, getSingleNews } from "#/lib/getNews";
 import Band from "#/ui/Band";
 import Breadcrumbs from "#/ui/Breadcrumbs";
 import Container from "#/ui/Container";
@@ -9,16 +9,18 @@ import Content from "./content";
 
 export default async function Page({ params }: any) {
   const { slug } = params;
+  const pageData = await getNewsSinglePage();
   const news = await getSingleNews(slug);
 
-  if (!news) notFound();
+  if (!pageData || !news) notFound();
 
+  const { couleur } = pageData.attributes;
   const { corps, medias, titre } = news.attributes;
 
   return (
     <div>
       <Container id="lastContainer">
-        <Band text={titre} />
+        <Band text={titre} color={couleur} />
         <div style={{ marginTop: "4rem" }}>
           <Breadcrumbs
             list={[{ name: "Actualités", href: "/news" }]}

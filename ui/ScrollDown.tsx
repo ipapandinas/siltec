@@ -1,5 +1,6 @@
 "use client";
 
+import { UP_LG } from "#/utils/constants";
 import SouthIcon from "@mui/icons-material/South";
 import { Button } from "@mui/material";
 import { keyframes } from "@mui/system";
@@ -24,8 +25,8 @@ export default function ScrollDown() {
       aria-label="Scroll"
       onClick={handleClickScroll}
       sx={{
+        display: "none",
         position: "absolute",
-        display: "flex",
         justifyContent: "center",
         alignItems: "center",
         width: "5.6rem",
@@ -33,6 +34,9 @@ export default function ScrollDown() {
         bottom: { xs: "14rem", lg: "4rem" },
         zIndex: 1000,
         animation: `${blinker} 2s ease infinite`,
+        [UP_LG]: {
+          display: "flex",
+        },
       }}
     >
       <SouthIcon fontSize="large" />

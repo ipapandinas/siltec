@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { getCollectionTitle } from "#/lib/getCollections";
+import {
+  getCollectionSinglePage,
+  getCollectionTitle,
+} from "#/lib/getCollections";
 import { getProducts } from "#/lib/getProducts";
 import { getTypologyTitle } from "#/lib/getTypologies";
 import Band from "#/ui/Band";
@@ -12,17 +15,19 @@ import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
 export default async function Page({ params }: any) {
   const { collectionSlug, typologySlug } = params;
   const collectionTitle = await getCollectionTitle(collectionSlug);
+  const pageData = await getCollectionSinglePage();
   const typologyTitle = await getTypologyTitle(typologySlug);
   const products = await getProducts(collectionSlug, typologySlug);
 
-  if (!products) notFound();
+  if (!pageData || !products) notFound();
 
+  const { couleur } = pageData.attributes;
   const pageName = typologyTitle ?? typologySlug;
 
   return (
     <div>
       <Container id="lastContainer">
-        <Band color={COLOR_SECONDARY_MAIN} text={pageName} />
+        <Band color={couleur ?? COLOR_SECONDARY_MAIN} text={pageName} />
         <div style={{ marginTop: "4rem" }}>
           <Breadcrumbs
             list={[

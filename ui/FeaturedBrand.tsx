@@ -101,10 +101,10 @@ export default function FeaturedBrand({
             position: { xs: "relative", lg: "absolute" },
             right: 0,
             bottom: { xs: "auto", lg: "-1.6rem" },
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: "#A2B39B",
             color: "#010101",
             "&:hover": {
-              backgroundColor: theme.palette.primary.dark,
+              backgroundColor: "#717e6c",
               color: "#fff",
             },
           }}

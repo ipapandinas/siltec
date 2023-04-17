@@ -6,13 +6,16 @@ import Breadcrumbs from "#/ui/Breadcrumbs";
 import Container from "#/ui/Container";
 import Product from "#/ui/Product";
 import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
+import { getCollectionSinglePage } from "#/lib/getCollections";
 
 export default async function Page({ params }: any) {
   const { slug } = params;
+  const pageData = await getCollectionSinglePage();
   const product = await getProduct(slug);
 
-  if (!product) notFound();
+  if (!pageData || !product) notFound();
 
+  const { couleur } = pageData.attributes;
   const titre = product.attributes.titre;
   const marque = product.attributes.marque;
   const pageName = titre + `${marque ? ` - ${marque}` : ""}`;
@@ -24,7 +27,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <Container id="lastContainer">
-        <Band color={COLOR_SECONDARY_MAIN} text={pageName} />
+        <Band color={couleur ?? COLOR_SECONDARY_MAIN} text={pageName} />
         <div style={{ marginTop: "4rem" }}>
           <Breadcrumbs
             list={[

@@ -73,10 +73,10 @@ export default function Section(props: Props) {
             variant="contained"
             sx={{
               marginTop: "4rem",
-              backgroundColor: theme.palette.secondary.light,
+              backgroundColor: "#A2B39B",
               color: "#010101",
               "&:hover": {
-                backgroundColor: theme.palette.secondary.dark,
+                backgroundColor: "#717e6c",
                 color: "#fff",
               },
             }}
