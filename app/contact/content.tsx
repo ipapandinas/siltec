@@ -138,6 +138,7 @@ export default function Content() {
           src={map}
           width={600}
           height={400}
+          loadMode="lg"
           placeholder="blur"
         />
       </Box>

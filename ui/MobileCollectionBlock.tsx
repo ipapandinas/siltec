@@ -65,7 +65,11 @@ export default function MobileCollectionBlock({
               padding: "0 1.6rem",
             }}
           >
-            <Typography textTransform="uppercase" variant="h3">
+            <Typography
+              textTransform="uppercase"
+              variant="h3"
+              textAlign="center"
+            >
               {title}
             </Typography>
           </Box>
