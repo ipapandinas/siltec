@@ -26,9 +26,17 @@ export default async function Page({ params }: any) {
 
   return (
     <div>
-      <Container id="lastContainer">
-        <Band color={couleur ?? COLOR_SECONDARY_MAIN} text={pageName} />
-        <div style={{ marginTop: "4rem" }}>
+      <Container
+        id="productPageContainer"
+        sx={{
+          marginX: { xs: "2.4rem", lg: "0" },
+          padding: { xs: "4.8rem 0", lg: "4rem" },
+        }}
+      >
+        <div style={{ paddingLeft: "2.4rem", paddingRight: "2.4rem" }}>
+          <Band color={couleur ?? COLOR_SECONDARY_MAIN} text={pageName} />
+        </div>
+        <div style={{ marginTop: "4rem", paddingLeft: "2.4rem" }}>
           <Breadcrumbs
             list={[
               { name: "Collections", href: "/collections" },

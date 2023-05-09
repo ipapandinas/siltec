@@ -140,6 +140,7 @@ export default function Content() {
           height={400}
           loadMode="lg"
           placeholder="blur"
+          quality={100}
         />
       </Box>
     </>

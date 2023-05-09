@@ -9,7 +9,7 @@ import { IProduct } from "#/interfaces/IProduct";
 
 import AppImage from "./AppImage";
 import Carroussel from "./Carroussel";
-import { UP_LG } from "#/utils/constants";
+import { UP_LG, UP_SM } from "#/utils/constants";
 import { rgbDataURL } from "#/utils/strings";
 
 interface IProps {
@@ -71,6 +71,7 @@ export default function Product({ product }: IProps) {
           width: "fit-content",
           marginTop: "0.8rem",
           path: { fill: "#010101" },
+          paddingX: { xs: "2.4rem", lg: 0 },
         }}
       >
         <PictureAsPdfIcon />
@@ -83,10 +84,12 @@ export default function Product({ product }: IProps) {
           img: {
             borderTopRightRadius: { xs: "4rem", lg: "8rem" },
             borderBottomLeftRadius: { xs: "4rem", lg: "8rem" },
-            width: { xs: "100% !important", lg: "auto" },
-            height: { xs: "auto !important", lg: "auto" },
-            maxWidth: 800,
-            maxHeight: 800,
+            width: { xs: "400px", lg: "100% !important" },
+            height: { xs: "400px", lg: "auto !important" },
+            [UP_LG]: {
+              maxWidth: 800,
+              maxHeight: 800,
+            },
           },
         }}
       >
@@ -105,12 +108,13 @@ export default function Product({ product }: IProps) {
       <Box
         sx={{
           position: "relative",
-          width: { xs: "100% !important", lg: "40%" },
-          maxWidth: { xs: "600px", lg: "40%" },
+          width: { xs: "400px", lg: "40%" },
+          maxWidth: { xs: "400px", lg: "40%" },
           bottom: { xs: 50, lg: 100 },
           right: 0,
           bgcolor: "#fff",
           padding: "1.6rem 4rem",
+          marginRight: { xs: "2.4rem", lg: 0 },
           height: "fit-content",
           borderTopLeftRadius: "4rem",
           borderBottomRightRadius: "4rem",
@@ -156,30 +160,37 @@ export default function Product({ product }: IProps) {
         <Box
           marginTop="4rem"
           sx={{
-            display: {
-              xs: "none",
-              lg: "block",
-            },
             ".slick-slider": {
-              borderTopLeftRadius: { xs: "4rem", lg: "8rem" },
-              borderBottomRightRadius: { xs: "4rem", lg: "8rem" },
               overflow: "hidden",
-              width: "85% !important",
+              width: "100vw",
               height: "auto",
               maxHeight: "1000px",
               objectFit: "cover",
               margin: "0 auto",
               [UP_LG]: {
+                borderTopLeftRadius: { xs: "4rem", lg: "8rem" },
+                borderBottomRightRadius: { xs: "4rem", lg: "8rem" },
                 width: "800px !important",
               },
             },
 
             ".slick-slide img": {
-              height: "800px !important",
+              height: "400px !important",
+            },
+
+            [UP_SM]: {
+              ".slick-slide img": {
+                height: "800px !important",
+              },
             },
           }}
         >
-          <Carroussel list={carrousselList} width={850} height={800} />
+          <Carroussel
+            list={carrousselList}
+            width={850}
+            height={800}
+            quality={100}
+          />
         </Box>
       )}
     </Box>

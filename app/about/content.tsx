@@ -53,6 +53,7 @@ export default function Content({ description, trombinoscope }: Props) {
             height={400}
             placeholder="blur"
             blurDataURL={rgbDataURL(255, 216, 209)}
+            quality={100}
           />
         </Box>
       )}

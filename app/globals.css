@@ -109,6 +109,11 @@ body {
   margin-bottom: 8rem;
 }
 
+#productPageContainer {
+  margin-bottom: 8rem;
+  width: 100vw;
+}
+
 a {
   color: inherit;
   text-decoration: none;

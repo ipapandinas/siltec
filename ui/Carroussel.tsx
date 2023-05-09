@@ -11,11 +11,12 @@ interface Props extends MuiBoxProps {
   list: string[];
   width?: number;
   height?: number;
+  quality?: number;
   isHero?: boolean;
 }
 
 export default function Carroussel(props: Props) {
-  const { list, width, height, isHero = false } = props;
+  const { list, width, height, quality = undefined, isHero = false } = props;
   const propsCopy = { ...props };
   const sliderSettings = {
     arrows: false,
@@ -55,7 +56,7 @@ export default function Carroussel(props: Props) {
             src={isHero ? cropSrc(src) : src}
             width={width ?? 1800}
             height={height ?? 800}
-            quality={isHero ? 100 : undefined}
+            quality={isHero ? 100 : quality}
             loadMode={isHero ? "lg" : undefined}
             unoptimized={isHero}
             placeholder="blur"

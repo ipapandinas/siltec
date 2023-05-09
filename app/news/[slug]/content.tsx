@@ -5,7 +5,6 @@ import ReactMarkdown from "react-markdown";
 
 import { IImage } from "#/interfaces/IImage";
 import Carroussel from "#/ui/Carroussel";
-import Container from "#/ui/Container";
 import { UP_LG } from "#/utils/constants";
 
 interface Props {
