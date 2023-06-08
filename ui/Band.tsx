@@ -28,11 +28,10 @@ export default function Band({ color, text }: IProps) {
     >
       <Typography
         color="#fff"
-        fontWeight="bold"
         variant="h3"
         textAlign="center"
-        textTransform="uppercase"
         sx={{
+          display: 'block',
           ":first-letter": {
             textTransform: "capitalize",
           },

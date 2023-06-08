@@ -30,7 +30,6 @@ export default async function Home() {
       {carroussel !== undefined && carroussel.length > 0 && (
         <>
           <Carroussel
-            isHero
             list={carroussel.map(({ attributes }) => attributes.url)}
             sx={{
               ":after": {

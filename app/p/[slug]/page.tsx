@@ -18,7 +18,7 @@ export default async function Page({ params }: any) {
   const { couleur } = pageData.attributes;
   const titre = product.attributes.titre;
   const marque = product.attributes.marque;
-  const pageName = titre + `${marque ? ` - ${marque}` : ""}`;
+  const pageName = titre;
   const { titre: collectionTitle, slug: collectionSlug } =
     product.attributes.collections.data?.attributes ?? {};
   const { titre: typologyTitle, slug: typologySlug } =
