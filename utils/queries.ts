@@ -14,6 +14,7 @@ export const queryCollections = () => gql`
               attributes {
                 alternativeText
                 url
+                hash
               }
             }
           }
@@ -70,6 +71,7 @@ export const queryProduct = (slug: string) => gql`
               attributes {
                 alternativeText
                 url
+                hash
               }
             }
           }
@@ -78,6 +80,7 @@ export const queryProduct = (slug: string) => gql`
               attributes {
                 alternativeText
                 url
+                hash
               }
             }
           }
@@ -129,6 +132,7 @@ export const queryProducts = (collection: string, typology: string) => gql`
               attributes {
                 alternativeText
                 url
+                hash
               }
             }
           }
@@ -170,6 +174,7 @@ export const queryTypologies = (collection: string) => gql`
               attributes {
                 alternativeText
                 url
+                hash
               }
             }
           }
@@ -212,6 +217,7 @@ const BRAND_DATA_QUERY = `
           attributes {
             alternativeText
             url
+            hash
           }
         }
       }
@@ -253,6 +259,7 @@ const PROJECT_DATA_QUERY = `
           attributes {
             alternativeText
             url
+            hash
           }
         }
       }
@@ -261,6 +268,7 @@ const PROJECT_DATA_QUERY = `
           attributes {
             alternativeText
             url
+            hash
           }
         }
       }
@@ -316,6 +324,7 @@ const NEWS_DATA_QUERY = `
           attributes {
             alternativeText
             url
+            hash
           }
         }
       }
@@ -324,6 +333,7 @@ const NEWS_DATA_QUERY = `
           attributes {
             alternativeText
             url
+            hash
           }
         }
       }
@@ -381,6 +391,7 @@ export const queryAboutSinglePage = () => gql`
               attributes {
                 alternativeText
                 url
+                hash
               }
             }
           }
@@ -404,6 +415,7 @@ export const queryNavigation = () => gql`
                 attributes {
                   alternativeText
                   url
+                  hash
                 }
               }
             }

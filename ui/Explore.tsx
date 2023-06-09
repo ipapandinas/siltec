@@ -22,9 +22,9 @@ export default function Explore({ items, subPath }: IProps) {
     >
       {items.map(({ id, attributes }: any) => {
         const { image, titre, slug } = attributes;
-        const { alternativeText, url } = image?.data?.attributes ?? {};
+        const { alternativeText, hash } = image?.data?.attributes ?? {};
 
-        if (!url) return null;
+        if (!hash) return null;
 
         return (
           <Grid
@@ -44,7 +44,7 @@ export default function Explore({ items, subPath }: IProps) {
             <Card
               href={`${subPath ? `/${subPath}` : ""}` + `/${slug}`}
               imageAlt={alternativeText ?? `Item - ${titre}`}
-              imageSrc={url}
+              imageSrc={hash}
               label={titre}
               title={titre}
             />

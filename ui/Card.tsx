@@ -1,4 +1,6 @@
 "use client";
+import cloudinary from "utils/cloudinary";
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 
 import {
   Card as MuiCard,
@@ -24,6 +26,11 @@ export default function Card({
   label,
   title,
 }: IProps) {
+  const srcCloudinary = cloudinary
+    .image(imageSrc)
+    .resize(thumbnail().width(370).height(380))
+    .toURL();
+
   return (
     <MuiCard sx={{ width: "100%" }} elevation={0}>
       <Link href={href} title={title}>
@@ -42,7 +49,7 @@ export default function Card({
           <CardMedia
             component="img"
             height="380"
-            image={imageSrc}
+            image={srcCloudinary}
             alt={imageAlt}
             sx={{ objectFit: "cover" }}
           />
