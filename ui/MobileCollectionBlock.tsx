@@ -26,12 +26,7 @@ export default function MobileCollectionBlock({
   title,
 }: IProps) {
   return (
-    <Box
-      sx={{
-        display: "block",
-        [UP_LG]: { display: "none" },
-      }}
-    >
+    <Box>
       <AppLink href={linkHref} title={linkTitle}>
         <Box
           sx={{

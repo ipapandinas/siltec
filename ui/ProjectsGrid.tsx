@@ -17,9 +17,9 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
     >
       {projects.slice(0, 3).map(({ id, attributes }, idx) => {
         const { titre, image, slug } = attributes;
-        const { alternativeText, url } = image.data?.attributes ?? {};
+        const { alternativeText, hash } = image.data?.attributes ?? {};
 
-        if (!url) return null;
+        if (!hash) return null;
 
         return (
           <Grid
@@ -41,7 +41,7 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
               key={idx}
               href={`/projects/${slug}`}
               imageAlt={alternativeText ?? `Item - ${titre}`}
-              imageSrc={url}
+              imageSrc={hash}
               label={titre}
               title={titre}
             />

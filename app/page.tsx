@@ -129,6 +129,7 @@ const getContent = cache(async () => {
                   attributes {
                     alternativeText
                     url
+                    hash
                   }
                 }
               }
@@ -147,6 +148,7 @@ const getContent = cache(async () => {
                   attributes {
                     alternativeText
                     url
+                    hash
                   }
                 }
               }
@@ -165,6 +167,7 @@ const getContent = cache(async () => {
                   attributes {
                     alternativeText
                     url
+                    hash
                   }
                 }
               }
@@ -189,6 +192,7 @@ const getContent = cache(async () => {
                   attributes {
                     alternativeText
                     url
+                    hash
                   }
                 }
               }

@@ -5,13 +5,15 @@ import { usePathname } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Box, IconButton, Typography } from "@mui/material";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { fit } from "@cloudinary/url-gen/actions/resize";
+
 import { IProduct } from "#/interfaces/IProduct";
+import { UP_LG, UP_SM } from "#/utils/constants";
+import { rgbDataURL } from "#/utils/strings";
+import cloudinary from "#/utils/cloudinary";
 
 import AppImage from "./AppImage";
 import Carroussel from "./Carroussel";
-import { UP_LG, UP_SM } from "#/utils/constants";
-import { rgbDataURL } from "#/utils/strings";
-
 interface IProps {
   product: IProduct;
 }
@@ -21,14 +23,24 @@ export default function Product({ product }: IProps) {
   const [loading, setLoading] = useState(false);
   const { description, designer, image, marque, medias, titre } =
     product.attributes;
-  const { alternativeText, url } = image?.data?.attributes ?? {};
+  const { alternativeText, hash } = image?.data?.attributes ?? {};
 
-  const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
+  const srcCloudinary = cloudinary
+    .image(hash)
+    .resize(fit().width(800).height(800))
+    .toURL();
+
+  const carrousselList = medias?.data?.map(({ attributes }) =>
+    cloudinary
+      .image(attributes.hash)
+      .resize(fit().width(850).height(800))
+      .toURL()
+  );
 
   const handleDownloadPDF = async () => {
     setLoading(true);
     fetch(
-      `/api/download-pdf?title=${titre}&brand=${marque}&imageUrl=${url}&pageUrl=${pathname}`
+      `/api/download-pdf?title=${titre}&brand=${marque}&imageUrl=${srcCloudinary}&pageUrl=${pathname}`
     )
       .then((response) => {
         setLoading(false);
@@ -93,10 +105,10 @@ export default function Product({ product }: IProps) {
           },
         }}
       >
-        {url && (
+        {srcCloudinary && (
           <AppImage
             alt={alternativeText ?? "Product image"}
-            src={url}
+            src={srcCloudinary}
             height={800}
             width={800}
             style={{ objectFit: "cover" }}

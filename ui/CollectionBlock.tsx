@@ -32,9 +32,7 @@ export default function CollectionBlock({
   return (
     <Box
       sx={{
-        display: "none",
         [UP_LG]: {
-          display: "block",
           alignSelf: isRtl ? "flex-end" : "flex-start",
           width: "100%",
         },
