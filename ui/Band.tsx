@@ -31,7 +31,7 @@ export default function Band({ color, text }: IProps) {
         variant="h3"
         textAlign="center"
         sx={{
-          display: 'block',
+          display: "block",
           ":first-letter": {
             textTransform: "capitalize",
           },

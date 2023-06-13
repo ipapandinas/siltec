@@ -124,7 +124,10 @@ export default function Header() {
                     color={couleur}
                     href={url}
                     imageAlt={`${titre} - Navigation Logo`}
-                    imageHref={picto.data.attributes.url}
+                    imageHref={
+                      picto.data?.attributes.url ??
+                      DEFAULT_NAVIGATION[idx].picto.data.attributes.url
+                    }
                     imageHeight={50}
                     imageWidth={30}
                     label={titre}
