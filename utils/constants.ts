@@ -35,6 +35,7 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
         attributes: {
           alternativeText: "Collections navigation logo",
           url: "/assets/nav/collections.svg",
+          hash: "collections",
         },
       },
     },
@@ -48,6 +49,7 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
         attributes: {
           alternativeText: "Réalisation navigation logo",
           url: "/assets/nav/realisations.svg",
+          hash: "realisations",
         },
       },
     },
@@ -61,6 +63,7 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
         attributes: {
           alternativeText: "About navigation logo",
           url: "/assets/nav/QSN.svg",
+          hash: "QSN",
         },
       },
     },
@@ -74,6 +77,7 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
         attributes: {
           alternativeText: "News navigation logo",
           url: "/assets/nav/actu.svg",
+          hash: "actu",
         },
       },
     },
@@ -87,6 +91,7 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
         attributes: {
           alternativeText: "Contact navigation logo",
           url: "/assets/nav/contact.svg",
+          hash: "contact",
         },
       },
     },
