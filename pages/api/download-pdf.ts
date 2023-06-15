@@ -61,7 +61,7 @@ function generatePDF(productData: ProductData): any {
   doc
     .font("Helvetica")
     .fillColor("#0c3e4b")
-    .text("contact@siltec-mobilier.com", { align: "center" });
+    .text("info@siltec-mobilier.com", { align: "center" });
   doc
     .font("Helvetica")
     .fillColor("#0c3e4b")
