@@ -96,9 +96,9 @@ export default function Content() {
           <ReactMarkdown>
             {"# CONTACT\n" +
               "\n" +
-              "## Visitez notre show room\n" +
+              "## Visitez notre showroom\n" +
               "\n" +
-              "Architectes, professionnels ou particuliers, nous vous accueillons dans notre show room du lundi au vendredi, de 9 heures à 18 heures, de préférence sur rendez-vous. Loin d'être un catalogue à ciel ouvert, cet espace d'accueil invite à l'échange et à la réflexion autour d'une sélection de produits au sein d'une offre beaucoup plus vaste."}
+              "Architectes, professionnels ou particuliers, nous vous accueillons dans notre showroom du lundi au vendredi, de 9 heures à 18 heures, de préférence sur rendez-vous. Loin d'être un catalogue à ciel ouvert, cet espace d'accueil invite à l'échange et à la réflexion autour d'une sélection de produits au sein d'une offre beaucoup plus vaste."}
           </ReactMarkdown>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
