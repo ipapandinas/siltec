@@ -67,6 +67,16 @@ export default async function Home() {
         />
       </Container>
 
+      <Container bgcolor="#F2EADF" bgcolorSize="lg">
+        <FeaturedBrand
+          address="51 rue de Miromesnil, 75008 PARIS"
+          bgcolor="#F2EADF"
+          href="https://www.wittmann.at//"
+          logoSrc="/assets/brands/wittmann.svg"
+          name="Wittmann"
+        />
+      </Container>
+
       {collections !== undefined && collections.length > 0 && (
         <Section
           sx={{
