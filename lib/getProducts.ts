@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { GRAPHQL_API_URL } from "#/utils/constants";
+import { GRAPHQL_API_URL, REVALIDATE_CONTENT } from "#/utils/constants";
 import { queryProducts, queryProduct } from "#/utils/queries";
 import { IProduct } from "#/interfaces/IProduct";
 
@@ -9,7 +9,7 @@ export const getProducts = cache(
     try {
       const query = queryProducts(collection, typology);
       return await fetch(GRAPHQL_API_URL, {
-        next: { revalidate: 60 },
+        next: { revalidate: REVALIDATE_CONTENT },
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -34,7 +34,7 @@ export const getProduct = cache(async (slug: string) => {
   try {
     const query = queryProduct(slug);
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_CONTENT },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

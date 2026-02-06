@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { GRAPHQL_API_URL } from "#/utils/constants";
+import { GRAPHQL_API_URL, REVALIDATE_STATIC } from "#/utils/constants";
 import { queryAboutSinglePage } from "#/utils/queries";
 import { IAboutSinglePage } from "#/interfaces/IAbout";
 
@@ -8,7 +8,7 @@ export const getAboutSinglePage = cache(async () => {
   try {
     const query = queryAboutSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_STATIC },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

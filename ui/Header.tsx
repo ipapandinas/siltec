@@ -1,6 +1,6 @@
 "use client";
 
-import { cloneElement, useState, useEffect } from "react";
+import { cloneElement, useState } from "react";
 import { AppBar, Box, IconButton, Toolbar, useTheme } from "@mui/material";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,8 +10,7 @@ import AppLink from "./AppLink";
 import NavItem from "./NavItem";
 import MobileDrawer from "./MobileDrawer";
 import AppImage from "./AppImage";
-import { getNavigation } from "#/lib/getNavigation";
-import { DEFAULT_NAVIGATION } from "#/utils/constants";
+import type { PastilleType } from "#/interfaces/INavigation";
 
 function ElevationScroll(props: { children: any; mobileMenuOpen: boolean }) {
   const { children, mobileMenuOpen } = props;
@@ -25,15 +24,17 @@ function ElevationScroll(props: { children: any; mobileMenuOpen: boolean }) {
   });
 }
 
-export default function Header() {
+export default function Header({
+  navigation,
+}: {
+  navigation: PastilleType[];
+}) {
   const theme = useTheme();
   const minimizeNav = useScrollTrigger({
     disableHysteresis: true,
     threshold: 100,
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isNavLoading, setIsNavLoading] = useState(true);
-  const [navigation, setNavigation] = useState(DEFAULT_NAVIGATION);
 
   const handleMobileOpen = () => {
     setMobileMenuOpen(true);
@@ -42,28 +43,6 @@ export default function Header() {
   const handleMobileClose = () => {
     setMobileMenuOpen(false);
   };
-
-  useEffect(() => {
-    let shoulUpdate = true;
-
-    const loadNavigation = async () => {
-      try {
-        const res = await getNavigation();
-        if (res && shoulUpdate) {
-          setNavigation(res.attributes.pastille);
-          setIsNavLoading(false);
-        }
-      } catch (error) {
-        setIsNavLoading(false);
-        console.log(error);
-      }
-    };
-
-    loadNavigation();
-    return () => {
-      shoulUpdate = false;
-    };
-  }, []);
 
   return (
     <Box
@@ -114,8 +93,7 @@ export default function Header() {
                   justifyContent: "center",
                   alignItems: "center",
                   gap: "6.4rem",
-                  opacity: isNavLoading ? 0 : 1,
-                  transition: "opacity 0.5s ease 0.5s",
+                  opacity: 1,
                 }}
               >
                 {navigation.map(({ couleur, url, picto, titre }, idx) => (
@@ -124,10 +102,7 @@ export default function Header() {
                     color={couleur}
                     href={url}
                     imageAlt={`${titre} - Navigation Logo`}
-                    imageHref={
-                      picto.data?.attributes.url ??
-                      DEFAULT_NAVIGATION[idx].picto.data.attributes.url
-                    }
+                    imageHref={picto?.data?.attributes?.url}
                     imageHeight={50}
                     imageWidth={30}
                     label={titre}

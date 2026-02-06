@@ -7,7 +7,7 @@ interface IProps {
   color: string;
   href: string;
   imageAlt: string;
-  imageHref: string;
+  imageHref?: string;
   imageHeight: number;
   imageWidth: number;
   label: string;
@@ -73,17 +73,17 @@ export default function NavItem({
             },
           }}
         >
-          {
-            <AppImage
-              className={minimize ? "minimize" : ""}
-              alt={imageAlt}
-              src={imageHref}
-              width={imageWidth}
-              height={imageHeight}
-              style={logoStyle}
-              loadMode="md"
-            />
-          }
+            {imageHref ? (
+                <AppImage
+                    className={minimize ? "minimize" : ""}
+                    alt={imageAlt}
+                    src={imageHref}
+                    width={imageWidth}
+                    height={imageHeight}
+                    style={logoStyle}
+                    loadMode="md"
+                />
+            ) : null}
         </Box>
         <Typography
           id="label"

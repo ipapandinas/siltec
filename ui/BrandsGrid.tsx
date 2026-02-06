@@ -11,35 +11,33 @@ interface IProps {
 
 export default function BrandsGrid({ list }: IProps) {
   return (
-    <Grid container rowSpacing={12} columnSpacing={4} justifyContent="center">
-      {list.map(({ id, attributes }) => {
-        const { nom, logo } = attributes;
-        const { url } = logo.data?.attributes ?? {};
+      <Grid container rowSpacing={12} columnSpacing={4} justifyContent="center">
+        {list.map(({ id, attributes }) => {
+          const { nom, logo } = attributes;
+          const url = logo.data?.attributes?.url;
 
-        if (!url) return null;
+          if (!url) return null;
 
-        return (
-          <Grid
-            key={id}
-            item
-            xs={6}
-            md={3}
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              img: { width: "auto", maxWidth: 115 },
-            }}
-          >
-            <AppImage
-              alt={`${nom} logo`}
-              src={url}
-              width={115}
-              height={40}
-              loadMode="md"
-            />
-          </Grid>
-        );
-      })}
-    </Grid>
+          return (
+              <Grid
+                  key={id}
+                  size={{ xs: 6, md: 3 }}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    img: { width: "auto", maxWidth: 115 },
+                  }}
+              >
+                <AppImage
+                    alt={`${nom} logo`}
+                    src={url}
+                    width={115}
+                    height={40}
+                    loadMode="md"
+                />
+              </Grid>
+          );
+        })}
+      </Grid>
   );
 }

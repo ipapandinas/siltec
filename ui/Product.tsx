@@ -39,15 +39,20 @@ export default function Product({ product }: IProps) {
 
   const handleDownloadPDF = async () => {
     setLoading(true);
-    fetch(
-      `/api/download-pdf?title=${titre}&brand=${marque}&imageUrl=${srcCloudinary}&pageUrl=${pathname}`
-    )
-      .then((response) => {
+    const queryString = `title=${encodeURIComponent(
+      titre
+    )}&brand=${encodeURIComponent(marque ?? "")}&imageUrl=${srcCloudinary}&pageUrl=${encodeURIComponent(
+      pathname ?? ""
+    )}`;
+    console.log(queryString);
+    fetch(`/api/download-pdf?${queryString}`)
+      .then(async (response) => {
         setLoading(false);
         if (response.ok) {
           return response.blob();
         } else {
-          throw new Error("Network response was not ok.");
+            const text = await response.text();
+            throw new Error(`${response.status} ${response.statusText}: ${text}`);
         }
       })
       .then((blob) => {

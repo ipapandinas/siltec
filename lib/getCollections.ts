@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { GRAPHQL_API_URL } from "#/utils/constants";
+import { GRAPHQL_API_URL, REVALIDATE_SLOW } from "#/utils/constants";
 import {
   queryCollections,
   queryCollectionSinglePage,
@@ -12,7 +12,7 @@ export const getCollections = cache(async () => {
   try {
     const query = queryCollections();
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -37,7 +37,7 @@ export const getCollectionSinglePage = cache(async () => {
   try {
     const query = queryCollectionSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -63,7 +63,7 @@ export const getCollectionTitle = cache(async (slug: string) => {
   try {
     const query = queryCollectionTitle(slug);
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

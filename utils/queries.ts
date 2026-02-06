@@ -410,15 +410,6 @@ export const queryNavigation = () => gql`
             couleur
             titre
             url
-            picto {
-              data {
-                attributes {
-                  alternativeText
-                  url
-                  hash
-                }
-              }
-            }
           }
         }
       }

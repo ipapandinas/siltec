@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { GRAPHQL_API_URL } from "#/utils/constants";
+import { GRAPHQL_API_URL, REVALIDATE_SLOW } from "#/utils/constants";
 import {
   queryProject,
   queryProjects,
@@ -12,7 +12,7 @@ export const getProjects = cache(async () => {
   try {
     const query = queryProjects();
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -37,7 +37,7 @@ export const getProject = cache(async (slug: string) => {
   try {
     const query = queryProject(slug);
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -62,7 +62,7 @@ export const getProjectSinglePage = cache(async () => {
   try {
     const query = queryProjectSinglePage();
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

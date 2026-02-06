@@ -10,19 +10,19 @@ interface Props {
 
 export default function Content({ brands }: Props) {
   const handleSort = () => {
-    const sortedList = brands
-      .sort((a, b) => a.attributes.nom.localeCompare(b.attributes.nom))
-      .map(({ attributes }) => attributes.nom);
+    const sortedList = [...brands]
+        .sort((a, b) => a.attributes.nom.localeCompare(b.attributes.nom))
+        .map(({ attributes }) => attributes.nom);
 
     const brandNamesByFirstLetter: { [key: string]: string[] } = {};
-    for (let i = 38; i <= 90; i++) {
-      // ASCII codes for A to Z
+    for (let i = 65; i <= 90; i++) {
       const letter = String.fromCharCode(i);
       brandNamesByFirstLetter[letter] = [];
     }
 
     sortedList.forEach((name) => {
       const firstLetter = name.charAt(0).toUpperCase();
+      if (!brandNamesByFirstLetter[firstLetter]) brandNamesByFirstLetter[firstLetter] = [];
       brandNamesByFirstLetter[firstLetter].push(name);
     });
 
@@ -35,38 +35,36 @@ export default function Content({ brands }: Props) {
         if (value.length === 0) return;
 
         return (
-          <Grid
-            key={key}
-            item
-            xs={6}
-            md={3}
-            sx={{ display: "flex", gap: { xs: "1.6rem", lg: "4rem" } }}
-          >
-            <Typography
-              variant="h3"
-              sx={{
-                width: "4.8rem",
-              }}
-            >
-              {key}
-            </Typography>
-            <List sx={{ paddingTop: "2.4rem" }}>
-              {value.map((name: string, idx: number) => (
-                <ListItemText key={idx}>
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      ":first-letter": {
-                        textTransform: "capitalize",
-                      },
-                    }}
-                  >
-                    {name}
-                  </Typography>
-                </ListItemText>
-              ))}
-            </List>
-          </Grid>
+            <Grid key={key} container rowSpacing={12} columnSpacing={8}>
+              {Object.entries(handleSort()).map(([key, value]) => {
+                if (value.length === 0) return null;
+
+                return (
+                    <Grid
+                        key={key}
+                        size={{ xs: 6, md: 3 }}
+                        sx={{ display: "flex", gap: { xs: "1.6rem", lg: "4rem" } }}
+                    >
+                      <Typography variant="h3" sx={{ width: "4.8rem" }}>
+                        {key}
+                      </Typography>
+
+                      <List sx={{ paddingTop: "2.4rem" }}>
+                        {value.map((name, idx) => (
+                            <ListItemText key={idx}>
+                              <Typography
+                                  variant="h6"
+                                  sx={{ ":first-letter": { textTransform: "capitalize" } }}
+                              >
+                                {name}
+                              </Typography>
+                            </ListItemText>
+                        ))}
+                      </List>
+                    </Grid>
+                );
+              })}
+            </Grid>
         );
       })}
     </Grid>

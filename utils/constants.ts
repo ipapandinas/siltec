@@ -7,6 +7,10 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL
 export const GRAPHQL_API_URL = process.env.NEXT_PUBLIC_GRAPHQL_API_URL
   ? removeURLSlash(process.env.NEXT_PUBLIC_GRAPHQL_API_URL)
   : "";
+// ISR revalidation intervals (seconds)
+export const REVALIDATE_STATIC = 60 * 60 * 12; // 12h - navigation, about, contact
+export const REVALIDATE_SLOW = 60 * 60 * 2; // 2h  - brands, collections, typologies, projects
+export const REVALIDATE_CONTENT = 60 * 60; // 1h - news, products
 
 export const DOWN_XXS = "@media (max-width: 320px)";
 export const DOWN_XS = "@media (max-width: 400px)";

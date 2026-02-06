@@ -1,6 +1,6 @@
 import { cache } from "react";
 
-import { GRAPHQL_API_URL } from "#/utils/constants";
+import { GRAPHQL_API_URL, REVALIDATE_SLOW } from "#/utils/constants";
 import { queryTypologies, queryTypologyTitle } from "#/utils/queries";
 import { ITypology } from "#/interfaces/ITypology";
 
@@ -8,7 +8,7 @@ export const getTypologies = cache(async (collection: string) => {
   try {
     const query = queryTypologies(collection);
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -33,7 +33,7 @@ export const getTypologyTitle = cache(async (slug: string) => {
   try {
     const query = queryTypologyTitle(slug);
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_SLOW },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -1,7 +1,7 @@
 import { cache } from "react";
-import request from "graphql-request";
 
-import { GRAPHQL_API_URL } from "#/utils/constants";
+
+import { GRAPHQL_API_URL, REVALIDATE_CONTENT } from "#/utils/constants";
 import {
   queryNews,
   querySingleNews,
@@ -13,7 +13,7 @@ export const getNews = cache(async () => {
   try {
     const query = queryNews();
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_CONTENT },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -38,7 +38,7 @@ export const getSingleNews = cache(async (slug: string) => {
   try {
     const query = querySingleNews(slug);
     return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
+      next: { revalidate: REVALIDATE_CONTENT },
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -61,13 +61,18 @@ export const getSingleNews = cache(async (slug: string) => {
 
 export const getNewsSinglePage = cache(async () => {
   try {
-    const gql = queryNewsSinglePage();
-    return (
-      await request<{ hubDActualite: { data: INewsSinglePage } }>(
-        GRAPHQL_API_URL,
-        gql
-      )
-    ).hubDActualite.data;
+    const query = queryNewsSinglePage();
+    const response = await fetch(GRAPHQL_API_URL, {
+      next: { revalidate: REVALIDATE_CONTENT },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query,
+      }),
+    });
+    const content: { data: { hubDActualite: { data: INewsSinglePage } } } =
+      await response.json();
+    return content.data.hubDActualite.data;
   } catch (err: any) {
     console.error(
       `News single page could not have been fetched - Detail: ${

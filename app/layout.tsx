@@ -1,98 +1,55 @@
-"use client";
-
-import { CacheProvider, EmotionCache } from "@emotion/react";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import NorthIcon from "@mui/icons-material/North";
-import ScrollToTop from "react-scroll-to-top";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Raleway } from "next/font/google";
-const raleway = Raleway({ subsets: ["latin"] });
+import { getNavigation } from "#/lib/getNavigation";
+import { DEFAULT_NAVIGATION } from "#/utils/constants";
+import type { PastilleType } from "#/interfaces/INavigation";
 
-import { theme } from "#/theme";
-import createEmotionCache from "#/theme/createEmotionCache";
-import Header from "#/ui/Header";
-import Footer from "#/ui/Footer";
+import ClientShell from "#/ui/ClientShell";
 
 import "./globals.css";
-import styles from "./page.module.css";
 
-const clientSideEmotionCache = createEmotionCache();
+const raleway = Raleway({ subsets: ["latin"] });
 
-export default function RootLayout({
-  children,
-  emotionCache = clientSideEmotionCache,
-}: {
-  children: React.ReactNode;
-  emotionCache?: EmotionCache;
-}) {
+export const metadata: Metadata = {
+  title: "Siltec - spécialiste de l'ameublement",
+  description:
+    "Spécialisé depuis 1977 dans l'aménagement des espaces bureau, résidentiel et hôtellerie.",
+  openGraph: {
+    type: "website",
+    title: "Siltec",
+    siteName: "Siltec",
+    url: "http://www.siltec-mobilier.com/",
+    description:
+      "Spécialisé depuis 1977 dans l'aménagement des espaces bureau, résidentiel et hôtellerie.",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      "/favicon.ico",
+    ],
+    apple: "/apple-touch-icon.png",
+    other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#5bbad5" }],
+  },
+  manifest: "/site.webmanifest",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffffff",
+};
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const navData = await getNavigation();
+  const navigation: PastilleType[] = navData ?? DEFAULT_NAVIGATION;
+
   return (
-    <html lang="en">
-      <style jsx global>{`
-        html {
-          font-family: ${raleway.style.fontFamily};
-        }
-      `}</style>
-      <head>
-        <title>Siltec - spécialiste de l&apos;ameublement</title>
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta property="og:type" content="website" />
-        <meta name="title" property="og:title" content="Siltec" />
-        <meta property="og:site_name" content="Siltec" />
-        <meta property="og:url" content="http://www.siltec-mobilier.com/" />
-        <meta
-          name="description"
-          property="og:description"
-          content="Spécialisé depuis 1977 dans l’aménagement des espaces bureau, résidentiel et hôtellerie."
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
-      </head>
-      <CacheProvider value={emotionCache}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <body>
-            <Header />
-            <main className={styles.main}>{children}</main>
-            <Footer />
-            <ScrollToTop
-              smooth
-              top={400}
-              component={<NorthIcon color="secondary" fontSize="large" />}
-              viewBox="0 0 0 0"
-              style={{
-                boxShadow: "none",
-                background: "white",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                right: "1.6rem",
-                bottom: "1.6rem",
-                width: "5.6rem",
-                height: "5.6rem",
-              }}
-            />
-          </body>
-        </ThemeProvider>
-      </CacheProvider>
+    <html lang="en" className={raleway.className}>
+      <body>
+        <ClientShell navigation={navigation}>{children}</ClientShell>
+      </body>
     </html>
   );
 }
