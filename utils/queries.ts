@@ -172,6 +172,52 @@ export const queryFeaturedBrands = () => gql`
   }
 `;
 
+export const queryHome = () => gql`
+  {
+    homepage {
+      couleurFondPartenaires
+      couleurFondArflex
+      couleurBoutonArflex
+      couleurTexteArflex
+      couleurBoutonVoirPlus
+    }
+    carroussel {
+      documentId
+      medias {
+        ${IMAGE_DATA_QUERY}
+      }
+    }
+    collections(sort: ["rank:ASC"], pagination: { pageSize: 2 }) {
+      documentId
+      titre
+      description
+      couleur
+      image {
+        ${IMAGE_DATA_QUERY}
+      }
+      rank
+      slug
+    }
+    projects(sort: ["rank:ASC"], pagination: { pageSize: 3 }) {
+      documentId
+      titre
+      image {
+        ${IMAGE_DATA_QUERY}
+      }
+      couleur
+      rank
+      slug
+    }
+    brands(
+      filters: { premium: { eq: true } }
+      pagination: { pageSize: 50 }
+      sort: "nom:asc"
+    ) {
+      ${BRAND_DATA_QUERY}
+    }
+  }
+`;
+
 const PROJECT_DATA_QUERY = `
   documentId
   titre

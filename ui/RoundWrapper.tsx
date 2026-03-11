@@ -10,10 +10,12 @@ interface Props extends MuiBoxProps {
 export default function RoundWrapper(props: Props) {
   const { bgcolor, children } = props;
   const propsCopy = { ...props };
+  const safeBgcolor = bgcolor || "background.default";
+
   return (
     <Box
       sx={{
-        bgcolor,
+        bgcolor: safeBgcolor,
         display: "flex",
         flexDirection: { xs: "column", lg: "row" },
         justifyContent: "center",

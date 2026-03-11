@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Typography, useTheme } from "@mui/material";
+import { darken } from "@mui/material/styles";
 
 import AppImage from "./AppImage";
 import AppLink from "./AppLink";
@@ -9,19 +10,32 @@ import RoundWrapper from "./RoundWrapper";
 interface IProps {
   address: string;
   bgcolor: string;
+  buttonColor?: string;
   href: string;
   logoSrc: string;
   name: string;
+  textColor?: string;
 }
 
 export default function FeaturedBrand({
   address,
   bgcolor,
+  buttonColor,
   href,
   logoSrc,
   name,
+  textColor,
 }: IProps) {
   const theme = useTheme();
+  const resolvedButtonColor = buttonColor || "#A2B39B";
+  const resolvedButtonHoverColor = buttonColor
+    ? darken(resolvedButtonColor, 0.2)
+    : "#717e6c";
+  const resolvedButtonTextColor = theme.palette.getContrastText(resolvedButtonColor);
+  const resolvedButtonHoverTextColor = theme.palette.getContrastText(
+    resolvedButtonHoverColor
+  );
+
   return (
     <RoundWrapper
       bgcolor={bgcolor}
@@ -56,6 +70,7 @@ export default function FeaturedBrand({
           padding: { xs: "2.4rem 4rem", lg: "2.4rem 8rem" },
           borderRadius: "12rem",
           marginLeft: { xs: 0, lg: "12rem" },
+          color: textColor || "#010101",
         }}
       >
         <Typography
@@ -101,11 +116,11 @@ export default function FeaturedBrand({
             position: { xs: "relative", lg: "absolute" },
             right: 0,
             bottom: { xs: "auto", lg: "-1.6rem" },
-            backgroundColor: "#A2B39B",
-            color: "#010101",
+            backgroundColor: resolvedButtonColor,
+            color: resolvedButtonTextColor,
             "&:hover": {
-              backgroundColor: "#717e6c",
-              color: "#fff",
+              backgroundColor: resolvedButtonHoverColor,
+              color: resolvedButtonHoverTextColor,
             },
           }}
         >

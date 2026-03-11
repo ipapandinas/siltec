@@ -7,11 +7,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { darken } from "@mui/material/styles";
 import AppLink from "./AppLink";
 
 import Container from "./Container";
 
 interface Props extends MuiBoxProps {
+  buttonColor?: string;
   containerId?: string;
   title?: string;
   description?: string;
@@ -20,9 +22,18 @@ interface Props extends MuiBoxProps {
 }
 
 export default function Section(props: Props) {
-  const { children, containerId, description, href, title } = props;
+  const { buttonColor, children, containerId, description, href, title } = props;
   const propsCopy = { ...props };
   const theme = useTheme();
+
+  const resolvedButtonColor = buttonColor || "#A2B39B";
+  const resolvedButtonHoverColor = buttonColor
+    ? darken(resolvedButtonColor, 0.2)
+    : "#717e6c";
+  const resolvedButtonTextColor = theme.palette.getContrastText(resolvedButtonColor);
+  const resolvedButtonHoverTextColor = theme.palette.getContrastText(
+    resolvedButtonHoverColor
+  );
 
   return (
     <Container
@@ -73,11 +84,11 @@ export default function Section(props: Props) {
             variant="contained"
             sx={{
               marginTop: "4rem",
-              backgroundColor: "#A2B39B",
-              color: "#010101",
+              backgroundColor: resolvedButtonColor,
+              color: resolvedButtonTextColor,
               "&:hover": {
-                backgroundColor: "#717e6c",
-                color: "#fff",
+                backgroundColor: resolvedButtonHoverColor,
+                color: resolvedButtonHoverTextColor,
               },
             }}
           >

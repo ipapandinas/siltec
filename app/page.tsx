@@ -1,7 +1,4 @@
-import { cache } from "react";
-import { gql } from "graphql-request";
-
-import { ICollection } from "#/interfaces/ICollection";
+import { getHome } from "#/lib/getHome";
 import BrandsSection from "#/ui/BrandsSection";
 import Carroussel from "#/ui/Carroussel";
 import CollectionsSection from "#/ui/CollectionsSection";
@@ -12,17 +9,50 @@ import RoundWrapper from "#/ui/RoundWrapper";
 import ScrollDown from "#/ui/ScrollDown";
 import Section from "#/ui/Section";
 import SiltecChip from "#/ui/SiltecChip";
-import { GRAPHQL_API_URL, UP_SM } from "#/utils/constants";
-import { IBrand } from "#/interfaces/IBrand";
-import { IProject } from "#/interfaces/IProject";
-import { IImage } from "#/interfaces/IImage";
+import { UP_SM } from "#/utils/constants";
+
+const isHexColor = (value: unknown): value is string =>
+  typeof value === "string" &&
+  /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value);
 
 export default async function Home() {
-  const data = await getContent();
+  const data = await getHome();
   const brands = data?.brands;
   const carroussel = data?.carroussel?.medias;
   const collections = data?.collections;
   const projects = data?.projects;
+  const homepageConfig = data?.homepage;
+
+  const brandsBgColorValue =
+    homepageConfig?.couleurFondPartenaires;
+  const featuredBrandBgColorValue =
+    homepageConfig?.couleurFondArflex;
+  const featuredBrandButtonColorValue =
+    homepageConfig?.couleurBoutonArflex;
+  const featuredBrandTextColorValue =
+    homepageConfig?.couleurTexteArflex;
+  const brandsVoirPlusButtonColorValue =
+    homepageConfig?.couleurBoutonVoirPlus;
+
+  const brandsBgColor = isHexColor(brandsBgColorValue)
+    ? brandsBgColorValue
+    : "background.default";
+
+  const featuredBrandBgColor = isHexColor(featuredBrandBgColorValue)
+    ? featuredBrandBgColorValue
+    : "#F2EADF";
+
+  const featuredBrandButtonColor = isHexColor(featuredBrandButtonColorValue)
+    ? featuredBrandButtonColorValue
+    : "#A2B39B";
+
+  const featuredBrandTextColor = isHexColor(featuredBrandTextColorValue)
+    ? featuredBrandTextColorValue
+    : "#010101";
+
+  const brandsVoirPlusButtonColor = isHexColor(brandsVoirPlusButtonColorValue)
+    ? brandsVoirPlusButtonColorValue
+    : "#A2B39B";
 
   return (
     <>
@@ -50,7 +80,7 @@ export default async function Home() {
 
       <Container
         id="firstContainer"
-        bgcolor="#F2EADF"
+        bgcolor={featuredBrandBgColor}
         bgcolorSize="lg"
         sx={{
           [UP_SM]: {
@@ -60,10 +90,12 @@ export default async function Home() {
       >
         <FeaturedBrand
           address="53 rue de Miromesnil, 75008 PARIS"
-          bgcolor="#F2EADF"
+          bgcolor={featuredBrandBgColor}
+          buttonColor={featuredBrandButtonColor}
           href="https://www.arflex.it/"
           logoSrc="/assets/brands/arflex.svg"
           name="Arflex"
+          textColor={featuredBrandTextColor}
         />
       </Container>
 
@@ -95,8 +127,9 @@ export default async function Home() {
           title="Nos réalisations"
           description="Hôtel à Courchevel ou sur une plage de Corse, espaces lounge d'aéroport, boutiques de joaillers, bureaux d'une tour de la Défense ou appartement privé, découvrez une sélection parmi nos réalisations."
           href="/projects"
+          buttonColor={brandsVoirPlusButtonColor}
           sx={{
-            dipslay: "flex",
+            display: "flex",
             alignItems: "center",
             justifyContent: "center",
             padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
@@ -112,11 +145,12 @@ export default async function Home() {
           containerId="lastContainer"
           title="Nos partenaires"
           href="/brands"
+          buttonColor={brandsVoirPlusButtonColor}
           sx={{
             padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
           }}
         >
-          <RoundWrapper bgcolor="background.default">
+          <RoundWrapper bgcolor={brandsBgColor}>
             <div style={{ width: "100%" }}>
               <BrandsSection brands={brands} />
             </div>
@@ -127,92 +161,3 @@ export default async function Home() {
   );
 }
 
-const getContent = cache(async () => {
-  try {
-    const query = gql`
-      {
-        carroussel {
-          documentId
-          medias {
-            alternativeText
-            url
-            hash
-            formats
-          }
-        }
-        collections(sort: ["rank:ASC"], pagination: { pageSize: 2 }) {
-          documentId
-          titre
-          description
-          couleur
-          image {
-            alternativeText
-            url
-            hash
-            formats
-          }
-          rank
-          slug
-        }
-        projects(sort: ["rank:ASC"], pagination: { pageSize: 3 }) {
-          documentId
-          titre
-          image {
-            alternativeText
-            url
-            hash
-            formats
-          }
-          couleur
-          rank
-          slug
-        }
-        brands(
-          filters: { premium: { eq: true } }
-          pagination: { pageSize: 50 }
-          sort: "nom:asc"
-        ) {
-          documentId
-          nom
-          premium
-          logo {
-            alternativeText
-            url
-            hash
-            formats
-          }
-        }
-      }
-    `;
-    return await fetch(GRAPHQL_API_URL, {
-      next: { revalidate: 60 },
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query,
-      }),
-    })
-      .then((response) => response.json())
-      .then(
-        (content: {
-          data: {
-            brands: IBrand[];
-            carroussel: {
-              documentId: string;
-              medias: IImage[];
-            };
-            collections: ICollection[];
-            projects: IProject[];
-          };
-        }) => {
-          return content.data;
-        }
-      );
-  } catch (err: any) {
-    console.error(
-      `Collections could not have been fetched - Detail: ${
-        err?.message ? err.message : JSON.stringify(err)
-      }`
-    );
-  }
-});
