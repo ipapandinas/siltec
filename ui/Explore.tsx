@@ -1,5 +1,6 @@
 "use client";
 
+import { IImage } from "#/interfaces/IImage";
 import { Grid } from "@mui/material";
 
 import Card from "./Card";
@@ -8,10 +9,7 @@ interface ExploreItem {
   documentId: string;
   titre: string;
   slug: string;
-  image?: {
-    alternativeText: string | null;
-    hash?: string | null;
-  } | null;
+  image?: IImage | null;
 }
 
 interface IProps {
@@ -31,10 +29,6 @@ export default function Explore({ items, subPath }: IProps) {
       columnSpacing={9}
     >
       {items.map(({ documentId, image, titre, slug }) => {
-        const { alternativeText, hash } = image ?? {};
-
-        if (!hash) return null;
-
         return (
           <Grid
             key={documentId}
@@ -48,8 +42,8 @@ export default function Explore({ items, subPath }: IProps) {
           >
             <Card
               href={`${subPath ? `/${subPath}` : ""}/${slug}`}
-              imageAlt={alternativeText ?? `Item - ${titre}`}
-              imageSrc={hash}
+              image={image ?? null}
+              imageAlt={image?.alternativeText ?? `Item - ${titre}`}
               label={titre}
               title={titre}
             />

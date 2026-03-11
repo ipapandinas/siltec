@@ -9,7 +9,7 @@ import AppLink from "./AppLink";
 interface IProps {
   color: string;
   imageAlt: string;
-  imageHref: string;
+  imageHref?: string | null;
   isRtl?: boolean;
   linkHref: string;
   linkTitle: string;
@@ -39,13 +39,17 @@ export default function MobileCollectionBlock({
             position: "relative",
           }}
         >
-          <AppImage
-            alt={imageAlt}
-            src={imageHref}
-            width={400}
-            height={400}
-            style={{ objectFit: "cover" }}
-          />
+          {imageHref ? (
+            <AppImage
+              alt={imageAlt}
+              src={imageHref}
+              width={400}
+              height={400}
+              style={{ objectFit: "cover" }}
+            />
+          ) : (
+            <Box sx={{ width: 400, height: 400 }} />
+          )}
           <Box
             sx={{
               width: 264,

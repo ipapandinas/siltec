@@ -1,6 +1,6 @@
 export interface IImage {
-  alternativeText: string | null;
   url: string;
-  hash?: string | null;
-  formats?: Record<string, unknown> | null;
+  hash?: string;
+  alternativeText?: string;
+  formats?: Record<string, { url: string; hash?: string }>;
 }

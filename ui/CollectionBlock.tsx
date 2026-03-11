@@ -12,7 +12,7 @@ interface IProps {
   color: string;
   description: string;
   imageAlt: string;
-  imageHref: string;
+  imageHref?: string | null;
   isRtl?: boolean;
   linkHref: string;
   linkTitle: string;
@@ -49,16 +49,20 @@ export default function CollectionBlock({
             },
           }}
         >
-          <AppImage
-            alt={imageAlt}
-            src={imageHref}
-            width={600}
-            height={620}
-            loadMode="lg"
-            style={{ objectFit: "cover" }}
-            placeholder="blur"
-            blurDataURL={rgbDataURL(233, 243, 240)}
-          />
+          {imageHref ? (
+            <AppImage
+              alt={imageAlt}
+              src={imageHref}
+              width={600}
+              height={620}
+              loadMode="lg"
+              style={{ objectFit: "cover" }}
+              placeholder="blur"
+              blurDataURL={rgbDataURL(233, 243, 240)}
+            />
+          ) : (
+            <Box sx={{ width: "50% !important", height: 620 }} />
+          )}
           <Box
             sx={{
               width: "50%",

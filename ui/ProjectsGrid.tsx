@@ -7,42 +7,38 @@ import Card from "./Card";
 
 export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
   return (
-      <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          rowSpacing={16}
-          columnSpacing={9}
-      >
-        {projects.slice(0, 3).map(({ documentId, titre, image, slug }) => {
-          const { alternativeText, hash } = image ?? {};
-
-          if (!hash) return null;
-
-          return (
-              <Grid
-                  key={documentId}
-                  size={{ xs: 12, sm: 6, md: 4, lg: 4 }}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    ".MuiCard-root": {
-                      borderTopLeftRadius: "4rem",
-                      borderBottomRightRadius: "4rem",
-                    },
-                  }}
-              >
-                <Card
-                    href={`/projects/${slug}`}
-                    imageAlt={alternativeText ?? `Item - ${titre}`}
-                    imageSrc={hash}
-                    label={titre}
-                    title={titre}
-                />
-              </Grid>
-          );
-        })}
-      </Grid>
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+      rowSpacing={16}
+      columnSpacing={9}
+    >
+      {projects.slice(0, 3).map(({ documentId, titre, image, slug }) => {
+        return (
+          <Grid
+            key={documentId}
+            size={{ xs: 12, sm: 6, md: 4, lg: 4 }}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              ".MuiCard-root": {
+                borderTopLeftRadius: "4rem",
+                borderBottomRightRadius: "4rem",
+              },
+            }}
+          >
+            <Card
+              href={`/projects/${slug}`}
+              image={image}
+              imageAlt={image?.alternativeText ?? `Item - ${titre}`}
+              label={titre}
+              title={titre}
+            />
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 }

@@ -5,12 +5,11 @@ import { usePathname } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Box, IconButton, Typography } from "@mui/material";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { fit } from "@cloudinary/url-gen/actions/resize";
 
 import { IProduct } from "#/interfaces/IProduct";
+import { resolveImageUrl } from "#/utils/media";
 import { UP_LG, UP_SM } from "#/utils/constants";
 import { rgbDataURL } from "#/utils/strings";
-import cloudinary from "#/utils/cloudinary";
 
 import AppImage from "./AppImage";
 import Carroussel from "./Carroussel";
@@ -22,24 +21,20 @@ export default function Product({ product }: IProps) {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const { description, designer, image, marque, medias, titre } = product;
-  const { alternativeText, hash } = image ?? {};
 
-  const srcCloudinary = hash
-    ? cloudinary.image(hash).resize(fit().width(800).height(800)).toURL()
-    : "";
+  const productImageUrl = resolveImageUrl(image);
 
   const carrousselList = medias
-    ?.map((media) => {
-      if (!media.hash) return null;
-      return cloudinary.image(media.hash).resize(fit().width(850).height(800)).toURL();
-    })
+    ?.map((media) => resolveImageUrl(media))
     .filter((url): url is string => Boolean(url));
 
   const handleDownloadPDF = async () => {
     setLoading(true);
     const queryString = `title=${encodeURIComponent(
       titre
-    )}&brand=${encodeURIComponent(marque ?? "")}&imageUrl=${srcCloudinary}&pageUrl=${encodeURIComponent(
+    )}&brand=${encodeURIComponent(
+      marque ?? ""
+    )}&imageUrl=${encodeURIComponent(productImageUrl ?? "")}&pageUrl=${encodeURIComponent(
       pathname ?? ""
     )}`;
     console.log(queryString);
@@ -49,8 +44,8 @@ export default function Product({ product }: IProps) {
         if (response.ok) {
           return response.blob();
         } else {
-            const text = await response.text();
-            throw new Error(`${response.status} ${response.statusText}: ${text}`);
+          const text = await response.text();
+          throw new Error(`${response.status} ${response.statusText}: ${text}`);
         }
       })
       .then((blob) => {
@@ -108,17 +103,17 @@ export default function Product({ product }: IProps) {
           },
         }}
       >
-        {srcCloudinary && (
+        {productImageUrl ? (
           <AppImage
-            alt={alternativeText ?? "Product image"}
-            src={srcCloudinary}
+            alt={image?.alternativeText ?? "Product image"}
+            src={productImageUrl}
             height={800}
             width={800}
             style={{ objectFit: "cover" }}
             placeholder="blur"
             blurDataURL={rgbDataURL(233, 243, 240)}
           />
-        )}
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -171,7 +166,7 @@ export default function Product({ product }: IProps) {
           >{`Designer: ${designer}`}</Typography>
         )}
       </Box>
-      {carrousselList && (
+      {carrousselList && carrousselList.length > 0 ? (
         <Box
           marginTop="4rem"
           sx={{
@@ -207,7 +202,7 @@ export default function Product({ product }: IProps) {
             quality={100}
           />
         </Box>
-      )}
+      ) : null}
     </Box>
   );
 }

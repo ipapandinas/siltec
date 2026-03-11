@@ -1,5 +1,7 @@
 "use client";
+import { IImage } from "#/interfaces/IImage";
 import cloudinary from "#/utils/cloudinary";
+import { resolveImageUrl } from "#/utils/media";
 import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 
 import {
@@ -13,23 +15,29 @@ import Link from "next/link";
 
 interface IProps {
   href: string;
+  image?: IImage | null;
   imageAlt: string;
-  imageSrc: string;
+  imageSrc?: string;
   label: string;
   title: string;
 }
 
 export default function Card({
   href,
+  image = null,
   imageAlt,
   imageSrc,
   label,
   title,
 }: IProps) {
-  const srcCloudinary = cloudinary
-    .image(imageSrc)
-    .resize(thumbnail().width(370).height(380))
-    .toURL();
+  const resolvedImageUrl = resolveImageUrl(image);
+  const legacyCloudinaryUrl = imageSrc
+    ? cloudinary
+        .image(imageSrc)
+        .resize(thumbnail().width(370).height(380))
+        .toURL()
+    : null;
+  const displayImageUrl = resolvedImageUrl ?? legacyCloudinaryUrl;
 
   return (
     <MuiCard sx={{ width: "100%" }} elevation={0}>
@@ -46,13 +54,15 @@ export default function Card({
             },
           }}
         >
-          <CardMedia
-            component="img"
-            height="380"
-            image={srcCloudinary}
-            alt={imageAlt}
-            sx={{ objectFit: "cover" }}
-          />
+          {displayImageUrl ? (
+            <CardMedia
+              component="img"
+              height="380"
+              image={displayImageUrl}
+              alt={imageAlt}
+              sx={{ objectFit: "cover" }}
+            />
+          ) : null}
           <CardContent
             sx={{
               position: "relative",

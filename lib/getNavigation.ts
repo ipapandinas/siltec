@@ -4,6 +4,7 @@ import { GRAPHQL_API_URL, REVALIDATE_STATIC } from "#/utils/constants";
 import { queryNavigation } from "#/utils/queries";
 import type { PastilleType } from "#/interfaces/INavigation";
 import { DEFAULT_NAVIGATION } from "#/utils/constants";
+import { resolveImageUrl } from "#/utils/media";
 
 export const getNavigation = cache(async () => {
   try {
@@ -28,24 +29,24 @@ export const getNavigation = cache(async () => {
 });
 
 export function mergeNavigationWithDefaultPictos(
-    apiNav: PastilleType[]
+  apiNav: PastilleType[]
 ): PastilleType[] {
-  const defaultByUrl = new Map(
-      DEFAULT_NAVIGATION.map((item) => [item.url, item])
-  );
+  const defaultByUrl = new Map(DEFAULT_NAVIGATION.map((item) => [item.url, item]));
 
   return apiNav.map((item) => {
-    // If API already has a picto, keep it
-    if (item.picto?.url) return item;
-
     const fallback = defaultByUrl.get(item.url);
-
-    // No fallback found → return item as-is
-    if (!fallback?.picto?.url) return item;
+    const resolvedPictoUrl = resolveImageUrl(item.picto) ?? fallback?.picto?.url;
 
     return {
       ...item,
-      picto: fallback.picto,
+      picto: resolvedPictoUrl
+        ? {
+            alternativeText:
+              item.picto?.alternativeText ?? fallback?.picto?.alternativeText,
+            hash: item.picto?.hash,
+            url: resolvedPictoUrl,
+          }
+        : null,
     };
   });
 }

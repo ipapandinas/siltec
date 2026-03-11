@@ -281,7 +281,9 @@ export const queryNavigation = () => gql`
         titre
         url
         picto {
-          ${IMAGE_DATA_QUERY}
+          url
+          hash
+          alternativeText
         }
       }
     }

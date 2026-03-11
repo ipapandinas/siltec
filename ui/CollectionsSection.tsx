@@ -2,11 +2,10 @@
 import dynamic from "next/dynamic";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 
 import { ICollection } from "#/interfaces/ICollection";
 import { COLOR_PRIMARY_MAIN } from "#/utils/constants";
-import cloudinary from "#/utils/cloudinary";
+import { resolveImageUrl } from "#/utils/media";
 
 const CollectionBlock = dynamic(() => import("./CollectionBlock"));
 const MobileCollectionBlock = dynamic(() => import("./MobileCollectionBlock"));
@@ -22,22 +21,15 @@ export default function CollectionsSection({
   return (
     <div>
       {collections.map(({ couleur, description, image, slug, titre, documentId }, idx) => {
-        const { alternativeText, hash } = image ?? {};
-
-        if (!hash) return null;
-
-        const srcCloudinary = cloudinary
-          .image(hash)
-          .resize(thumbnail().width(600).height(620))
-          .toURL();
+        const imageSrc = resolveImageUrl(image);
 
         return (
           <div key={documentId}>
             {!isDesktop && (
               <MobileCollectionBlock
                 color={couleur ?? COLOR_PRIMARY_MAIN}
-                imageAlt={alternativeText ?? `Collection - ${titre}`}
-                imageHref={srcCloudinary}
+                imageAlt={image?.alternativeText ?? `Collection - ${titre}`}
+                imageHref={imageSrc}
                 isRtl={idx % 2 === 1}
                 linkHref={`/c/${slug}`}
                 linkTitle={`Collection - ${titre}`}
@@ -48,8 +40,8 @@ export default function CollectionsSection({
               <CollectionBlock
                 color={couleur ?? COLOR_PRIMARY_MAIN}
                 description={description ?? ""}
-                imageAlt={alternativeText ?? `Collection - ${titre}`}
-                imageHref={srcCloudinary}
+                imageAlt={image?.alternativeText ?? `Collection - ${titre}`}
+                imageHref={imageSrc}
                 isRtl={idx % 2 === 1}
                 linkHref={`/c/${slug}`}
                 linkTitle={`Collection - ${titre}`}
