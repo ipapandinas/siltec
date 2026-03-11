@@ -1,8 +1,6 @@
 export interface IContactSinglePage {
-  id: string;
-  attributes: {
-    titre: string;
-    sousTitre: string | null;
-    couleur: string;
-  };
+  documentId: string;
+  titre: string;
+  sousTitre: string | null;
+  couleur: string;
 }

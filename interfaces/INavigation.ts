@@ -4,13 +4,10 @@ export type PastilleType = {
   couleur: string;
   titre: string;
   url: string;
-  picto: {
-    data: IImage;
-  };
+  picto?: IImage | null;
 };
 
 export interface INavigation {
-  attributes: {
-    pastille: PastilleType[];
-  };
+  documentId: string;
+  pastille: PastilleType[];
 }

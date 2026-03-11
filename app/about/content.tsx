@@ -9,13 +9,11 @@ import { rgbDataURL } from "#/utils/strings";
 
 interface Props {
   description: string;
-  trombinoscope: {
-    data: IImage | null;
-  };
+  trombinoscope: IImage | null;
 }
 
 export default function Content({ description, trombinoscope }: Props) {
-  const { alternativeText, url } = trombinoscope.data?.attributes ?? {};
+  const { alternativeText, url } = trombinoscope ?? {};
 
   return (
     <>

@@ -8,21 +8,22 @@ import Product from "#/ui/Product";
 import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
 import { getCollectionSinglePage } from "#/lib/getCollections";
 
-export default async function Page({ params }: any) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const pageData = await getCollectionSinglePage();
   const product = await getProduct(slug);
 
   if (!pageData || !product) notFound();
 
-  const { couleur } = pageData.attributes;
-  const titre = product.attributes.titre;
-  const marque = product.attributes.marque;
+  const { couleur } = pageData;
+  const titre = product.titre;
   const pageName = titre;
-  const { titre: collectionTitle, slug: collectionSlug } =
-    product.attributes.collections.data?.attributes ?? {};
-  const { titre: typologyTitle, slug: typologySlug } =
-    product.attributes.typologies.data?.attributes ?? {};
+  const collection = product.collections?.[0];
+  const typology = product.typologies?.[0];
 
   return (
     <div>
@@ -41,12 +42,12 @@ export default async function Page({ params }: any) {
             list={[
               { name: "Collections", href: "/collections" },
               {
-                name: collectionTitle,
-                href: `/c/${collectionSlug}`,
+                name: collection?.titre,
+                href: `/c/${collection?.slug}`,
               },
               {
-                name: typologyTitle,
-                href: `/c/${collectionSlug}/${typologySlug}`,
+                name: typology?.titre,
+                href: `/c/${collection?.slug}/${typology?.slug}`,
               },
             ]}
             pageName={pageName}

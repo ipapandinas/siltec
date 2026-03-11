@@ -17,8 +17,8 @@ export const getAboutSinglePage = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { quiSommesNous: { data: IAboutSinglePage } } }) =>
-          content.data.quiSommesNous.data
+        (content: { data: { quiSommesNous: IAboutSinglePage } }) =>
+          content.data.quiSommesNous
       );
   } catch (err: any) {
     console.error(

@@ -12,8 +12,12 @@ import Container from "#/ui/Container";
 import Explore from "#/ui/Explore";
 import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
 
-export default async function Page({ params }: any) {
-  const { collectionSlug, typologySlug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ collectionSlug: string; typologySlug: string }>;
+}) {
+  const { collectionSlug, typologySlug } = await params;
   const collectionTitle = await getCollectionTitle(collectionSlug);
   const pageData = await getCollectionSinglePage();
   const typologyTitle = await getTypologyTitle(typologySlug);
@@ -21,7 +25,7 @@ export default async function Page({ params }: any) {
 
   if (!pageData || !products) notFound();
 
-  const { couleur } = pageData.attributes;
+  const { couleur } = pageData;
   const pageName = typologyTitle ?? typologySlug;
 
   return (

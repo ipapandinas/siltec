@@ -21,9 +21,8 @@ export default function CollectionsSection({
 
   return (
     <div>
-      {collections.map(({ id, attributes }, idx) => {
-        const { couleur, description, image, slug, titre } = attributes;
-        const { alternativeText, hash } = image.data?.attributes ?? {};
+      {collections.map(({ couleur, description, image, slug, titre, documentId }, idx) => {
+        const { alternativeText, hash } = image ?? {};
 
         if (!hash) return null;
 
@@ -33,7 +32,7 @@ export default function CollectionsSection({
           .toURL();
 
         return (
-          <div key={id}>
+          <div key={documentId}>
             {!isDesktop && (
               <MobileCollectionBlock
                 color={couleur ?? COLOR_PRIMARY_MAIN}

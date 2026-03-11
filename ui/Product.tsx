@@ -21,21 +21,19 @@ interface IProps {
 export default function Product({ product }: IProps) {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-  const { description, designer, image, marque, medias, titre } =
-    product.attributes;
-  const { alternativeText, hash } = image?.data?.attributes ?? {};
+  const { description, designer, image, marque, medias, titre } = product;
+  const { alternativeText, hash } = image ?? {};
 
-  const srcCloudinary = cloudinary
-    .image(hash)
-    .resize(fit().width(800).height(800))
-    .toURL();
+  const srcCloudinary = hash
+    ? cloudinary.image(hash).resize(fit().width(800).height(800)).toURL()
+    : "";
 
-  const carrousselList = medias?.data?.map(({ attributes }) =>
-    cloudinary
-      .image(attributes.hash)
-      .resize(fit().width(850).height(800))
-      .toURL()
-  );
+  const carrousselList = medias
+    ?.map((media) => {
+      if (!media.hash) return null;
+      return cloudinary.image(media.hash).resize(fit().width(850).height(800)).toURL();
+    })
+    .filter((url): url is string => Boolean(url));
 
   const handleDownloadPDF = async () => {
     setLoading(true);

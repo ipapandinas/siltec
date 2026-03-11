@@ -9,7 +9,7 @@ export default async function Contact() {
 
   if (!pageData) notFound();
 
-  const { couleur, sousTitre, titre } = pageData.attributes;
+  const { couleur, sousTitre, titre } = pageData;
 
   return (
     <div>

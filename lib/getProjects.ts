@@ -21,8 +21,8 @@ export const getProjects = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { projects: { data: IProject[] } } }) =>
-          content.data.projects.data
+        (content: { data: { projects: IProject[] } }) =>
+          content.data.projects
       );
   } catch (err: any) {
     console.error(
@@ -46,8 +46,8 @@ export const getProject = cache(async (slug: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { projects: { data: IProject[] } } }) =>
-          content.data.projects.data[0] ?? null
+        (content: { data: { projects: IProject[] } }) =>
+          content.data.projects[0] ?? null
       );
   } catch (err: any) {
     console.error(
@@ -72,8 +72,8 @@ export const getProjectSinglePage = cache(async () => {
       .then((response) => response.json())
       .then(
         (content: {
-          data: { hubDeRealisation: { data: IProjectSinglePage } };
-        }) => content.data.hubDeRealisation.data
+          data: { hubDeRealisation: IProjectSinglePage };
+        }) => content.data.hubDeRealisation
       );
   } catch (err: any) {
     console.error(

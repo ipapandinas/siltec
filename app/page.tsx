@@ -19,10 +19,10 @@ import { IImage } from "#/interfaces/IImage";
 
 export default async function Home() {
   const data = await getContent();
-  const brands = data?.brands.data;
-  const carroussel = data?.carroussel?.data.attributes.medias.data;
-  const collections = data?.collections.data;
-  const projects = data?.projects.data;
+  const brands = data?.brands;
+  const carroussel = data?.carroussel?.medias;
+  const collections = data?.collections;
+  const projects = data?.projects;
 
   return (
     <>
@@ -30,7 +30,7 @@ export default async function Home() {
       {carroussel !== undefined && carroussel.length > 0 && (
         <>
           <Carroussel
-            list={carroussel.map(({ attributes }) => attributes.url)}
+            list={carroussel.map(({ url }) => url)}
             sx={{
               ":after": {
                 content: '""',
@@ -132,81 +132,54 @@ const getContent = cache(async () => {
     const query = gql`
       {
         carroussel {
-          data {
-            attributes {
-              medias {
-                data {
-                  attributes {
-                    alternativeText
-                    url
-                    hash
-                  }
-                }
-              }
-            }
+          documentId
+          medias {
+            alternativeText
+            url
+            hash
+            formats
           }
         }
         collections(sort: ["rank:ASC"], pagination: { pageSize: 2 }) {
-          data {
-            id
-            attributes {
-              titre
-              description
-              couleur
-              image {
-                data {
-                  attributes {
-                    alternativeText
-                    url
-                    hash
-                  }
-                }
-              }
-              rank
-              slug
-            }
+          documentId
+          titre
+          description
+          couleur
+          image {
+            alternativeText
+            url
+            hash
+            formats
           }
+          rank
+          slug
         }
         projects(sort: ["rank:ASC"], pagination: { pageSize: 3 }) {
-          data {
-            id
-            attributes {
-              titre
-              image {
-                data {
-                  attributes {
-                    alternativeText
-                    url
-                    hash
-                  }
-                }
-              }
-              couleur
-              rank
-              slug
-            }
+          documentId
+          titre
+          image {
+            alternativeText
+            url
+            hash
+            formats
           }
+          couleur
+          rank
+          slug
         }
         brands(
           filters: { premium: { eq: true } }
           pagination: { pageSize: 50 }
           sort: "nom:asc"
         ) {
-          data {
-            id
-            attributes {
-              nom
-              premium
-              logo {
-                data {
-                  attributes {
-                    alternativeText
-                    url
-                    hash
-                  }
-                }
-              }
-            }
+          documentId
+          nom
+          premium
+          logo {
+            alternativeText
+            url
+            hash
+            formats
           }
         }
       }
@@ -223,18 +196,13 @@ const getContent = cache(async () => {
       .then(
         (content: {
           data: {
-            brands: { data: IBrand[] };
+            brands: IBrand[];
             carroussel: {
-              data: {
-                attributes: {
-                  medias: {
-                    data: IImage[];
-                  };
-                };
-              };
+              documentId: string;
+              medias: IImage[];
             };
-            collections: { data: ICollection[] };
-            projects: { data: IProject[] };
+            collections: ICollection[];
+            projects: IProject[];
           };
         }) => {
           return content.data;

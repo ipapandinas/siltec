@@ -10,13 +10,11 @@ import { UP_LG } from "#/utils/constants";
 interface Props {
   titre: string;
   description?: string | null;
-  medias?: {
-    data: IImage[] | null;
-  };
+  medias?: IImage[] | null;
 }
 
 export default function Content({ titre, description, medias }: Props) {
-  const carrousselList = medias?.data?.map(({ attributes }) => attributes.url);
+  const carrousselList = medias?.map(({ url }) => url);
 
   return (
     <Box>

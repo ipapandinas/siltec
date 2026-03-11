@@ -15,15 +15,14 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
           rowSpacing={16}
           columnSpacing={9}
       >
-        {projects.slice(0, 3).map(({ id, attributes }) => {
-          const { titre, image, slug } = attributes;
-          const { alternativeText, hash } = image.data?.attributes ?? {};
+        {projects.slice(0, 3).map(({ documentId, titre, image, slug }) => {
+          const { alternativeText, hash } = image ?? {};
 
           if (!hash) return null;
 
           return (
               <Grid
-                  key={id}
+                  key={documentId}
                   size={{ xs: 12, sm: 6, md: 4, lg: 4 }}
                   sx={{
                     display: "flex",

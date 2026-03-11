@@ -7,15 +7,19 @@ import Container from "#/ui/Container";
 
 import Content from "./content";
 
-export default async function Page({ params }: any) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const pageData = await getNewsSinglePage();
   const news = await getSingleNews(slug);
 
   if (!pageData || !news) notFound();
 
-  const { couleur } = pageData.attributes;
-  const { corps, medias, titre } = news.attributes;
+  const { couleur } = pageData;
+  const { corps, medias, titre } = news;
 
   return (
     <div>

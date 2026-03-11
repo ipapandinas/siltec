@@ -11,7 +11,7 @@ export default async function Collections() {
 
   if (!pageData || !collections) notFound();
 
-  const { couleur, sousTitre, titre } = pageData.attributes;
+  const { couleur, sousTitre, titre } = pageData;
 
   return (
     <div>

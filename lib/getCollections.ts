@@ -21,8 +21,8 @@ export const getCollections = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { collections: { data: ICollection[] } } }) =>
-          content.data.collections.data
+        (content: { data: { collections: ICollection[] } }) =>
+          content.data.collections
       );
   } catch (err: any) {
     console.error(
@@ -47,8 +47,8 @@ export const getCollectionSinglePage = cache(async () => {
       .then((response) => response.json())
       .then(
         (content: {
-          data: { hubDeCollection: { data: ICollectionSinglePage } };
-        }) => content.data.hubDeCollection.data
+          data: { hubDeCollection: ICollectionSinglePage };
+        }) => content.data.hubDeCollection
       );
   } catch (err: any) {
     console.error(
@@ -71,9 +71,9 @@ export const getCollectionTitle = cache(async (slug: string) => {
       }),
     })
       .then((response) => response.json())
-      .then((content: { data: { collections: { data: ICollection[] } } }) => {
-        const collections = content.data.collections.data;
-        if (collections.length > 0) return collections[0].attributes.titre;
+      .then((content: { data: { collections: ICollection[] } }) => {
+        const collections = content.data.collections;
+        if (collections.length > 0) return collections[0].titre;
         return undefined;
       });
   } catch (err: any) {

@@ -17,8 +17,8 @@ export const getProducts = cache(
         }),
       })
         .then((response) => response.json())
-        .then((content: { data: { products: { data: IProduct[] } } }) => {
-          return content.data.products.data;
+        .then((content: { data: { products: IProduct[] } }) => {
+          return content.data.products;
         });
     } catch (err: any) {
       console.error(
@@ -43,8 +43,8 @@ export const getProduct = cache(async (slug: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { products: { data: IProduct[] } } }) =>
-          content.data.products.data[0] ?? null
+        (content: { data: { products: IProduct[] } }) =>
+          content.data.products[0] ?? null
       );
   } catch (err: any) {
     console.error(

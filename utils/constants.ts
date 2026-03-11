@@ -35,13 +35,9 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
     titre: "Collections",
     url: "/collections",
     picto: {
-      data: {
-        attributes: {
-          alternativeText: "Collections navigation logo",
-          url: "/assets/nav/collections.svg",
-          hash: "collections",
-        },
-      },
+      alternativeText: "Collections navigation logo",
+      url: "/assets/nav/collections.svg",
+      hash: "collections",
     },
   },
   {
@@ -49,13 +45,9 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
     titre: "Réalisations",
     url: "/projects",
     picto: {
-      data: {
-        attributes: {
-          alternativeText: "Réalisation navigation logo",
-          url: "/assets/nav/realisations.svg",
-          hash: "realisations",
-        },
-      },
+      alternativeText: "Réalisation navigation logo",
+      url: "/assets/nav/realisations.svg",
+      hash: "realisations",
     },
   },
   {
@@ -63,13 +55,9 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
     titre: "Qui sommes-nous",
     url: "/about",
     picto: {
-      data: {
-        attributes: {
-          alternativeText: "About navigation logo",
-          url: "/assets/nav/QSN.svg",
-          hash: "QSN",
-        },
-      },
+      alternativeText: "About navigation logo",
+      url: "/assets/nav/QSN.svg",
+      hash: "QSN",
     },
   },
   {
@@ -77,13 +65,9 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
     titre: "Actualités",
     url: "/news",
     picto: {
-      data: {
-        attributes: {
-          alternativeText: "News navigation logo",
-          url: "/assets/nav/actu.svg",
-          hash: "actu",
-        },
-      },
+      alternativeText: "News navigation logo",
+      url: "/assets/nav/actu.svg",
+      hash: "actu",
     },
   },
   {
@@ -91,13 +75,9 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
     titre: "Contact",
     url: "/contact",
     picto: {
-      data: {
-        attributes: {
-          alternativeText: "Contact navigation logo",
-          url: "/assets/nav/contact.svg",
-          hash: "contact",
-        },
-      },
+      alternativeText: "Contact navigation logo",
+      url: "/assets/nav/contact.svg",
+      hash: "contact",
     },
   },
 ];

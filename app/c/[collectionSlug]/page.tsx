@@ -11,15 +11,19 @@ import Container from "#/ui/Container";
 import Explore from "#/ui/Explore";
 import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
 
-export default async function Page({ params }: any) {
-  const { collectionSlug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ collectionSlug: string }>;
+}) {
+  const { collectionSlug } = await params;
   const title = await getCollectionTitle(collectionSlug);
   const pageData = await getCollectionSinglePage();
   const typologies = await getTypologies(collectionSlug);
 
   if (!pageData || !typologies) notFound();
 
-  const { couleur } = pageData.attributes;
+  const { couleur } = pageData;
   const pageName = title ?? collectionSlug;
 
   return (

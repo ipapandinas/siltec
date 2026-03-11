@@ -11,7 +11,7 @@ export default async function Projects() {
 
   if (!pageData || !projects) notFound();
 
-  const { couleur, sousTitre, titre } = pageData.attributes;
+  const { couleur, sousTitre, titre } = pageData;
 
   return (
     <div>

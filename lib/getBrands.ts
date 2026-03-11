@@ -17,8 +17,7 @@ export const getAllBrands = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { brands: { data: IBrand[] } } }) =>
-          content.data.brands.data
+        (content: { data: { brands: IBrand[] } }) => content.data.brands
       );
   } catch (err: any) {
     console.error(
@@ -42,8 +41,7 @@ export const getFeaturedBrands = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { brands: { data: IBrand[] } } }) =>
-          content.data.brands.data
+        (content: { data: { brands: IBrand[] } }) => content.data.brands
       );
   } catch (err: any) {
     console.error(

@@ -7,13 +7,17 @@ import Container from "#/ui/Container";
 
 import Content from "./content";
 
-export default async function Page({ params }: any) {
-  const { slug } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const project = await getProject(slug);
 
   if (!project) notFound();
 
-  const { couleur, description, medias, titre } = project.attributes;
+  const { couleur, description, medias, titre } = project;
 
   return (
     <div>

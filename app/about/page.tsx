@@ -11,8 +11,7 @@ export default async function About() {
 
   if (!pageData) notFound();
 
-  const { couleur, description, sousTitre, titre, trombinoscope } =
-    pageData.attributes;
+  const { couleur, description, sousTitre, titre, trombinoscope } = pageData;
 
   return (
     <div>

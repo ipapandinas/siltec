@@ -17,8 +17,8 @@ export const getTypologies = cache(async (collection: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { typologies: { data: ITypology[] } } }) =>
-          content.data.typologies.data
+        (content: { data: { typologies: ITypology[] } }) =>
+          content.data.typologies
       );
   } catch (err: any) {
     console.error(
@@ -41,9 +41,9 @@ export const getTypologyTitle = cache(async (slug: string) => {
       }),
     })
       .then((response) => response.json())
-      .then((content: { data: { typologies: { data: ITypology[] } } }) => {
-        const typologies = content.data.typologies.data;
-        if (typologies.length > 0) return typologies[0].attributes.titre;
+      .then((content: { data: { typologies: ITypology[] } }) => {
+        const typologies = content.data.typologies;
+        if (typologies.length > 0) return typologies[0].titre;
         return undefined;
       });
   } catch (err: any) {

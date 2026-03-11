@@ -2,7 +2,6 @@ import { cache } from "react";
 
 import { GRAPHQL_API_URL, REVALIDATE_STATIC } from "#/utils/constants";
 import { queryNavigation } from "#/utils/queries";
-import { INavigation } from "#/interfaces/INavigation";
 import type { PastilleType } from "#/interfaces/INavigation";
 import { DEFAULT_NAVIGATION } from "#/utils/constants";
 
@@ -17,8 +16,9 @@ export const getNavigation = cache(async () => {
 
     const json = await response.json();
 
-    const apiPastille =
-        json?.data?.navigation?.data?.attributes?.pastille ?? [];
+    const apiPastille = json?.data?.navigation?.pastille ?? [];
+
+    if (apiPastille.length === 0) return DEFAULT_NAVIGATION;
 
     return mergeNavigationWithDefaultPictos(apiPastille);
   } catch (err: any) {
@@ -36,12 +36,12 @@ export function mergeNavigationWithDefaultPictos(
 
   return apiNav.map((item) => {
     // If API already has a picto, keep it
-    if (item.picto?.data) return item;
+    if (item.picto?.url) return item;
 
     const fallback = defaultByUrl.get(item.url);
 
     // No fallback found → return item as-is
-    if (!fallback?.picto?.data) return item;
+    if (!fallback?.picto?.url) return item;
 
     return {
       ...item,

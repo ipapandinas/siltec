@@ -22,8 +22,7 @@ export const getNews = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { news: { data: INews[] } } }) =>
-          content.data.news.data
+        (content: { data: { news: INews[] } }) => content.data.news
       );
   } catch (err: any) {
     console.error(
@@ -47,8 +46,7 @@ export const getSingleNews = cache(async (slug: string) => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { news: { data: INews[] } } }) =>
-          content.data.news.data[0] ?? null
+        (content: { data: { news: INews[] } }) => content.data.news[0] ?? null
       );
   } catch (err: any) {
     console.error(
@@ -70,9 +68,9 @@ export const getNewsSinglePage = cache(async () => {
         query,
       }),
     });
-    const content: { data: { hubDActualite: { data: INewsSinglePage } } } =
+    const content: { data: { hubDActualite: INewsSinglePage } } =
       await response.json();
-    return content.data.hubDActualite.data;
+    return content.data.hubDActualite;
   } catch (err: any) {
     console.error(
       `News single page could not have been fetched - Detail: ${

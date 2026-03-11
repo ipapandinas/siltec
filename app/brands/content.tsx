@@ -11,8 +11,8 @@ interface Props {
 export default function Content({ brands }: Props) {
   const handleSort = () => {
     const sortedList = [...brands]
-        .sort((a, b) => a.attributes.nom.localeCompare(b.attributes.nom))
-        .map(({ attributes }) => attributes.nom);
+      .sort((a, b) => a.nom.localeCompare(b.nom))
+      .map(({ nom }) => nom);
 
     const brandNamesByFirstLetter: { [key: string]: string[] } = {};
     for (let i = 65; i <= 90; i++) {
@@ -29,42 +29,36 @@ export default function Content({ brands }: Props) {
     return brandNamesByFirstLetter;
   };
 
+  const groupedBrands = handleSort();
+
   return (
     <Grid container rowSpacing={12} columnSpacing={8}>
-      {Object.entries(handleSort()).map(([key, value]) => {
-        if (value.length === 0) return;
+      {Object.entries(groupedBrands).map(([key, value]) => {
+        if (value.length === 0) return null;
 
         return (
-            <Grid key={key} container rowSpacing={12} columnSpacing={8}>
-              {Object.entries(handleSort()).map(([key, value]) => {
-                if (value.length === 0) return null;
+          <Grid
+            key={key}
+            size={{ xs: 6, md: 3 }}
+            sx={{ display: "flex", gap: { xs: "1.6rem", lg: "4rem" } }}
+          >
+            <Typography variant="h3" sx={{ width: "4.8rem" }}>
+              {key}
+            </Typography>
 
-                return (
-                    <Grid
-                        key={key}
-                        size={{ xs: 6, md: 3 }}
-                        sx={{ display: "flex", gap: { xs: "1.6rem", lg: "4rem" } }}
-                    >
-                      <Typography variant="h3" sx={{ width: "4.8rem" }}>
-                        {key}
-                      </Typography>
-
-                      <List sx={{ paddingTop: "2.4rem" }}>
-                        {value.map((name, idx) => (
-                            <ListItemText key={idx}>
-                              <Typography
-                                  variant="h6"
-                                  sx={{ ":first-letter": { textTransform: "capitalize" } }}
-                              >
-                                {name}
-                              </Typography>
-                            </ListItemText>
-                        ))}
-                      </List>
-                    </Grid>
-                );
-              })}
-            </Grid>
+            <List sx={{ paddingTop: "2.4rem" }}>
+              {value.map((name, idx) => (
+                <ListItemText key={idx}>
+                  <Typography
+                    variant="h6"
+                    sx={{ ":first-letter": { textTransform: "capitalize" } }}
+                  >
+                    {name}
+                  </Typography>
+                </ListItemText>
+              ))}
+            </List>
+          </Grid>
         );
       })}
     </Grid>

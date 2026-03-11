@@ -17,8 +17,8 @@ export const getContactSinglePage = cache(async () => {
     })
       .then((response) => response.json())
       .then(
-        (content: { data: { contact: { data: IContactSinglePage } } }) =>
-          content.data.contact.data
+        (content: { data: { contact: IContactSinglePage } }) =>
+          content.data.contact
       );
   } catch (err: any) {
     console.error(

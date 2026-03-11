@@ -14,16 +14,14 @@ import { IImage } from "#/interfaces/IImage";
 
 interface Props {
   description?: string | null;
-  medias?: {
-    data: IImage[] | null;
-  };
+  medias?: IImage[] | null;
 }
 
 export default function Content({ description, medias }: Props) {
   const theme = useTheme();
   const isResponsive = useMediaQuery(theme.breakpoints.down("md"));
   const nbColumns = isResponsive ? 1 : 2;
-  const mediasList = medias?.data?.map(({ attributes }) => attributes.url);
+  const mediasList = medias?.map(({ url }) => url);
 
   return (
     <Box

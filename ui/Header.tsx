@@ -102,7 +102,7 @@ export default function Header({
                     color={couleur}
                     href={url}
                     imageAlt={`${titre} - Navigation Logo`}
-                    imageHref={picto?.data?.attributes?.url}
+                    imageHref={picto?.url}
                     imageHeight={50}
                     imageWidth={30}
                     label={titre}

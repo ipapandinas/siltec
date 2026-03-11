@@ -1,5 +1,5 @@
 "use client";
-import cloudinary from "utils/cloudinary";
+import cloudinary from "#/utils/cloudinary";
 import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 
 import {
