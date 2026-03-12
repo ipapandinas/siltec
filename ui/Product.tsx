@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { Box, IconButton, Typography } from "@mui/material";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { Box, Typography } from "@mui/material";
 
 import { IProduct } from "#/interfaces/IProduct";
 import { resolveImageUrl } from "#/utils/media";
@@ -18,8 +15,6 @@ interface IProps {
 }
 
 export default function Product({ product }: IProps) {
-  const pathname = usePathname();
-  const [loading, setLoading] = useState(false);
   const { description, designer, image, marque, medias, titre } = product;
 
   const productImageUrl = resolveImageUrl(image);
@@ -28,65 +23,8 @@ export default function Product({ product }: IProps) {
     ?.map((media) => resolveImageUrl(media))
     .filter((url): url is string => Boolean(url));
 
-  const handleDownloadPDF = async () => {
-    setLoading(true);
-    const queryString = `title=${encodeURIComponent(
-      titre
-    )}&brand=${encodeURIComponent(
-      marque ?? ""
-    )}&imageUrl=${encodeURIComponent(productImageUrl ?? "")}&pageUrl=${encodeURIComponent(
-      pathname ?? ""
-    )}`;
-    console.log(queryString);
-    fetch(`/api/download-pdf?${queryString}`)
-      .then(async (response) => {
-        setLoading(false);
-        if (response.ok) {
-          return response.blob();
-        } else {
-          const text = await response.text();
-          throw new Error(`${response.status} ${response.statusText}: ${text}`);
-        }
-      })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `${titre.split(" ").join("_")}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error("Error downloading PDF:", error);
-      });
-  };
-
   return (
     <Box sx={{ position: "relative" }}>
-      <IconButton
-        onClick={handleDownloadPDF}
-        disabled={loading}
-        aria-label={loading ? "Génération du PDF..." : "Télécharger PDF"}
-        component="label"
-        sx={{
-          position: { xs: "relative", lg: "absolute" },
-          top: -10,
-          right: 0,
-          display: "flex",
-          alignItems: "center",
-          gap: "0.8rem",
-          borderRadius: "0.8rem",
-          width: "fit-content",
-          marginTop: "0.8rem",
-          path: { fill: "#010101" },
-          paddingX: { xs: "2.4rem", lg: 0 },
-        }}
-      >
-        <PictureAsPdfIcon />
-        <Typography variant="body1">Télécharger cette fiche</Typography>
-      </IconButton>
       <Box
         sx={{
           display: "flex",
