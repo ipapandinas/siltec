@@ -15,4 +15,5 @@ export interface ICollectionSinglePage {
   titre: string;
   sousTitre: string;
   couleur: string;
+  couleurBoutonDemandeInformations?: string | null;
 }

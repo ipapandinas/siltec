@@ -20,6 +20,7 @@ interface IProps {
   imageSrc?: string;
   label: string;
   title: string;
+  cornerVariant?: "default" | "reverse";
 }
 
 export default function Card({
@@ -29,6 +30,7 @@ export default function Card({
   imageSrc,
   label,
   title,
+  cornerVariant = "default",
 }: IProps) {
   const resolvedImageUrl = resolveImageUrl(image);
   const legacyCloudinaryUrl = imageSrc
@@ -39,8 +41,19 @@ export default function Card({
     : null;
   const displayImageUrl = resolvedImageUrl ?? legacyCloudinaryUrl;
 
+  const cardRadiusSx =
+    cornerVariant === "reverse"
+      ? {
+          borderTopRightRadius: { xs: "6rem", lg: "8rem" },
+          borderBottomLeftRadius: { xs: "6rem", lg: "8rem" },
+        }
+      : {
+          borderTopLeftRadius: { xs: "6rem", lg: "8rem" },
+          borderBottomRightRadius: { xs: "6rem", lg: "8rem" },
+        };
+
   return (
-    <MuiCard sx={{ width: "100%" }} elevation={0}>
+    <MuiCard sx={{ width: "100%", ...cardRadiusSx }} elevation={0}>
       <Link href={href} title={title}>
         <CardActionArea
           sx={{

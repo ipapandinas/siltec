@@ -20,3 +20,14 @@ export function resolveImageUrl(image: IImage | null | undefined): string | null
 
   return url;
 }
+
+export function buildMediaCarouselUrls(
+  image: IImage | null | undefined,
+  medias: IImage[] | null | undefined
+): string[] {
+  const mediaList = [image, ...(medias ?? [])]
+    .map((item) => resolveImageUrl(item))
+    .filter((url): url is string => Boolean(url));
+
+  return [...new Set(mediaList)];
+}

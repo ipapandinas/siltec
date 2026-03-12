@@ -5,10 +5,6 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import AppLink from "./AppLink";
 
-function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
 
 interface Props {
   list: {
@@ -20,17 +16,35 @@ interface Props {
 
 export default function BasicBreadcrumbs({ list, pageName }: Props) {
   return (
-    <div role="presentation" onClick={handleClick}>
-      <Breadcrumbs aria-label="breadcrumb">
+    <div role="presentation">
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        sx={{
+          ".MuiBreadcrumbs-separator": {
+            opacity: 0.5,
+          },
+        }}
+      >
         {list.map(({ href, name }, idx) => {
           if (!name) return;
           return (
-            <AppLink key={idx} href={href} underline="hover" color="inherit">
+            <AppLink
+              key={idx}
+              href={href}
+              underline="hover"
+              color="inherit"
+              sx={{
+                opacity: 0.6,
+                fontWeight: 300,
+              }}
+            >
               {name}
             </AppLink>
           );
         })}
-        <Typography color="text.primary">{pageName}</Typography>
+        <Typography color="text.primary" fontWeight={700}>
+          {pageName}
+        </Typography>
       </Breadcrumbs>
     </div>
   );

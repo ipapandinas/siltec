@@ -28,6 +28,7 @@ export const queryCollectionSinglePage = () => gql`
     hubDeCollection {
       documentId
       couleur
+      couleurBoutonDemandeInformations
       sousTitre
       titre
     }
@@ -53,6 +54,9 @@ export const queryProduct = (slug: string) => gql`
       documentId
       titre
       designer
+      producteur
+      dimensions
+      annee
       description
       marque
       medias {
@@ -92,6 +96,9 @@ export const queryProducts = (collection: string, typology: string) => gql`
       documentId
       titre
       designer
+      producteur
+      dimensions
+      annee
       description
       marque
       image {
@@ -102,10 +109,12 @@ export const queryProducts = (collection: string, typology: string) => gql`
       collections {
         documentId
         titre
+        slug
       }
       typologies {
         documentId
         titre
+        slug
       }
     }
   }

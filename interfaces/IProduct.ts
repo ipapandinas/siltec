@@ -6,6 +6,9 @@ export interface IProduct {
   documentId: string;
   titre: string;
   designer: string | null;
+  producteur: string | null;
+  dimensions: string | null;
+  annee: number | null;
   description: string | null;
   marque: string | null;
   image: IImage | null;

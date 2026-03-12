@@ -59,21 +59,33 @@ export default async function Home() {
       <SiltecChip />
       {carroussel !== undefined && carroussel.length > 0 && (
         <>
-          <Carroussel
-            list={carroussel.map(({ url }) => url)}
-            sx={{
-              ":after": {
-                content: '""',
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background:
-                  "linear-gradient(to bottom, transparent 0%, black 1800%)",
-              },
+          <div
+            style={{
+              width: "100vw",
+              marginLeft: "calc(50% - 50vw)",
+              marginRight: "calc(50% - 50vw)",
             }}
-          />
+          >
+            <Carroussel
+              arrows
+              list={carroussel.map(({ url }) => url)}
+              sx={{
+                ".slick-slider": {
+                  width: "100vw",
+                },
+                ":after": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background:
+                    "linear-gradient(to bottom, transparent 0%, black 1800%)",
+                },
+              }}
+            />
+          </div>
           <ScrollDown />
         </>
       )}
