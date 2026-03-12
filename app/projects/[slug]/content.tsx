@@ -5,6 +5,7 @@ import {
   Box,
   ImageList,
   ImageListItem,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -13,15 +14,31 @@ import ReactMarkdown from "react-markdown";
 import { IImage } from "#/interfaces/IImage";
 
 interface Props {
+  date?: string | null;
   description?: string | null;
   medias?: IImage[] | null;
 }
 
-export default function Content({ description, medias }: Props) {
+const formatDate = (value?: string | null) => {
+  if (!value) return null;
+
+  const [year, month, day] = value.split("-").map(Number);
+
+  if (!year || !month || !day) return null;
+
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(Date.UTC(year, month - 1, day)));
+};
+
+export default function Content({ date, description, medias }: Props) {
   const theme = useTheme();
   const isResponsive = useMediaQuery(theme.breakpoints.down("md"));
   const nbColumns = isResponsive ? 1 : 2;
   const mediasList = medias?.map(({ url }) => url);
+  const formattedDate = formatDate(date);
 
   return (
     <Box
@@ -45,6 +62,11 @@ export default function Content({ description, medias }: Props) {
             </ImageListItem>
           ))}
         </ImageList>
+      )}
+      {formattedDate && (
+        <Typography variant="h5" textAlign="center" sx={{ marginBottom: "4rem" }}>
+          {formattedDate}
+        </Typography>
       )}
       {description && (
         <Box

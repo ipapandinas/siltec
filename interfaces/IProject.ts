@@ -9,6 +9,7 @@ export interface IProject {
   couleur: string | null;
   rank: number;
   slug: string;
+  date: string | null;
   createdAt: string;
 }
 

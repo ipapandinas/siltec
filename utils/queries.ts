@@ -198,15 +198,21 @@ export const queryHome = () => gql`
       rank
       slug
     }
-    projects(sort: ["rank:ASC"], pagination: { pageSize: 3 }) {
+    projects(sort: ["date:DESC", "rank:ASC"], pagination: { pageSize: 3 }) {
       documentId
       titre
+      description
       image {
+        ${IMAGE_DATA_QUERY}
+      }
+      medias {
         ${IMAGE_DATA_QUERY}
       }
       couleur
       rank
       slug
+      date
+      createdAt
     }
     brands(
       filters: { premium: { eq: true } }
@@ -231,12 +237,13 @@ const PROJECT_DATA_QUERY = `
   couleur
   rank
   slug
+  date
   createdAt
 `;
 
 export const queryProjects = () => gql`
   {
-    projects(pagination: { pageSize: 50 }, sort: ["rank:ASC"]) {
+    projects(pagination: { pageSize: 50 }, sort: ["date:DESC", "rank:ASC"]) {
       ${PROJECT_DATA_QUERY}
     }
   }

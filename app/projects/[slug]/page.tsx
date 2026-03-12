@@ -17,7 +17,7 @@ export default async function Page({
 
   if (!project) notFound();
 
-  const { couleur, description, medias, titre } = project;
+  const { couleur, date, description, medias, titre } = project;
 
   return (
     <div>
@@ -30,7 +30,7 @@ export default async function Page({
           />
         </div>
         <div style={{ marginTop: "8rem" }}>
-          <Content description={description} medias={medias} />
+          <Content date={date} description={description} medias={medias} />
         </div>
       </Container>
     </div>
