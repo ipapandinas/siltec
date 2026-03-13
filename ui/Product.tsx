@@ -18,9 +18,10 @@ import Carroussel from "./Carroussel";
 interface IProps {
   product: IProduct;
   quoteButtonColor?: string | null;
+  brandHref?: string | null;
 }
 
-export default function Product({ product, quoteButtonColor }: IProps) {
+export default function Product({ product, quoteButtonColor, brandHref }: IProps) {
   const theme = useTheme();
   const {
     annee,
@@ -121,7 +122,21 @@ export default function Product({ product, quoteButtonColor }: IProps) {
               color: "text.secondary",
             }}
           >
-            {marque}
+            {brandHref ? (
+              <AppLink
+                href={brandHref}
+                sx={{
+                  color: "text.secondary",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "0.2rem",
+                  "&:hover": { opacity: 0.8 },
+                }}
+              >
+                {marque}
+              </AppLink>
+            ) : (
+              marque
+            )}
           </Typography>
         )}
         <Typography

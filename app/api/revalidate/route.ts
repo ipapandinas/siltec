@@ -27,10 +27,15 @@ function extractModel(payload: RevalidationPayload): string {
   );
 }
 
+const SAFE_SLUG_REGEX = /^[a-z0-9-]+$/;
+
 function extractSlug(payload: RevalidationPayload): string | null {
   const slug = payload.entry?.slug ?? payload.data?.entry?.slug;
   const trimmed = slug?.trim();
-  return trimmed ? trimmed : null;
+
+  if (!trimmed) return null;
+
+  return SAFE_SLUG_REGEX.test(trimmed) ? trimmed : null;
 }
 
 function isAuthorized(request: NextRequest, secret: string): boolean {
@@ -130,6 +135,9 @@ export async function POST(request: NextRequest) {
       break;
 
     case "brand":
+      if (slug) {
+        pathsToRevalidate.add(`/b/${slug}`);
+      }
       pathsToRevalidate.add("/brands");
       pathsToRevalidate.add("/");
       break;

@@ -22,6 +22,8 @@ export default async function Page({
 
   const { couleur, couleurBoutonDemandeInformations } = pageData;
   const pageName = product.titre;
+  const relationBrandSlug = product.brand?.slug?.trim();
+  const brandHref = relationBrandSlug ? `/b/${relationBrandSlug}` : null;
   const collection = product.collections?.[0];
   const typology = product.typologies?.[0];
 
@@ -32,7 +34,10 @@ export default async function Page({
 
   const relatedProducts =
     relatedProductsRaw
-      ?.filter((relatedProduct) => relatedProduct.slug !== slug)
+      ?.filter(
+        (relatedProduct): relatedProduct is NonNullable<typeof relatedProduct> =>
+          Boolean(relatedProduct && relatedProduct.slug && relatedProduct.slug !== slug)
+      )
       .slice(0, 3) ?? [];
 
   const pluralizeTypologyTitle = (value: string) => {
@@ -89,6 +94,7 @@ export default async function Page({
           <Product
             product={product}
             quoteButtonColor={couleurBoutonDemandeInformations ?? couleur}
+            brandHref={brandHref}
           />
         </div>
 

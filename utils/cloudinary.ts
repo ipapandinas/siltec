@@ -9,6 +9,7 @@ export const cloudinary = new Cloudinary({
   },
   url: {
     secure: true,
+    analytics: false,
   },
 });
 

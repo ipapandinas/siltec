@@ -3,6 +3,7 @@
 import { Grid, List, ListItemText, Typography } from "@mui/material";
 
 import { IBrand } from "#/interfaces/IBrand";
+import AppLink from "#/ui/AppLink";
 
 interface Props {
   brands: IBrand[];
@@ -10,20 +11,18 @@ interface Props {
 
 export default function Content({ brands }: Props) {
   const handleSort = () => {
-    const sortedList = [...brands]
-      .sort((a, b) => a.nom.localeCompare(b.nom))
-      .map(({ nom }) => nom);
+    const sortedList = [...brands].sort((a, b) => a.nom.localeCompare(b.nom));
 
-    const brandNamesByFirstLetter: { [key: string]: string[] } = {};
+    const brandNamesByFirstLetter: { [key: string]: IBrand[] } = {};
     for (let i = 65; i <= 90; i++) {
       const letter = String.fromCharCode(i);
       brandNamesByFirstLetter[letter] = [];
     }
 
-    sortedList.forEach((name) => {
-      const firstLetter = name.charAt(0).toUpperCase();
+    sortedList.forEach((brand) => {
+      const firstLetter = brand.nom.charAt(0).toUpperCase();
       if (!brandNamesByFirstLetter[firstLetter]) brandNamesByFirstLetter[firstLetter] = [];
-      brandNamesByFirstLetter[firstLetter].push(name);
+      brandNamesByFirstLetter[firstLetter].push(brand);
     });
 
     return brandNamesByFirstLetter;
@@ -47,14 +46,28 @@ export default function Content({ brands }: Props) {
             </Typography>
 
             <List sx={{ paddingTop: "2.4rem" }}>
-              {value.map((name, idx) => (
-                <ListItemText key={idx}>
-                  <Typography
-                    variant="h6"
-                    sx={{ ":first-letter": { textTransform: "capitalize" } }}
-                  >
-                    {name}
-                  </Typography>
+              {value.map((brand) => (
+                <ListItemText key={brand.documentId}>
+                  {brand.slug ? (
+                    <AppLink href={`/b/${brand.slug}`}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          ":first-letter": { textTransform: "capitalize" },
+                          "&:hover": { textDecoration: "underline" },
+                        }}
+                      >
+                        {brand.nom}
+                      </Typography>
+                    </AppLink>
+                  ) : (
+                    <Typography
+                      variant="h6"
+                      sx={{ ":first-letter": { textTransform: "capitalize" } }}
+                    >
+                      {brand.nom}
+                    </Typography>
+                  )}
                 </ListItemText>
               ))}
             </List>

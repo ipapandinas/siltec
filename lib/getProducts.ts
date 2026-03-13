@@ -1,34 +1,97 @@
 import { cache } from "react";
 
-import { GRAPHQL_API_URL, REVALIDATE_CONTENT } from "#/utils/constants";
-import { queryProducts, queryProduct } from "#/utils/queries";
 import { IProduct } from "#/interfaces/IProduct";
+import { GRAPHQL_API_URL, REVALIDATE_CONTENT } from "#/utils/constants";
+import {
+  queryProduct,
+  queryProductImage,
+  queryProducts,
+  queryProductsByBrandSlug,
+} from "#/utils/queries";
 
-export const getProducts = cache(
-  async (collection: string, typology: string) => {
-    try {
-      const query = queryProducts(collection, typology);
-      return await fetch(GRAPHQL_API_URL, {
-        next: { revalidate: REVALIDATE_CONTENT },
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          query,
-        }),
-      })
-        .then((response) => response.json())
-        .then((content: { data: { products: IProduct[] } }) => {
-          return content.data.products;
-        });
-    } catch (err: any) {
-      console.error(
-        `Products could not have been fetched - Detail: ${
-          err?.message ? err.message : JSON.stringify(err)
-        }`
-      );
-    }
+type ProductsResponse = { data?: { products?: IProduct[] }; errors?: Array<{ message?: string }> };
+
+async function getProductImageBySlug(slug: string) {
+  const query = queryProductImage(slug);
+
+  const response = await fetch(GRAPHQL_API_URL, {
+    next: { revalidate: REVALIDATE_CONTENT },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query }),
+  }).then((res) => res.json() as Promise<ProductsResponse>);
+
+  if (!response.data?.products || response.errors?.length) {
+    return null;
   }
-);
+
+  return response.data.products[0]?.image ?? null;
+}
+
+function extractProducts(content: ProductsResponse): IProduct[] {
+  if (content.errors?.length) {
+    throw new Error(
+      `GraphQL errors: ${content.errors
+        .map(({ message }) => message || "Unknown GraphQL error")
+        .join(" | ")}`
+    );
+  }
+
+  return content.data?.products ?? [];
+}
+
+export const getProducts = cache(async (collection: string, typology: string) => {
+  try {
+    const query = queryProducts(collection, typology);
+    return await fetch(GRAPHQL_API_URL, {
+      next: { revalidate: REVALIDATE_CONTENT },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    })
+      .then((response) => response.json())
+      .then((content: ProductsResponse) => extractProducts(content));
+  } catch (err: any) {
+    console.error(
+      `Products could not have been fetched - Detail: ${
+        err?.message ? err.message : JSON.stringify(err)
+      }`
+    );
+
+    return [];
+  }
+});
+
+export const getProductsByBrand = cache(async (brandSlug: string) => {
+  try {
+    const query = queryProductsByBrandSlug(brandSlug);
+    const products = await fetch(GRAPHQL_API_URL, {
+      next: { revalidate: REVALIDATE_CONTENT },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    })
+      .then((response) => response.json())
+      .then((content: ProductsResponse) => extractProducts(content));
+
+    const productsWithImages = await Promise.all(
+      products.map(async (product) => {
+        const image = await getProductImageBySlug(product.slug);
+        return { ...product, image: image ?? product.image ?? null };
+      })
+    );
+
+    return productsWithImages;
+  } catch (err: any) {
+    console.error(
+      `Products by brand could not have been fetched - Detail: ${
+        err?.message ? err.message : JSON.stringify(err)
+      }`
+    );
+
+    return [];
+  }
+});
 
 export const getProduct = cache(async (slug: string) => {
   try {
@@ -37,15 +100,10 @@ export const getProduct = cache(async (slug: string) => {
       next: { revalidate: REVALIDATE_CONTENT },
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query,
-      }),
+      body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then(
-        (content: { data: { products: IProduct[] } }) =>
-          content.data.products[0] ?? null
-      );
+      .then((content: ProductsResponse) => extractProducts(content)[0] ?? null);
   } catch (err: any) {
     console.error(
       `Product could not have been fetched - Detail: ${

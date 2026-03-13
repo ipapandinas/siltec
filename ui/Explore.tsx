@@ -19,6 +19,11 @@ interface IProps {
 }
 
 export default function Explore({ items, subPath }: IProps) {
+  const safeItems = items.filter(
+    (item): item is ExploreItem =>
+      Boolean(item && item.documentId && item.titre && item.slug)
+  );
+
   return (
     <Grid
       container
@@ -28,7 +33,7 @@ export default function Explore({ items, subPath }: IProps) {
       rowSpacing={12}
       columnSpacing={9}
     >
-      {items.map(({ documentId, image, titre, slug }) => {
+      {safeItems.map(({ documentId, image, titre, slug }) => {
         return (
           <Grid
             key={documentId}

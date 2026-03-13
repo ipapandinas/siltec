@@ -1,5 +1,7 @@
 import { gql } from "graphql-request";
 
+import { gqlString } from "#/utils/strings";
+
 const IMAGE_DATA_QUERY = `
   alternativeText
   url
@@ -38,7 +40,7 @@ export const queryCollectionSinglePage = () => gql`
 export const queryCollectionTitle = (slug: string) => gql`
   {
     collections(
-      filters: { slug: { eq: "${slug}" } }
+      filters: { slug: { eq: "${gqlString(slug)}" } }
       pagination: { pageSize: 1 }
     ) {
       documentId
@@ -50,7 +52,7 @@ export const queryCollectionTitle = (slug: string) => gql`
 
 export const queryProduct = (slug: string) => gql`
   {
-    products(filters: { slug: { eq: "${slug}" } }, pagination: { pageSize: 1 }) {
+    products(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
       documentId
       titre
       designer
@@ -59,6 +61,11 @@ export const queryProduct = (slug: string) => gql`
       annee
       description
       marque
+      brand {
+        documentId
+        nom
+        slug
+      }
       medias {
         ${IMAGE_DATA_QUERY}
       }
@@ -81,13 +88,25 @@ export const queryProduct = (slug: string) => gql`
   }
 `;
 
+export const queryProductImage = (slug: string) => gql`
+  {
+    products(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
+      documentId
+      slug
+      image {
+        ${IMAGE_DATA_QUERY}
+      }
+    }
+  }
+`;
+
 export const queryProducts = (collection: string, typology: string) => gql`
   {
     products(
       filters: {
         and: [
-          { collections: { slug: { eq: "${collection}" } } }
-          { typologies: { slug: { eq: "${typology}" } } }
+          { collections: { slug: { eq: "${gqlString(collection)}" } } }
+          { typologies: { slug: { eq: "${gqlString(typology)}" } } }
         ]
       }
       pagination: { pageSize: 50 }
@@ -101,8 +120,49 @@ export const queryProducts = (collection: string, typology: string) => gql`
       annee
       description
       marque
+      brand {
+        documentId
+        nom
+        slug
+      }
       image {
         ${IMAGE_DATA_QUERY}
+      }
+      rank
+      slug
+      collections {
+        documentId
+        titre
+        slug
+      }
+      typologies {
+        documentId
+        titre
+        slug
+      }
+    }
+  }
+`;
+
+export const queryProductsByBrandSlug = (brandSlug: string) => gql`
+  {
+    products(
+      filters: { brand: { slug: { eq: "${gqlString(brandSlug)}" } } }
+      pagination: { pageSize: 500 }
+      sort: ["rank:ASC"]
+    ) {
+      documentId
+      titre
+      designer
+      producteur
+      dimensions
+      annee
+      description
+      marque
+      brand {
+        documentId
+        nom
+        slug
       }
       rank
       slug
@@ -123,7 +183,7 @@ export const queryProducts = (collection: string, typology: string) => gql`
 export const queryTypologies = (collection: string) => gql`
   {
     typologies(
-      filters: { collections: { slug: { contains: "${collection}" } } }
+      filters: { collections: { slug: { contains: "${gqlString(collection)}" } } }
       pagination: { pageSize: 50 }
       sort: ["rank:ASC"]
     ) {
@@ -144,7 +204,7 @@ export const queryTypologies = (collection: string) => gql`
 
 export const queryTypologyTitle = (slug: string) => gql`
   {
-    typologies(filters: { slug: { eq: "${slug}" } }, pagination: { pageSize: 1 }) {
+    typologies(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
       documentId
       titre
       slug
@@ -155,8 +215,13 @@ export const queryTypologyTitle = (slug: string) => gql`
 const BRAND_DATA_QUERY = `
   documentId
   nom
+  slug
   premium
+  description
   logo {
+    ${IMAGE_DATA_QUERY}
+  }
+  banner {
     ${IMAGE_DATA_QUERY}
   }
 `;
@@ -176,6 +241,14 @@ export const queryFeaturedBrands = () => gql`
       pagination: { pageSize: 50 }
       sort: "nom:asc"
     ) {
+      ${BRAND_DATA_QUERY}
+    }
+  }
+`;
+
+export const queryBrandBySlug = (slug: string) => gql`
+  {
+    brands(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
       ${BRAND_DATA_QUERY}
     }
   }
@@ -260,7 +333,7 @@ export const queryProjects = () => gql`
 
 export const queryProject = (slug: string) => gql`
   {
-    projects(filters: { slug: { eq: "${slug}" } }, pagination: { pageSize: 1 }) {
+    projects(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
       ${PROJECT_DATA_QUERY}
     }
   }
@@ -302,7 +375,7 @@ export const queryNews = () => gql`
 
 export const querySingleNews = (slug: string) => gql`
   {
-    news(filters: { slug: { eq: "${slug}" } }, pagination: { pageSize: 1 }) {
+    news(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
       ${NEWS_DATA_QUERY}
     }
   }
