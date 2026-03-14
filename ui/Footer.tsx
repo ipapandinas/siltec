@@ -15,6 +15,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import AppImage from "./AppImage";
 import AppLink from "./AppLink";
 
+const FOOTER_CTA_TEXT = "Un projet d’aménagement ? Parlons-en.";
+
 const SocialButton = (props: {
   ariaLabel: string;
   link: string;
@@ -66,8 +68,8 @@ const SiteMap = () => {
       <SiteMapItem text="Réalisations" link="/projects" />
       <SiteMapItem text="Qui sommes-nous?" link="/about" />
       <SiteMapItem text="Actualités" link="/news" />
-      <SiteMapItem text="Contact" link="/contact" />
       <SiteMapItem text="Nos marques" link="/brands" />
+      <SiteMapItem text="Contact" link="/contact" />
     </Box>
   );
 };
@@ -115,6 +117,9 @@ export default function Footer() {
               paddingTop: "20px",
             }}
           >
+            <Typography component={"p"} sx={{ marginTop: "8px", marginBottom: "4px" }}>
+              {FOOTER_CTA_TEXT}
+            </Typography>
             <Typography
               component={"div"}
               variant={"h6"}

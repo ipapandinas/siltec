@@ -65,12 +65,12 @@ export const DEFAULT_NAVIGATION: PastilleType[] = [
   },
   {
     couleur: COLOR_SECONDARY_LIGHT,
-    titre: "Actualités",
-    url: "/news",
+    titre: "Nos marques",
+    url: "/brands",
     picto: {
-      alternativeText: "News navigation logo",
+      alternativeText: "Brands navigation logo",
       url: "/assets/nav/actu.svg",
-      hash: "actu",
+      hash: "brands",
     },
   },
   {
