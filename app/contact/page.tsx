@@ -20,7 +20,7 @@ export default async function Contact() {
           title={titre}
         />
         <div style={{ marginTop: "8rem" }}>
-          <Content />
+          <Content buttonColor={couleur} />
         </div>
       </Container>
     </div>
