@@ -4,21 +4,25 @@ import { Resend } from "resend";
 export const runtime = "nodejs";
 
 type ContactPayload = {
-  name?: unknown;
+  civilite?: unknown;
+  prenom?: unknown;
+  nom?: unknown;
+  adresse?: unknown;
   email?: unknown;
   phone?: unknown;
   company?: unknown;
-  subject?: unknown;
   message?: unknown;
   website?: unknown;
 };
 
 type ValidContactPayload = {
-  name: string;
+  civilite: string;
+  prenom: string;
+  nom: string;
+  adresse: string;
   email: string;
   phone: string;
   company: string;
-  subject: string;
   message: string;
   website: string;
 };
@@ -36,21 +40,37 @@ function normalizeString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+const CIVILITE_OPTIONS = ["Monsieur", "Madame"];
+
 function validatePayload(payload: ContactPayload): {
   values: ValidContactPayload;
   isValid: boolean;
 } {
   const values: ValidContactPayload = {
-    name: normalizeString(payload.name),
+    civilite: normalizeString(payload.civilite),
+    prenom: normalizeString(payload.prenom),
+    nom: normalizeString(payload.nom),
+    adresse: normalizeString(payload.adresse),
     email: normalizeString(payload.email),
     phone: normalizeString(payload.phone),
     company: normalizeString(payload.company),
-    subject: normalizeString(payload.subject),
     message: normalizeString(payload.message),
     website: normalizeString(payload.website),
   };
 
-  if (!values.name || values.name.length < 2) {
+  if (!values.civilite || !CIVILITE_OPTIONS.includes(values.civilite)) {
+    return { values, isValid: false };
+  }
+
+  if (!values.prenom || values.prenom.length < 2) {
+    return { values, isValid: false };
+  }
+
+  if (!values.nom || values.nom.length < 2) {
+    return { values, isValid: false };
+  }
+
+  if (!values.adresse || values.adresse.length < 5) {
     return { values, isValid: false };
   }
 
@@ -59,10 +79,6 @@ function validatePayload(payload: ContactPayload): {
   }
 
   if (values.phone && !/^[+()\d\s-]{6,}$/.test(values.phone)) {
-    return { values, isValid: false };
-  }
-
-  if (!values.subject || values.subject.length < 2) {
     return { values, isValid: false };
   }
 
@@ -78,18 +94,24 @@ function sanitizeHeaderValue(value: string): string {
 }
 
 function buildEmail(values: ValidContactPayload): { subject: string; text: string } {
-  const safeSubject = sanitizeHeaderValue(values.subject);
+  const safeIdentity = sanitizeHeaderValue(
+    `${values.civilite} ${values.prenom} ${values.nom}`
+  );
 
   return {
-    subject: `Nouveau message contact: ${safeSubject}`,
+    subject: safeIdentity
+      ? `Nouveau message contact: ${safeIdentity}`
+      : "Nouveau message contact",
     text: [
       "Nouveau message depuis le formulaire de contact Siltec.",
       "",
-      `Nom: ${values.name}`,
+      `Civilité: ${values.civilite}`,
+      `Prénom: ${values.prenom}`,
+      `Nom: ${values.nom}`,
+      `Adresse: ${values.adresse}`,
       `Email: ${values.email}`,
       `Téléphone: ${values.phone || "Non renseigné"}`,
       `Société: ${values.company || "Non renseignée"}`,
-      `Objet: ${values.subject}`,
       "",
       "Message:",
       values.message,

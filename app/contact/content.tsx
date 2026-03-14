@@ -1,7 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Alert, Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail";
 import PhoneIcon from "@mui/icons-material/Phone";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
@@ -11,11 +23,13 @@ import { darken } from "@mui/material/styles";
 import AppLink from "#/ui/AppLink";
 
 type FormValues = {
-  name: string;
+  civilite: string;
+  prenom: string;
+  nom: string;
+  adresse: string;
   email: string;
   phone: string;
   company: string;
-  subject: string;
   message: string;
   website: string;
 };
@@ -39,21 +53,26 @@ type Props = {
 };
 
 const INITIAL_VALUES: FormValues = {
-  name: "",
+  civilite: "",
+  prenom: "",
+  nom: "",
+  adresse: "",
   email: "",
   phone: "",
   company: "",
-  subject: "",
   message: "",
   website: "",
 };
 
+const CIVILITE_OPTIONS: FormValues["civilite"][] = ["Monsieur", "Madame"];
+
 const FORM_FIELDS: FieldConfig[] = [
-  { name: "name", placeholder: "nom*", required: true, width: "half" },
-  { name: "email", placeholder: "email*", required: true, type: "email", width: "half" },
+  { name: "prenom", placeholder: "prénom*", required: true, width: "half" },
+  { name: "nom", placeholder: "nom*", required: true, width: "half" },
+  { name: "email", placeholder: "email*", required: true, type: "email", width: "full" },
+  { name: "adresse", placeholder: "adresse*", required: true, width: "full" },
   { name: "phone", placeholder: "téléphone", type: "tel", width: "half" },
   { name: "company", placeholder: "société", width: "half" },
-  { name: "subject", placeholder: "objet*", required: true, width: "full" },
   {
     name: "message",
     placeholder: "message*",
@@ -129,19 +148,41 @@ const ContactItem = (props: {
 function validate(values: FormValues): FormErrors {
   const errors: FormErrors = {};
 
-  if (!values.name.trim()) errors.name = "Le nom est requis.";
+  if (!values.civilite.trim()) {
+    errors.civilite = "La civilité est requise.";
+  } else if (!CIVILITE_OPTIONS.includes(values.civilite)) {
+    errors.civilite = "Merci de sélectionner Monsieur ou Madame.";
+  }
 
-  if (!values.email.trim()) {
+  if (!values.prenom.trim()) {
+    errors.prenom = "Le prénom est requis.";
+  } else if (values.prenom.trim().length < 2) {
+    errors.prenom = "Le prénom doit contenir au moins 2 caractères.";
+  }
+
+  if (!values.nom.trim()) {
+    errors.nom = "Le nom est requis.";
+  } else if (values.nom.trim().length < 2) {
+    errors.nom = "Le nom doit contenir au moins 2 caractères.";
+  }
+
+  if (!values.adresse.trim()) {
+    errors.adresse = "L’adresse est requise.";
+  } else if (values.adresse.trim().length < 5) {
+    errors.adresse = "L’adresse doit contenir au moins 5 caractères.";
+  }
+
+  const email = values.email.trim();
+
+  if (!email) {
     errors.email = "L’email est requis.";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     errors.email = "Merci d’indiquer un email valide.";
   }
 
   if (values.phone.trim() && !/^[+()\d\s-]{6,}$/.test(values.phone.trim())) {
     errors.phone = "Merci d’indiquer un numéro valide.";
   }
-
-  if (!values.subject.trim()) errors.subject = "L’objet est requis.";
 
   if (!values.message.trim()) {
     errors.message = "Le message est requis.";
@@ -238,10 +279,15 @@ export default function Content({ buttonColor }: Props) {
             display: "flex",
             flexDirection: "column",
             height: "100%",
-            pt: { xs: 0, lg: "6.4rem" },
+            pt: { xs: 0, lg: "10rem" },
           }}
         >
           <Typography sx={{ textAlign: "justify", textJustify: "inter-word" }}>
+            Pour une demande générale, veuillez utiliser le formulaire ci-joint.
+            Nous y répondrons dans les plus brefs délais.
+          </Typography>
+
+          <Typography sx={{ mt: "2.4rem", textAlign: "justify", textJustify: "inter-word" }}>
             Nous vous accueillons dans notre showroom du lundi au vendredi,
             de 9h à 18h, de préférence sur rendez-vous, pour découvrir une
             sélection de mobilier et échanger sur votre projet.
@@ -318,6 +364,46 @@ export default function Content({ buttonColor }: Props) {
               name="website"
             />
           </Box>
+
+          <FormControl error={Boolean(errors.civilite)} sx={{ mb: "1.6rem" }}>
+            <FormLabel
+              sx={{
+                color: "#546360",
+                fontSize: "1.4rem",
+                letterSpacing: "0.56px",
+                "&.Mui-focused": { color: "#010101" },
+              }}
+            >
+              civilité*
+            </FormLabel>
+            <RadioGroup
+              row
+              name="civilite"
+              value={values.civilite}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                onChange("civilite", event.target.value)
+              }
+              sx={{ mt: "0.4rem", gap: "0.8rem" }}
+            >
+              {CIVILITE_OPTIONS.map((option) => (
+                <FormControlLabel
+                  key={option}
+                  value={option}
+                  control={<Radio size="small" />}
+                  label={option}
+                  sx={{ mr: "2rem" }}
+                />
+              ))}
+            </RadioGroup>
+            {errors.civilite && (
+              <Typography
+                variant="body2"
+                sx={{ color: "error.main", mt: "0.4rem", fontSize: "1.2rem" }}
+              >
+                {errors.civilite}
+              </Typography>
+            )}
+          </FormControl>
 
           <Box
             sx={{
