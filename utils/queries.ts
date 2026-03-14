@@ -60,7 +60,6 @@ export const queryProduct = (slug: string) => gql`
       dimensions
       annee
       description
-      marque
       brand {
         documentId
         nom
@@ -119,7 +118,6 @@ export const queryProducts = (collection: string, typology: string) => gql`
       dimensions
       annee
       description
-      marque
       brand {
         documentId
         nom
@@ -158,11 +156,16 @@ export const queryProductsByBrandSlug = (brandSlug: string) => gql`
       dimensions
       annee
       description
-      marque
       brand {
         documentId
         nom
         slug
+      }
+      medias {
+        ${IMAGE_DATA_QUERY}
+      }
+      image {
+        ${IMAGE_DATA_QUERY}
       }
       rank
       slug

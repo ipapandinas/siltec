@@ -9,7 +9,16 @@ import {
   queryProductsByBrandSlug,
 } from "#/utils/queries";
 
-type ProductsResponse = { data?: { products?: IProduct[] }; errors?: Array<{ message?: string }> };
+type GraphqlProductsResponse<TProduct> = {
+  data?: { products?: TProduct[] };
+  errors?: Array<{ message?: string }>;
+};
+
+type ProductImageNode = {
+  documentId: string;
+  slug: string;
+  image: IProduct["image"];
+};
 
 async function getProductImageBySlug(slug: string) {
   const query = queryProductImage(slug);
@@ -19,7 +28,7 @@ async function getProductImageBySlug(slug: string) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query }),
-  }).then((res) => res.json() as Promise<ProductsResponse>);
+  }).then((res) => res.json() as Promise<GraphqlProductsResponse<ProductImageNode>>);
 
   if (!response.data?.products || response.errors?.length) {
     return null;
@@ -28,7 +37,7 @@ async function getProductImageBySlug(slug: string) {
   return response.data.products[0]?.image ?? null;
 }
 
-function extractProducts(content: ProductsResponse): IProduct[] {
+function extractProducts<TProduct>(content: GraphqlProductsResponse<TProduct>): TProduct[] {
   if (content.errors?.length) {
     throw new Error(
       `GraphQL errors: ${content.errors
@@ -50,7 +59,7 @@ export const getProducts = cache(async (collection: string, typology: string) =>
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: ProductsResponse) => extractProducts(content));
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
   } catch (err: any) {
     console.error(
       `Products could not have been fetched - Detail: ${
@@ -72,7 +81,7 @@ export const getProductsByBrand = cache(async (brandSlug: string) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: ProductsResponse) => extractProducts(content));
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
 
     const productsWithImages = await Promise.all(
       products.map(async (product) => {
@@ -103,7 +112,7 @@ export const getProduct = cache(async (slug: string) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: ProductsResponse) => extractProducts(content)[0] ?? null);
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content)[0] ?? null);
   } catch (err: any) {
     console.error(
       `Product could not have been fetched - Detail: ${

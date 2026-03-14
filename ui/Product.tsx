@@ -25,15 +25,17 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
   const theme = useTheme();
   const {
     annee,
+    brand,
     description,
     designer,
     dimensions,
     image,
-    marque,
     medias,
     producteur,
     titre,
   } = product;
+
+  const relationBrandName = brand?.nom?.trim() || null;
 
   const carrousselList = buildMediaCarouselUrls(image, medias);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -113,16 +115,16 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
           top: { lg: "10rem" },
         }}
       >
-        {marque && (
-          <Typography
-            sx={{
-              fontSize: "0.9rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "text.secondary",
-            }}
-          >
-            {brandHref ? (
+        <Typography
+          sx={{
+            fontSize: "0.9rem",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "text.secondary",
+          }}
+        >
+          {relationBrandName ? (
+            brandHref ? (
               <AppLink
                 href={brandHref}
                 sx={{
@@ -132,13 +134,15 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
                   "&:hover": { opacity: 0.8 },
                 }}
               >
-                {marque}
+                {relationBrandName}
               </AppLink>
             ) : (
-              marque
-            )}
-          </Typography>
-        )}
+              relationBrandName
+            )
+          ) : (
+            "Marque non renseignée"
+          )}
+        </Typography>
         <Typography
           sx={{
             fontSize: { xs: "2.8rem", lg: "4.8rem" },
