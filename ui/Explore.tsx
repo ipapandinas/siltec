@@ -1,6 +1,7 @@
 "use client";
 
 import { IImage } from "#/interfaces/IImage";
+import { resolveImageUrl } from "#/utils/media";
 import { Grid } from "@mui/material";
 
 import Card from "./Card";
@@ -19,10 +20,13 @@ interface IProps {
 }
 
 export default function Explore({ items, subPath }: IProps) {
-  const safeItems = items.filter(
-    (item): item is ExploreItem =>
-      Boolean(item && item.documentId && item.titre && item.slug)
-  );
+  const safeItems = items.filter((item): item is ExploreItem => {
+    if (!item || !item.documentId || !item.titre || !item.slug) {
+      return false;
+    }
+
+    return Boolean(resolveImageUrl(item.image ?? null));
+  });
 
   return (
     <Grid

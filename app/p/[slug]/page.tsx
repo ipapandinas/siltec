@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { getCollectionSinglePage, getCollections } from "#/lib/getCollections";
 import { getProduct, getProducts } from "#/lib/getProducts";
+import { buildMediaCarouselUrls, resolveImageUrl } from "#/utils/media";
 import Breadcrumbs from "#/ui/Breadcrumbs";
 import Container from "#/ui/Container";
 import Card from "#/ui/Card";
@@ -20,6 +21,11 @@ export default async function Page({
 
   if (!pageData || !product) notFound();
 
+  const hasRenderableMedia =
+    buildMediaCarouselUrls(product.image, product.medias).length > 0;
+
+  if (!hasRenderableMedia) notFound();
+
   const { couleur, couleurBoutonDemandeInformations } = pageData;
   const pageName = product.titre;
   const relationBrandSlug = product.brand?.slug?.trim();
@@ -36,7 +42,12 @@ export default async function Page({
     relatedProductsRaw
       ?.filter(
         (relatedProduct): relatedProduct is NonNullable<typeof relatedProduct> =>
-          Boolean(relatedProduct && relatedProduct.slug && relatedProduct.slug !== slug)
+          Boolean(
+            relatedProduct &&
+              relatedProduct.slug &&
+              relatedProduct.slug !== slug &&
+              resolveImageUrl(relatedProduct.image)
+          )
       )
       .slice(0, 3) ?? [];
 

@@ -2,40 +2,179 @@ import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 type RevalidationPayload = {
-  model?: string;
-  uid?: string;
+  model?: unknown;
+  uid?: unknown;
   entry?: {
-    slug?: string;
+    slug?: unknown;
   };
   data?: {
-    model?: string;
-    uid?: string;
+    model?: unknown;
+    uid?: unknown;
     entry?: {
-      slug?: string;
+      slug?: unknown;
     };
   };
 };
 
-function normalizeModel(model?: string): string {
-  if (!model) return "";
-  return model.split(".").pop()?.toLowerCase() ?? "";
-}
+type CanonicalModel =
+  | "product"
+  | "project"
+  | "collection"
+  | "brand"
+  | "typology"
+  | "new"
+  | "navigation"
+  | "homepage"
+  | "carroussel"
+  | "hub-de-collection"
+  | "hub-de-realisation"
+  | "hub-d-actualite";
 
-function extractModel(payload: RevalidationPayload): string {
-  return normalizeModel(
-    payload.model ?? payload.uid ?? payload.data?.model ?? payload.data?.uid
-  );
-}
+type RevalidationTarget = {
+  paths: string[];
+  revalidateLayout: boolean;
+};
+
+const MODEL_ALIASES: Record<string, CanonicalModel> = {
+  news: "new",
+  hubdecollection: "hub-de-collection",
+  hubderealisation: "hub-de-realisation",
+  hubdactualite: "hub-d-actualite",
+};
 
 const SAFE_SLUG_REGEX = /^[a-z0-9-]+$/;
 
+function normalizeModelValue(value: unknown): string {
+  if (typeof value !== "string") return "";
+
+  const rightMostSegment = value
+    .trim()
+    .toLowerCase()
+    .replace(/^api::/, "")
+    .split(".")
+    .pop() ?? "";
+
+  return rightMostSegment
+    .replace(/[\s_]+/g, "-")
+    .replace(/[’'`]/g, "")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function normalizeModel(model: unknown): CanonicalModel | null {
+  const normalized = normalizeModelValue(model);
+  if (!normalized) return null;
+
+  const squashed = normalized.replace(/-/g, "");
+  const canonical = MODEL_ALIASES[normalized] ?? MODEL_ALIASES[squashed] ?? normalized;
+
+  switch (canonical) {
+    case "product":
+    case "project":
+    case "collection":
+    case "brand":
+    case "typology":
+    case "new":
+    case "navigation":
+    case "homepage":
+    case "carroussel":
+    case "hub-de-collection":
+    case "hub-de-realisation":
+    case "hub-d-actualite":
+      return canonical;
+    default:
+      return null;
+  }
+}
+
+function extractModel(payload: RevalidationPayload): CanonicalModel | null {
+  const rawModel = payload.model ?? payload.uid ?? payload.data?.model ?? payload.data?.uid;
+  return normalizeModel(rawModel);
+}
+
 function extractSlug(payload: RevalidationPayload): string | null {
-  const slug = payload.entry?.slug ?? payload.data?.entry?.slug;
-  const trimmed = slug?.trim();
+  const slugValue = payload.entry?.slug ?? payload.data?.entry?.slug;
+  if (typeof slugValue !== "string") return null;
 
-  if (!trimmed) return null;
+  const slug = slugValue.trim().toLowerCase();
+  if (!slug) return null;
 
-  return SAFE_SLUG_REGEX.test(trimmed) ? trimmed : null;
+  return SAFE_SLUG_REGEX.test(slug) ? slug : null;
+}
+
+function getTargets(model: CanonicalModel, slug: string | null): RevalidationTarget {
+  const paths = new Set<string>();
+  let revalidateLayout = false;
+
+  switch (model) {
+    case "product":
+      paths.add(slug ? `/p/${slug}` : "/p/[slug]");
+      paths.add("/b/[brandSlug]");
+      paths.add("/c/[collectionSlug]/[typologySlug]");
+      paths.add("/");
+      break;
+
+    case "project":
+      paths.add(slug ? `/projects/${slug}` : "/projects/[slug]");
+      paths.add("/projects");
+      paths.add("/");
+      break;
+
+    case "collection":
+      paths.add(slug ? `/c/${slug}` : "/c/[collectionSlug]");
+      paths.add("/c/[collectionSlug]/[typologySlug]");
+      paths.add("/collections");
+      paths.add("/");
+      break;
+
+    case "brand":
+      paths.add(slug ? `/b/${slug}` : "/b/[brandSlug]");
+      paths.add("/brands");
+      paths.add("/");
+      break;
+
+    case "typology":
+      paths.add("/c/[collectionSlug]");
+      paths.add("/c/[collectionSlug]/[typologySlug]");
+      paths.add("/p/[slug]");
+      break;
+
+    case "new":
+      paths.add(slug ? `/news/${slug}` : "/news/[slug]");
+      paths.add("/news");
+      break;
+
+    case "navigation":
+      revalidateLayout = true;
+      break;
+
+    case "homepage":
+    case "carroussel":
+      paths.add("/");
+      break;
+
+    case "hub-de-collection":
+      paths.add("/collections");
+      paths.add("/c/[collectionSlug]");
+      paths.add("/c/[collectionSlug]/[typologySlug]");
+      paths.add("/p/[slug]");
+      break;
+
+    case "hub-de-realisation":
+      paths.add("/projects");
+      break;
+
+    case "hub-d-actualite":
+      paths.add("/news");
+      paths.add("/news/[slug]");
+      break;
+  }
+
+  return {
+    paths: Array.from(paths).sort(),
+    revalidateLayout,
+  };
 }
 
 function isAuthorized(request: NextRequest, secret: string): boolean {
@@ -43,9 +182,14 @@ function isAuthorized(request: NextRequest, secret: string): boolean {
   const bearerSecret = authHeader?.startsWith("Bearer ")
     ? authHeader.slice(7)
     : null;
+  const headerSecret = request.headers.get("x-revalidation-secret");
   const querySecret = request.nextUrl.searchParams.get("secret");
 
-  return bearerSecret === secret || querySecret === secret;
+  return (
+    bearerSecret === secret ||
+    headerSecret === secret ||
+    querySecret === secret
+  );
 }
 
 function logWarn(message: string, meta?: unknown) {
@@ -99,7 +243,7 @@ export async function POST(request: NextRequest) {
 
   if (!model) {
     revalidatePath("/", "layout");
-    logInfo("Fallback layout revalidation (missing model)");
+    logInfo("Fallback layout revalidation (missing or unknown model)");
     return NextResponse.json({
       model: null,
       revalidated: ["/ (layout)"],
@@ -108,65 +252,27 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const pathsToRevalidate = new Set<string>();
+  const { paths, revalidateLayout } = getTargets(model, slug);
 
-  switch (model) {
-    case "product":
-      if (slug) {
-        pathsToRevalidate.add(`/p/${slug}`);
-      }
-      pathsToRevalidate.add("/");
-      break;
-
-    case "project":
-      if (slug) {
-        pathsToRevalidate.add(`/projects/${slug}`);
-      }
-      pathsToRevalidate.add("/projects");
-      pathsToRevalidate.add("/");
-      break;
-
-    case "collection":
-      if (slug) {
-        pathsToRevalidate.add(`/c/${slug}`);
-      }
-      pathsToRevalidate.add("/collections");
-      pathsToRevalidate.add("/");
-      break;
-
-    case "brand":
-      if (slug) {
-        pathsToRevalidate.add(`/b/${slug}`);
-      }
-      pathsToRevalidate.add("/brands");
-      pathsToRevalidate.add("/");
-      break;
-
-    default:
-      revalidatePath("/", "layout");
-      logInfo("Fallback layout revalidation (unknown model)", { model });
-      return NextResponse.json({
-        revalidated: ["/ (layout)"],
-        model,
-        success: true,
-      });
+  for (const path of paths) {
+    revalidatePath(path);
   }
 
-  const revalidatedPaths = Array.from(pathsToRevalidate);
+  if (revalidateLayout) {
+    revalidatePath("/", "layout");
+  }
 
-  pathsToRevalidate.forEach((path) => {
-    revalidatePath(path);
-  });
+  const revalidated = revalidateLayout ? [...paths, "/ (layout)"] : paths;
 
   logInfo("Webhook revalidation completed", {
     model,
     slug,
-    revalidatedPaths,
+    revalidatedPaths: revalidated,
   });
 
   return NextResponse.json({
     model,
-    revalidated: revalidatedPaths,
+    revalidated,
     success: true,
   });
 }

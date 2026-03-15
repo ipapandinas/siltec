@@ -2,39 +2,20 @@ import { cache } from "react";
 
 import { IProduct } from "#/interfaces/IProduct";
 import { GRAPHQL_API_URL, REVALIDATE_CONTENT } from "#/utils/constants";
-import {
-  queryProduct,
-  queryProductImage,
-  queryProducts,
-  queryProductsByBrandSlug,
-} from "#/utils/queries";
+import { queryProduct, queryProducts, queryProductsByBrandSlug } from "#/utils/queries";
 
 type GraphqlProductsResponse<TProduct> = {
   data?: { products?: TProduct[] };
   errors?: Array<{ message?: string }>;
 };
 
-type ProductImageNode = {
-  documentId: string;
-  slug: string;
-  image: IProduct["image"];
-};
+type ProductQueryResult = Omit<IProduct, "image">;
 
-async function getProductImageBySlug(slug: string) {
-  const query = queryProductImage(slug);
-
-  const response = await fetch(GRAPHQL_API_URL, {
-    next: { revalidate: REVALIDATE_CONTENT },
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query }),
-  }).then((res) => res.json() as Promise<GraphqlProductsResponse<ProductImageNode>>);
-
-  if (!response.data?.products || response.errors?.length) {
-    return null;
-  }
-
-  return response.data.products[0]?.image ?? null;
+function withFallbackImage(product: ProductQueryResult): IProduct {
+  return {
+    ...product,
+    image: product.medias?.[0] ?? null,
+  };
 }
 
 function extractProducts<TProduct>(content: GraphqlProductsResponse<TProduct>): TProduct[] {
@@ -59,7 +40,9 @@ export const getProducts = cache(async (collection: string, typology: string) =>
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
+      .then((content: GraphqlProductsResponse<ProductQueryResult>) =>
+        extractProducts(content).map(withFallbackImage)
+      );
   } catch (err: any) {
     console.error(
       `Products could not have been fetched - Detail: ${
@@ -74,6 +57,7 @@ export const getProducts = cache(async (collection: string, typology: string) =>
 export const getProductsByBrand = cache(async (brandSlug: string) => {
   try {
     const query = queryProductsByBrandSlug(brandSlug);
+
     const products = await fetch(GRAPHQL_API_URL, {
       next: { revalidate: REVALIDATE_CONTENT },
       method: "POST",
@@ -81,16 +65,9 @@ export const getProductsByBrand = cache(async (brandSlug: string) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
+      .then((content: GraphqlProductsResponse<ProductQueryResult>) => extractProducts(content));
 
-    const productsWithImages = await Promise.all(
-      products.map(async (product) => {
-        const image = await getProductImageBySlug(product.slug);
-        return { ...product, image: image ?? product.image ?? null };
-      })
-    );
-
-    return productsWithImages;
+    return products.map(withFallbackImage);
   } catch (err: any) {
     console.error(
       `Products by brand could not have been fetched - Detail: ${
@@ -112,7 +89,10 @@ export const getProduct = cache(async (slug: string) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content)[0] ?? null);
+      .then((content: GraphqlProductsResponse<ProductQueryResult>) => {
+        const product = extractProducts(content)[0];
+        return product ? withFallbackImage(product) : null;
+      });
   } catch (err: any) {
     console.error(
       `Product could not have been fetched - Detail: ${

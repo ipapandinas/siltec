@@ -68,9 +68,6 @@ export const queryProduct = (slug: string) => gql`
       medias {
         ${IMAGE_DATA_QUERY}
       }
-      image {
-        ${IMAGE_DATA_QUERY}
-      }
       rank
       slug
       collections {
@@ -82,18 +79,6 @@ export const queryProduct = (slug: string) => gql`
         documentId
         titre
         slug
-      }
-    }
-  }
-`;
-
-export const queryProductImage = (slug: string) => gql`
-  {
-    products(filters: { slug: { eq: "${gqlString(slug)}" } }, pagination: { pageSize: 1 }) {
-      documentId
-      slug
-      image {
-        ${IMAGE_DATA_QUERY}
       }
     }
   }
@@ -123,7 +108,7 @@ export const queryProducts = (collection: string, typology: string) => gql`
         nom
         slug
       }
-      image {
+      medias {
         ${IMAGE_DATA_QUERY}
       }
       rank
@@ -162,9 +147,6 @@ export const queryProductsByBrandSlug = (brandSlug: string) => gql`
         slug
       }
       medias {
-        ${IMAGE_DATA_QUERY}
-      }
-      image {
         ${IMAGE_DATA_QUERY}
       }
       rank

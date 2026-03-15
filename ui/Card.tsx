@@ -41,6 +41,10 @@ export default function Card({
     : null;
   const displayImageUrl = resolvedImageUrl ?? legacyCloudinaryUrl;
 
+  if (!displayImageUrl) {
+    return null;
+  }
+
   const cardRadiusSx =
     cornerVariant === "reverse"
       ? {
@@ -67,15 +71,13 @@ export default function Card({
             },
           }}
         >
-          {displayImageUrl ? (
-            <CardMedia
-              component="img"
-              height="380"
-              image={displayImageUrl}
-              alt={imageAlt}
-              sx={{ objectFit: "cover" }}
-            />
-          ) : null}
+          <CardMedia
+            component="img"
+            height="380"
+            image={displayImageUrl}
+            alt={imageAlt}
+            sx={{ objectFit: "cover" }}
+          />
           <CardContent
             sx={{
               position: "relative",
