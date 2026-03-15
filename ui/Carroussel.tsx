@@ -75,7 +75,7 @@ export default function Carroussel(props: Props) {
     return src;
   };
 
-  const arrowStyles = arrows && hasMultipleImages
+  const arrowStyles: MuiBoxProps["sx"] = arrows && hasMultipleImages
     ? {
         ".slick-prev, .slick-next": {
           zIndex: 2,
@@ -120,7 +120,7 @@ export default function Carroussel(props: Props) {
           content: '"›"',
         },
       }
-    : {};
+    : undefined;
 
   return (
     <Box sx={arrowStyles}>

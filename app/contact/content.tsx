@@ -423,49 +423,85 @@ export default function Content({ buttonColor }: Props) {
                       field.width === "full" ? "1 / -1" : { xs: "1 / -1", md: "auto" },
                   }}
                 >
-                  <Box
-                    component={isTextarea ? "textarea" : "input"}
-                    name={field.name}
-                    type={isTextarea ? undefined : field.type ?? "text"}
-                    value={values[field.name]}
-                    placeholder={field.placeholder}
-                    rows={isTextarea ? field.rows : undefined}
-                    onChange={
-                      isTextarea
-                        ? (event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                            onChange(field.name, event.target.value)
-                        : (event: React.ChangeEvent<HTMLInputElement>) =>
-                            onChange(field.name, event.target.value)
-                    }
-                    sx={{
-                      fontFamily: '"Helvetica Neue LT W05 45 Light", sans-serif',
-                      WebkitAppearance: "none",
-                      MozAppearance: "none",
-                      boxShadow: "none",
-                      border: "none",
-                      borderRadius: 0,
-                      borderBottom: `2px solid ${errors[field.name] ? "#d32f2f" : "#546360"}`,
-                      outline: "none",
-                      width: "100%",
-                      height: isTextarea ? "auto" : "40px",
-                      minHeight: isTextarea ? "140px" : "40px",
-                      backgroundColor: "#f0edeb",
-                      padding: isTextarea ? "10px" : "0 10px 20px",
-                      fontSize: "14px",
-                      letterSpacing: "0.56px",
-                      lineHeight: "1.4",
-                      resize: isTextarea ? "vertical" : "none",
-                      "&:focus": {
-                        borderBottomColor: "#010101",
-                      },
-                      "&::placeholder": {
-                        color: "#546360",
-                        opacity: 1,
-                      },
-                    }}
-                    aria-label={field.placeholder}
-                    required={field.required}
-                  />
+                  {isTextarea ? (
+                    <Box
+                      component="textarea"
+                      name={field.name}
+                      value={values[field.name]}
+                      placeholder={field.placeholder}
+                      rows={field.rows}
+                      onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                        onChange(field.name, event.target.value)
+                      }
+                      sx={{
+                        fontFamily: '"Helvetica Neue LT W05 45 Light", sans-serif',
+                        WebkitAppearance: "none",
+                        MozAppearance: "none",
+                        boxShadow: "none",
+                        border: "none",
+                        borderRadius: 0,
+                        borderBottom: `2px solid ${errors[field.name] ? "#d32f2f" : "#546360"}`,
+                        outline: "none",
+                        width: "100%",
+                        height: "auto",
+                        minHeight: "140px",
+                        backgroundColor: "#f0edeb",
+                        padding: "10px",
+                        fontSize: "14px",
+                        letterSpacing: "0.56px",
+                        lineHeight: "1.4",
+                        resize: "vertical",
+                        "&:focus": {
+                          borderBottomColor: "#010101",
+                        },
+                        "&::placeholder": {
+                          color: "#546360",
+                          opacity: 1,
+                        },
+                      }}
+                      aria-label={field.placeholder}
+                      required={field.required}
+                    />
+                  ) : (
+                    <Box
+                      component="input"
+                      name={field.name}
+                      type={field.type ?? "text"}
+                      value={values[field.name]}
+                      placeholder={field.placeholder}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        onChange(field.name, event.target.value)
+                      }
+                      sx={{
+                        fontFamily: '"Helvetica Neue LT W05 45 Light", sans-serif',
+                        WebkitAppearance: "none",
+                        MozAppearance: "none",
+                        boxShadow: "none",
+                        border: "none",
+                        borderRadius: 0,
+                        borderBottom: `2px solid ${errors[field.name] ? "#d32f2f" : "#546360"}`,
+                        outline: "none",
+                        width: "100%",
+                        height: "40px",
+                        minHeight: "40px",
+                        backgroundColor: "#f0edeb",
+                        padding: "0 10px 20px",
+                        fontSize: "14px",
+                        letterSpacing: "0.56px",
+                        lineHeight: "1.4",
+                        resize: "none",
+                        "&:focus": {
+                          borderBottomColor: "#010101",
+                        },
+                        "&::placeholder": {
+                          color: "#546360",
+                          opacity: 1,
+                        },
+                      }}
+                      aria-label={field.placeholder}
+                      required={field.required}
+                    />
+                  )}
 
                   {errors[field.name] && (
                     <Typography

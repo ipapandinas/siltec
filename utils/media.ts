@@ -29,5 +29,5 @@ export function buildMediaCarouselUrls(
     .map((item) => resolveImageUrl(item))
     .filter((url): url is string => Boolean(url));
 
-  return [...new Set(mediaList)];
+  return Array.from(new Set(mediaList));
 }
