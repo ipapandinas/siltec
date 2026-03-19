@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { IImage } from "#/interfaces/IImage";
 import Carroussel from "#/ui/Carroussel";
 import { UP_LG } from "#/utils/constants";
+import { resolveImageUrl } from "#/utils/media";
 
 interface Props {
   titre: string;
@@ -14,11 +15,13 @@ interface Props {
 }
 
 export default function Content({ titre, description, medias }: Props) {
-  const carrousselList = medias?.map(({ url }) => url);
+  const carrousselList = (medias ?? [])
+    .map((media) => resolveImageUrl(media))
+    .filter((url): url is string => Boolean(url));
 
   return (
     <Box>
-      {carrousselList && (
+      {carrousselList.length > 0 && (
         <Box
           sx={{
             ".slick-slider": {

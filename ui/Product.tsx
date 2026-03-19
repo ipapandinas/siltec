@@ -10,6 +10,7 @@ import { IProduct } from "#/interfaces/IProduct";
 import { buildMediaCarouselUrls } from "#/utils/media";
 import { COLOR_PRIMARY_MAIN, UP_LG, UP_SM } from "#/utils/constants";
 
+import AppImage from "./AppImage";
 import AppLink from "./AppLink";
 import type Slider from "react-slick";
 
@@ -29,14 +30,13 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
     description,
     designer,
     dimensions,
-    image,
     medias,
     titre,
   } = product;
 
   const relationBrandName = marque?.nom?.trim() || null;
 
-  const carrousselList = buildMediaCarouselUrls(image, medias);
+  const carrousselList = buildMediaCarouselUrls(medias);
   const [activeSlide, setActiveSlide] = useState(0);
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
   const hasMultipleImages = carrousselList.length > 1;
@@ -91,7 +91,6 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
               list={carrousselList}
               width={850}
               height={800}
-              quality={100}
               setSliderRef={setSliderRef}
               onSlideChange={setActiveSlide}
             />
@@ -245,6 +244,7 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
                   cursor: "pointer",
                   borderRadius: "1.2rem",
                   overflow: "hidden",
+                  position: "relative",
                   opacity: idx === activeSlide ? 1 : 0.7,
                   transform: idx === activeSlide ? "scale(1.05)" : "scale(1)",
                   transition: "all .2s ease",
@@ -254,11 +254,12 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
                   flexShrink: 0,
                 }}
               >
-                <Box
-                  component="img"
+                <AppImage
                   alt={`carroussel-thumbnail-${idx}`}
                   src={src}
-                  sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  fill
+                  sizes="80px"
+                  style={{ objectFit: "cover" }}
                 />
               </Box>
             ))}

@@ -82,8 +82,7 @@
   margin: 0;
 }
 
-html,
-body {
+html {
   font-size: 62.5%;
   max-width: 100vw;
   overflow-x: hidden;
@@ -91,6 +90,7 @@ body {
 }
 
 body {
+  font-size: 1.6rem;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,

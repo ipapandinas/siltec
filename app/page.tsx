@@ -10,6 +10,7 @@ import ScrollDown from "#/ui/ScrollDown";
 import Section from "#/ui/Section";
 import SiltecChip from "#/ui/SiltecChip";
 import { UP_SM } from "#/utils/constants";
+import { resolveImageUrl } from "#/utils/media";
 
 const isHexColor = (value: unknown): value is string =>
   typeof value === "string" &&
@@ -19,6 +20,9 @@ export default async function Home() {
   const data = await getHome();
   const brands = data?.brands;
   const carroussel = data?.carroussel?.medias;
+  const heroCarrousselList = (carroussel ?? [])
+    .map((media) => resolveImageUrl(media))
+    .filter((url): url is string => Boolean(url));
   const collections = data?.collections;
   const projects = data?.projects;
   const homepageConfig = data?.homepage;
@@ -57,7 +61,7 @@ export default async function Home() {
   return (
     <>
       <SiltecChip />
-      {carroussel !== undefined && carroussel.length > 0 && (
+      {heroCarrousselList.length > 0 && (
         <>
           <div
             style={{
@@ -68,7 +72,7 @@ export default async function Home() {
           >
             <Carroussel
               arrows
-              list={carroussel.map(({ url }) => url)}
+              list={heroCarrousselList}
               sx={{
                 ".slick-slider": {
                   width: "100vw",
@@ -147,7 +151,7 @@ export default async function Home() {
             padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
           }}
         >
-          <div>
+          <div style={{ width: "100%" }}>
             <ProjectsSection projects={projects} />
           </div>
         </Section>

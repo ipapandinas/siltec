@@ -21,8 +21,7 @@ export default async function Page({
 
   if (!pageData || !product) notFound();
 
-  const hasRenderableMedia =
-    buildMediaCarouselUrls(product.image, product.medias).length > 0;
+  const hasRenderableMedia = buildMediaCarouselUrls(product.medias).length > 0;
 
   if (!hasRenderableMedia) notFound();
 
@@ -46,7 +45,7 @@ export default async function Page({
             relatedProduct &&
               relatedProduct.slug &&
               relatedProduct.slug !== slug &&
-              resolveImageUrl(relatedProduct.image)
+              resolveImageUrl(relatedProduct.medias?.[0] ?? null)
           )
       )
       .slice(0, 3) ?? [];
@@ -147,8 +146,8 @@ export default async function Page({
                 >
                   <Card
                     href={`/p/${relatedProduct.slug}`}
-                    image={relatedProduct.image ?? null}
-                    imageAlt={relatedProduct.image?.alternativeText ?? relatedProduct.titre}
+                    image={relatedProduct.medias?.[0] ?? null}
+                    imageAlt={relatedProduct.medias?.[0]?.alternativeText ?? relatedProduct.titre}
                     label={relatedProduct.titre}
                     title={relatedProduct.titre}
                     cornerVariant="default"

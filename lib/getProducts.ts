@@ -9,15 +9,6 @@ type GraphqlProductsResponse<TProduct> = {
   errors?: Array<{ message?: string }>;
 };
 
-type ProductQueryResult = Omit<IProduct, "image">;
-
-function withFallbackImage(product: ProductQueryResult): IProduct {
-  return {
-    ...product,
-    image: product.medias?.[0] ?? null,
-  };
-}
-
 function extractProducts<TProduct>(content: GraphqlProductsResponse<TProduct>): TProduct[] {
   if (content.errors?.length) {
     throw new Error(
@@ -40,9 +31,7 @@ export const getProducts = cache(async (collection: string, typology: string) =>
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProductsResponse<ProductQueryResult>) =>
-        extractProducts(content).map(withFallbackImage)
-      );
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
   } catch (err: any) {
     console.error(
       `Products could not have been fetched - Detail: ${
@@ -65,9 +54,9 @@ export const getProductsByBrand = cache(async (brandSlug: string) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProductsResponse<ProductQueryResult>) => extractProducts(content));
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
 
-    return products.map(withFallbackImage);
+    return products;
   } catch (err: any) {
     console.error(
       `Products by brand could not have been fetched - Detail: ${
@@ -89,10 +78,7 @@ export const getProduct = cache(async (slug: string) => {
       body: JSON.stringify({ query }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProductsResponse<ProductQueryResult>) => {
-        const product = extractProducts(content)[0];
-        return product ? withFallbackImage(product) : null;
-      });
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content)[0] ?? null);
   } catch (err: any) {
     console.error(
       `Product could not have been fetched - Detail: ${

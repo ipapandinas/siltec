@@ -11,7 +11,6 @@ export interface IProduct {
   annee: number | null;
   description: string | null;
   marque: Pick<IBrand, "documentId" | "nom" | "slug"> | null;
-  image: IImage | null;
   medias: IImage[] | null;
   rank: number;
   slug: string;

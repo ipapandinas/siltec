@@ -18,7 +18,7 @@ export default async function Page({
 
   if (!project) notFound();
 
-  const { date, description, image, medias, titre } = project;
+  const { date, description, medias, titre } = project;
 
   const relatedProjects =
     projects
@@ -46,7 +46,6 @@ export default async function Page({
             titre={titre}
             date={date}
             description={description}
-            image={image}
             medias={medias}
           />
         </div>
@@ -89,8 +88,8 @@ export default async function Page({
                 >
                   <Card
                     href={`/projects/${relatedProject.slug}`}
-                    image={relatedProject.image ?? null}
-                    imageAlt={relatedProject.image?.alternativeText ?? relatedProject.titre}
+                    image={relatedProject.medias?.[0] ?? null}
+                    imageAlt={relatedProject.medias?.[0]?.alternativeText ?? relatedProject.titre}
                     label={relatedProject.titre}
                     title={relatedProject.titre}
                     cornerVariant="default"

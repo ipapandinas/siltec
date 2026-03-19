@@ -23,10 +23,6 @@ type HomeContentResponse = {
   };
   collections: ICollection[];
   homepage?: HomepageConfig | null;
-  projects: Array<Omit<IProject, "image">>;
-};
-
-type HomeContent = Omit<HomeContentResponse, "projects"> & {
   projects: IProject[];
 };
 
@@ -52,17 +48,7 @@ export const getHome = cache(async () => {
           );
         }
 
-        if (!content.data) return content.data;
-
-        const normalizedData: HomeContent = {
-          ...content.data,
-          projects: (content.data.projects || []).map((project) => ({
-            ...project,
-            image: project.medias?.[0] ?? null,
-          })),
-        };
-
-        return normalizedData;
+        return content.data;
       });
   } catch (err: any) {
     console.error(

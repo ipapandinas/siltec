@@ -1,17 +1,20 @@
 "use client";
+import { useState } from "react";
+
 import { IImage } from "#/interfaces/IImage";
-import cloudinary from "#/utils/cloudinary";
-import { resolveImageUrl } from "#/utils/media";
-import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { cloudinaryThumbUrl, injectCloudinaryTransforms, isCloudinaryUrl } from "#/utils/cloudinary";
+import { resolveCardImageUrl } from "#/utils/media";
 
 import {
+  Box,
   Card as MuiCard,
   CardActionArea,
-  CardMedia,
   CardContent,
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+
+import AppImage from "./AppImage";
 
 interface IProps {
   href: string;
@@ -32,12 +35,15 @@ export default function Card({
   title,
   cornerVariant = "default",
 }: IProps) {
-  const resolvedImageUrl = resolveImageUrl(image);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const resolvedImageUrl = resolveCardImageUrl(image);
   const legacyCloudinaryUrl = imageSrc
-    ? cloudinary
-        .image(imageSrc)
-        .resize(thumbnail().width(370).height(380))
-        .toURL()
+    ? isCloudinaryUrl(imageSrc)
+      ? injectCloudinaryTransforms(
+          imageSrc,
+          "f_auto,q_auto:eco,c_fill,g_auto,w_370,h_380"
+        )
+      : cloudinaryThumbUrl(imageSrc, { width: 370, height: 380 })
     : null;
   const displayImageUrl = resolvedImageUrl ?? legacyCloudinaryUrl;
 
@@ -71,13 +77,42 @@ export default function Card({
             },
           }}
         >
-          <CardMedia
-            component="img"
-            height="380"
-            image={displayImageUrl}
-            alt={imageAlt}
-            sx={{ objectFit: "cover" }}
-          />
+          <Box
+            className="MuiCardMedia-root"
+            sx={{
+              position: "relative",
+              height: 380,
+              bgcolor: "rgba(0,0,0,0.06)",
+              overflow: "hidden",
+            }}
+          >
+            <Box
+              sx={{
+                position: "absolute",
+                inset: 0,
+                zIndex: 1,
+                pointerEvents: "none",
+                opacity: isImageLoaded ? 0 : 1,
+                transition: "opacity .25s ease",
+                background:
+                  "linear-gradient(110deg, rgba(0,0,0,0.06) 20%, rgba(255,255,255,0.45) 35%, rgba(0,0,0,0.06) 50%)",
+                backgroundSize: "220% 100%",
+                animation: "siltecCardShimmer 1.2s linear infinite",
+                "@keyframes siltecCardShimmer": {
+                  "0%": { backgroundPosition: "220% 0" },
+                  "100%": { backgroundPosition: "-220% 0" },
+                },
+              }}
+            />
+            <AppImage
+              alt={imageAlt}
+              src={displayImageUrl}
+              fill
+              sizes="(max-width: 600px) 100vw, 370px"
+              style={{ objectFit: "cover" }}
+              onLoad={() => setIsImageLoaded(true)}
+            />
+          </Box>
           <CardContent
             sx={{
               position: "relative",

@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { IImage } from "#/interfaces/IImage";
 import { UP_LG, UP_SM } from "#/utils/constants";
 import { buildMediaCarouselUrls } from "#/utils/media";
+import AppImage from "#/ui/AppImage";
 import Carroussel from "#/ui/Carroussel";
 import type Slider from "react-slick";
 
@@ -15,7 +16,6 @@ interface Props {
   titre: string;
   date?: string | null;
   description?: string | null;
-  image?: IImage | null;
   medias?: IImage[] | null;
 }
 
@@ -33,9 +33,9 @@ const formatDate = (value?: string | null) => {
   }).format(new Date(Date.UTC(year, month - 1, day)));
 };
 
-export default function Content({ titre, date, description, image, medias }: Props) {
+export default function Content({ titre, date, description, medias }: Props) {
   const formattedDate = formatDate(date);
-  const carrousselList = buildMediaCarouselUrls(image, medias);
+  const carrousselList = buildMediaCarouselUrls(medias);
   const [activeSlide, setActiveSlide] = useState(0);
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
   const hasMultipleImages = carrousselList.length > 1;
@@ -84,7 +84,6 @@ export default function Content({ titre, date, description, image, medias }: Pro
               list={carrousselList}
               width={850}
               height={800}
-              quality={100}
               setSliderRef={setSliderRef}
               onSlideChange={setActiveSlide}
             />
@@ -184,6 +183,7 @@ export default function Content({ titre, date, description, image, medias }: Pro
                   cursor: "pointer",
                   borderRadius: "1.2rem",
                   overflow: "hidden",
+                  position: "relative",
                   opacity: idx === activeSlide ? 1 : 0.7,
                   transform: idx === activeSlide ? "scale(1.05)" : "scale(1)",
                   transition: "all .2s ease",
@@ -193,11 +193,12 @@ export default function Content({ titre, date, description, image, medias }: Pro
                   flexShrink: 0,
                 }}
               >
-                <Box
-                  component="img"
+                <AppImage
                   alt={`carroussel-thumbnail-${idx}`}
                   src={src}
-                  sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  fill
+                  sizes="80px"
+                  style={{ objectFit: "cover" }}
                 />
               </Box>
             ))}

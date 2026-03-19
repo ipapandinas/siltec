@@ -11,19 +11,24 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
       container
       direction="row"
       justifyContent="center"
-      alignItems="center"
+      alignItems="stretch"
       rowSpacing={16}
       columnSpacing={9}
+      sx={{ width: "100%" }}
     >
-      {projects.slice(0, 3).map(({ documentId, titre, image, slug }) => {
+      {projects.slice(0, 3).map(({ documentId, titre, medias, slug }) => {
+        const thumbnailImage = medias?.[0] ?? null;
+
         return (
           <Grid
             key={documentId}
             size={{ xs: 12, sm: 6, md: 4, lg: 4 }}
             sx={{
               display: "flex",
-              justifyContent: "center",
+              width: "100%",
               ".MuiCard-root": {
+                width: "100%",
+                flex: 1,
                 borderTopLeftRadius: "4rem",
                 borderBottomRightRadius: "4rem",
               },
@@ -31,8 +36,8 @@ export default function ProjectsGrid({ projects }: { projects: IProject[] }) {
           >
             <Card
               href={`/projects/${slug}`}
-              image={image}
-              imageAlt={image?.alternativeText ?? `Item - ${titre}`}
+              image={thumbnailImage}
+              imageAlt={thumbnailImage?.alternativeText ?? `Item - ${titre}`}
               label={titre}
               title={titre}
             />

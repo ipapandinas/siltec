@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { isCloudinaryUrl, injectCloudinaryTransforms } from "#/utils/cloudinary";
 import { rgbDataURL } from "#/utils/strings";
 import { Box, BoxProps as MuiBoxProps } from "@mui/material";
 import Slider from "react-slick";
@@ -92,7 +93,7 @@ export default function Carroussel(props: Props) {
             opacity: 1,
           },
           "&:hover": {
-            opacity: 0.75,
+            //opacity: 0.75,
             bgcolor: "#fff",
             boxShadow: "0 6px 16px rgba(0,0,0,0.16)",
           },
@@ -122,20 +123,35 @@ export default function Carroussel(props: Props) {
       }
     : undefined;
 
+  const getCarouselSlideSrc = (src: string) => {
+    const widthTarget = Math.min(width ?? 1400, 1600);
+
+    if (!isCloudinaryUrl(src)) return src;
+
+    return injectCloudinaryTransforms(
+      src,
+      `f_auto,q_auto:good,c_limit,w_${widthTarget}`
+    );
+  };
+
+  const getThumbnailSrc = (src: string) => {
+    if (!isCloudinaryUrl(src)) return src;
+
+    return injectCloudinaryTransforms(
+      src,
+      "f_auto,q_auto:eco,c_fill,g_auto,w_160,h_160"
+    );
+  };
+
   return (
     <Box sx={arrowStyles}>
       <Slider ref={sliderRef} {...sliderSettings}>
         {list.map((src, idx) => (
-          <Box
-            key={idx}
-            sx={{
-              ...propsCopy.sx,
-            }}
-          >
+          <Box key={idx} sx={propsCopy.sx}>
             <AppImage
               alt={`carroussel-image-${idx}`}
-              src={isHero ? cropSrc(src) : src}
-              width={width ?? 1800}
+              src={isHero ? cropSrc(src) : getCarouselSlideSrc(src)}
+              width={width ?? 1400}
               height={height ?? 800}
               quality={isHero ? 100 : quality}
               loadMode={isHero ? "lg" : undefined}
@@ -178,6 +194,7 @@ export default function Carroussel(props: Props) {
                   cursor: "pointer",
                   borderRadius: "1.2rem",
                   overflow: "hidden",
+                  position: "relative",
                   opacity: idx === currentSlide ? 1 : 0.7,
                   transform: idx === currentSlide ? "scale(1.05)" : "scale(1)",
                   transition: "all .2s ease",
@@ -189,10 +206,9 @@ export default function Carroussel(props: Props) {
               >
                 <AppImage
                   alt={`carroussel-thumbnail-${idx}`}
-                  src={src}
+                  src={getThumbnailSrc(src)}
                   width={80}
                   height={80}
-                  quality={80}
                 />
               </Box>
             ))}

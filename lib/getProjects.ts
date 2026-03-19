@@ -13,15 +13,6 @@ type GraphqlProjectsResponse<TProject> = {
   errors?: Array<{ message?: string }>;
 };
 
-type ProjectQueryResult = Omit<IProject, "image">;
-
-function withFallbackImage(project: ProjectQueryResult): IProject {
-  return {
-    ...project,
-    image: project.medias?.[0] ?? null,
-  };
-}
-
 function extractProjects<TProject>(content: GraphqlProjectsResponse<TProject>): TProject[] {
   if (content.errors?.length) {
     throw new Error(
@@ -46,9 +37,7 @@ export const getProjects = cache(async () => {
       }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProjectsResponse<ProjectQueryResult>) =>
-        extractProjects(content).map(withFallbackImage)
-      );
+      .then((content: GraphqlProjectsResponse<IProject>) => extractProjects(content));
   } catch (err: any) {
     console.error(
       `Projects could not have been fetched - Detail: ${
@@ -72,10 +61,7 @@ export const getProject = cache(async (slug: string) => {
       }),
     })
       .then((response) => response.json())
-      .then((content: GraphqlProjectsResponse<ProjectQueryResult>) => {
-        const project = extractProjects(content)[0];
-        return project ? withFallbackImage(project) : null;
-      });
+      .then((content: GraphqlProjectsResponse<IProject>) => extractProjects(content)[0] ?? null);
   } catch (err: any) {
     console.error(
       `Project could not have been fetched - Detail: ${

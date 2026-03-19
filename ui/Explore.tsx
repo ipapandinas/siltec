@@ -11,6 +11,7 @@ interface ExploreItem {
   titre: string;
   slug: string;
   image?: IImage | null;
+  medias?: IImage[] | null;
 }
 
 interface IProps {
@@ -25,7 +26,9 @@ export default function Explore({ items, subPath }: IProps) {
       return false;
     }
 
-    return Boolean(resolveImageUrl(item.image ?? null));
+    const thumbnailImage = item.medias?.[0] ?? item.image ?? null;
+
+    return Boolean(resolveImageUrl(thumbnailImage));
   });
 
   return (
@@ -37,7 +40,9 @@ export default function Explore({ items, subPath }: IProps) {
       rowSpacing={12}
       columnSpacing={9}
     >
-      {safeItems.map(({ documentId, image, titre, slug }) => {
+      {safeItems.map(({ documentId, image, medias, titre, slug }) => {
+        const thumbnailImage = medias?.[0] ?? image ?? null;
+
         return (
           <Grid
             key={documentId}
@@ -51,8 +56,8 @@ export default function Explore({ items, subPath }: IProps) {
           >
             <Card
               href={`${subPath ? `/${subPath}` : ""}/${slug}`}
-              image={image ?? null}
-              imageAlt={image?.alternativeText ?? `Item - ${titre}`}
+              image={thumbnailImage}
+              imageAlt={thumbnailImage?.alternativeText ?? `Item - ${titre}`}
               label={titre}
               title={titre}
             />
