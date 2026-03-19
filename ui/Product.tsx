@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import ReactMarkdown from "react-markdown";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import { darken } from "@mui/material/styles";
 
@@ -24,15 +23,7 @@ interface IProps {
 
 export default function Product({ product, quoteButtonColor, brandHref }: IProps) {
   const theme = useTheme();
-  const {
-    annee,
-    marque,
-    description,
-    designer,
-    dimensions,
-    medias,
-    titre,
-  } = product;
+  const { annee, marque, designer, dimensions, medias, titre } = product;
 
   const relationBrandName = marque?.nom?.trim() || null;
 
@@ -162,16 +153,6 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
           {annee != null && <Typography variant="body1">{`Année : ${annee}`}</Typography>}
         </Box>
 
-        {description && (
-          <Box
-            sx={{
-              marginTop: "2.4rem",
-              textAlign: "justify",
-            }}
-          >
-            <ReactMarkdown>{description}</ReactMarkdown>
-          </Box>
-        )}
 
         <Box sx={{ marginTop: "2.4rem" }}>
           <AppLink

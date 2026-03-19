@@ -9,7 +9,6 @@ export interface IProduct {
   designer: string | null;
   dimensions: string | null;
   annee: number | null;
-  description: string | null;
   marque: Pick<IBrand, "documentId" | "nom" | "slug"> | null;
   medias: IImage[] | null;
   rank: number;
