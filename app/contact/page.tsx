@@ -13,7 +13,7 @@ export default async function Contact() {
 
   return (
     <div>
-      <Container id="lastContainer">
+      <Container id="lastContainer" sx={{ overflowX: "clip" }}>
         <SinglePageHeader
           color={couleur}
           subtitle={sousTitre ?? ""}

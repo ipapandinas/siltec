@@ -104,22 +104,38 @@ const ContactItem = (props: {
           gap: "1.2rem",
           bgcolor: "white !important",
           borderRadius: "0.8rem",
-          width: "fit-content",
+          width: { xs: "100%", sm: "fit-content" },
           maxWidth: "100%",
           mt: "0.8rem",
-          mr: "1.2rem",
+          mr: { xs: 0, sm: "1.2rem" },
           p: "1rem 1.2rem",
+          minWidth: 0,
+          whiteSpace: "normal",
           path: { fill: "#010101" },
         }}
       >
         {children}
-        <Typography>{text}</Typography>
+        <Typography
+          sx={{
+            textAlign: "left",
+            whiteSpace: "normal",
+            overflowWrap: "anywhere",
+            minWidth: 0,
+          }}
+        >
+          {text}
+        </Typography>
       </IconButton>
     );
   }
 
   return (
-    <AppLink href={link} target={"_blank"} rel="noreferrer">
+    <AppLink
+      href={link}
+      target={"_blank"}
+      rel="noreferrer"
+      sx={{ display: "block", width: { xs: "100%", sm: "auto" }, maxWidth: "100%" }}
+    >
       <IconButton
         aria-label={ariaLabel}
         component="label"
@@ -130,16 +146,27 @@ const ContactItem = (props: {
           gap: "1.2rem",
           bgcolor: "white",
           borderRadius: "0.8rem",
-          width: "fit-content",
+          width: { xs: "100%", sm: "fit-content" },
           maxWidth: "100%",
           mt: "0.8rem",
-          mr: "1.2rem",
+          mr: { xs: 0, sm: "1.2rem" },
           p: "1rem 1.2rem",
+          minWidth: 0,
+          whiteSpace: "normal",
           path: { fill: "#010101" },
         }}
       >
         {children}
-        <Typography>{text}</Typography>
+        <Typography
+          sx={{
+            textAlign: "left",
+            whiteSpace: "normal",
+            overflowWrap: "anywhere",
+            minWidth: 0,
+          }}
+        >
+          {text}
+        </Typography>
       </IconButton>
     </AppLink>
   );
@@ -272,6 +299,11 @@ export default function Content({ buttonColor }: Props) {
           gridTemplateColumns: { xs: "1fr", lg: "minmax(0, 1fr) minmax(0, 2fr)" },
           gap: { xs: "3.2rem", lg: "12rem" },
           alignItems: { xs: "start", lg: "stretch" },
+          width: "100%",
+          overflowX: "clip",
+          "& > *": {
+            minWidth: 0,
+          },
         }}
       >
         <Box
@@ -340,30 +372,30 @@ export default function Content({ buttonColor }: Props) {
           </Typography>
 
           <Box
-            sx={{
-              position: "absolute",
-              width: 1,
-              height: 1,
-              padding: 0,
-              margin: -1,
-              overflow: "hidden",
-              clip: "rect(0, 0, 0, 0)",
-              border: 0,
-            }}
+            component="input"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            placeholder="site web"
+            value={values.website}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              onChange("website", event.target.value)
+            }
+            name="website"
             aria-hidden="true"
-          >
-            <Box
-              component="input"
-              tabIndex={-1}
-              autoComplete="off"
-              placeholder="site web"
-              value={values.website}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                onChange("website", event.target.value)
-              }
-              name="website"
-            />
-          </Box>
+            sx={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: 0,
+              height: 0,
+              padding: 0,
+              margin: 0,
+              border: 0,
+              opacity: 0,
+              pointerEvents: "none",
+            }}
+          />
 
           <FormControl error={Boolean(errors.civilite)} sx={{ mb: "1.6rem" }}>
             <FormLabel
@@ -383,7 +415,7 @@ export default function Content({ buttonColor }: Props) {
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 onChange("civilite", event.target.value)
               }
-              sx={{ mt: "0.4rem", gap: "0.8rem" }}
+              sx={{ mt: "0.4rem", gap: "0.8rem", flexWrap: "wrap" }}
             >
               {CIVILITE_OPTIONS.map((option) => (
                 <FormControlLabel
@@ -391,7 +423,7 @@ export default function Content({ buttonColor }: Props) {
                   value={option}
                   control={<Radio size="small" />}
                   label={option}
-                  sx={{ mr: "2rem" }}
+                  sx={{ mr: { xs: "1rem", md: "2rem" } }}
                 />
               ))}
             </RadioGroup>

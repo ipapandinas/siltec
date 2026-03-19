@@ -50,14 +50,28 @@ export default function AppImage(props: Props) {
 
   const defaultBlurDataURL = rgbDataURL(233, 243, 240);
 
+  const numericWidth = typeof props.width === "number" ? props.width : null;
+  const numericHeight = typeof props.height === "number" ? props.height : null;
+  const shouldUseBlurBySize =
+    numericWidth === null || numericHeight === null
+      ? true
+      : Math.min(numericWidth, numericHeight) >= 40;
+
+  const resolvedPlaceholder =
+    props.placeholder ?? (shouldUseBlurBySize ? "blur" : "empty");
+  const resolvedBlurDataURL =
+    resolvedPlaceholder === "blur"
+      ? (props.blurDataURL ?? defaultBlurDataURL)
+      : undefined;
+
   return (
     <Image
       {...copy}
       src={transformedSrc}
       alt={props.alt ? props.alt : "Image descriptive text"}
       unoptimized={props.unoptimized ?? true}
-      placeholder={props.placeholder ?? "blur"}
-      blurDataURL={props.blurDataURL ?? defaultBlurDataURL}
+      placeholder={resolvedPlaceholder}
+      blurDataURL={resolvedBlurDataURL}
       sizes={props.sizes !== undefined ? props.sizes : defaultSizes}
       priority={props.priority !== undefined ? props.priority : false}
       draggable={props.draggable !== undefined ? props.draggable : false}

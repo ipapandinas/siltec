@@ -17,6 +17,7 @@ interface Props extends MuiBoxProps {
   quality?: number;
   isHero?: boolean;
   arrows?: boolean;
+  dots?: boolean;
   showThumbnails?: boolean;
   onSlideChange?: (index: number) => void;
   setSliderRef?: (slider: Slider | null) => void;
@@ -30,6 +31,7 @@ export default function Carroussel(props: Props) {
     quality = undefined,
     isHero = false,
     arrows = false,
+    dots = false,
     showThumbnails = false,
     onSlideChange,
     setSliderRef,
@@ -50,6 +52,7 @@ export default function Carroussel(props: Props) {
 
   const sliderSettings = {
     arrows: arrows && hasMultipleImages,
+    dots: dots && hasMultipleImages,
     infinite: hasMultipleImages,
     autoplay: hasMultipleImages,
     speed: 1000,

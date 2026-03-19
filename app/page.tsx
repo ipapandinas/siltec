@@ -1,4 +1,5 @@
 import { getHome } from "#/lib/getHome";
+import { getNews } from "#/lib/getNews";
 import BrandsSection from "#/ui/BrandsSection";
 import Carroussel from "#/ui/Carroussel";
 import CollectionsSection from "#/ui/CollectionsSection";
@@ -6,7 +7,7 @@ import Container from "#/ui/Container";
 import FeaturedBrand from "#/ui/FeaturedBrand";
 import ProjectsSection from "#/ui/ProjectsSection";
 import RoundWrapper from "#/ui/RoundWrapper";
-import ScrollDown from "#/ui/ScrollDown";
+// import ScrollDown from "#/ui/ScrollDown";
 import Section from "#/ui/Section";
 import SiltecChip from "#/ui/SiltecChip";
 import { UP_SM } from "#/utils/constants";
@@ -17,7 +18,7 @@ const isHexColor = (value: unknown): value is string =>
   /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value);
 
 export default async function Home() {
-  const data = await getHome();
+  const [data, news] = await Promise.all([getHome(), getNews()]);
   const brands = data?.brands;
   const carroussel = data?.carroussel?.medias;
   const heroCarrousselList = (carroussel ?? [])
@@ -26,6 +27,26 @@ export default async function Home() {
   const collections = data?.collections;
   const projects = data?.projects;
   const homepageConfig = data?.homepage;
+
+  const latestNewsItem = [...(news ?? [])]
+    .sort((a, b) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )[0];
+
+  const latestNewsCarrousselList = (latestNewsItem?.medias ?? [])
+    .map((media) => resolveImageUrl(media))
+    .filter((url): url is string => Boolean(url));
+
+  if (
+    latestNewsCarrousselList.length === 0 &&
+    latestNewsItem?.image
+  ) {
+    const fallback = resolveImageUrl(latestNewsItem.image);
+
+    if (fallback) {
+      latestNewsCarrousselList.push(fallback);
+    }
+  }
 
   const brandsBgColorValue =
     homepageConfig?.couleurFondPartenaires;
@@ -156,6 +177,42 @@ export default async function Home() {
           </div>
         </Section>
       )}
+      {latestNewsCarrousselList.length > 0 && (
+        <Section
+          title="Dernières actualités"
+          buttonColor={brandsVoirPlusButtonColor}
+          sx={{
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
+            justifyContent: "center",
+            padding: { xs: "4.8rem 2.4rem", lg: "8rem" },
+          }}
+        >
+          <div style={{ width: "100%", maxWidth: "960px", margin: "0 auto" }}>
+            <Carroussel
+              arrows
+              dots
+              list={latestNewsCarrousselList}
+              width={900}
+              height={1273}
+              sx={{
+                ".slick-slider": {
+                  width: "100%",
+                  maxWidth: "900px",
+                  margin: "0 auto",
+                },
+                ".slick-slide img": {
+                  width: "100%",
+                  height: "auto !important",
+                  aspectRatio: "1 / 1.414",
+                  objectFit: "cover",
+                },
+              }}
+            />
+          </div>
+        </Section>
+      )}
+
       {brands !== undefined && brands.length > 0 && (
         <Section
           containerId="lastContainer"
