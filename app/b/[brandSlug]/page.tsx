@@ -7,7 +7,6 @@ import Band from "#/ui/Band";
 import Breadcrumbs from "#/ui/Breadcrumbs";
 import Container from "#/ui/Container";
 import { COLOR_SECONDARY_MAIN } from "#/utils/constants";
-import { resolveImageUrl } from "#/utils/media";
 
 import Content from "./content";
 
@@ -23,7 +22,6 @@ export default async function Page({
   if (!brand) notFound();
 
   const products = await getProductsByBrand(brandSlug);
-  const bannerUrl = resolveImageUrl(brand.banner);
   const bandColor = home?.homepage?.couleurFondPartenaires ?? COLOR_SECONDARY_MAIN;
 
   return (
@@ -37,7 +35,7 @@ export default async function Page({
           />
         </div>
         <div style={{ marginTop: "6rem" }}>
-          <Content brand={brand} bannerUrl={bannerUrl} products={products ?? []} />
+          <Content products={products ?? []} />
         </div>
       </Container>
     </div>

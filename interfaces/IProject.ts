@@ -4,9 +4,9 @@ export interface IProject {
   documentId: string;
   titre: string;
   description: string | null;
+  // Derived client-side from medias[0] for card compatibility.
   image: IImage | null;
   medias: IImage[] | null;
-  couleur: string | null;
   rank: number;
   slug: string;
   date: string | null;

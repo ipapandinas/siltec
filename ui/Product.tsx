@@ -25,17 +25,16 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
   const theme = useTheme();
   const {
     annee,
-    brand,
+    marque,
     description,
     designer,
     dimensions,
     image,
     medias,
-    producteur,
     titre,
   } = product;
 
-  const relationBrandName = brand?.nom?.trim() || null;
+  const relationBrandName = marque?.nom?.trim() || null;
 
   const carrousselList = buildMediaCarouselUrls(image, medias);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -156,11 +155,8 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
           {titre}
         </Typography>
 
-        <Box sx={{ marginTop: "3.2rem", display: "flex", flexDirection: "column", gap: "2rem" }}>
+        <Box sx={{ marginTop: "3.2rem", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
           {designer && <Typography variant="body1">{`Designer : ${designer}`}</Typography>}
-          {producteur && (
-            <Typography variant="body1">{`Producteur : ${producteur}`}</Typography>
-          )}
           {dimensions && (
             <Typography variant="body1">{`Dimensions : ${dimensions}`}</Typography>
           )}

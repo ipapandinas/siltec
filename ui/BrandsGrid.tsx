@@ -4,6 +4,7 @@ import { IBrand } from "#/interfaces/IBrand";
 import { Grid } from "@mui/material";
 
 import AppImage from "./AppImage";
+import AppLink from "./AppLink";
 
 interface IProps {
   list: IBrand[];
@@ -12,7 +13,7 @@ interface IProps {
 export default function BrandsGrid({ list }: IProps) {
   return (
       <Grid container rowSpacing={12} columnSpacing={4} justifyContent="center">
-        {list.map(({ documentId, nom, logo }) => {
+        {list.map(({ documentId, nom, logo, slug }) => {
           const url = logo?.url;
 
           if (!url) return null;
@@ -27,13 +28,25 @@ export default function BrandsGrid({ list }: IProps) {
                     img: { width: "auto", maxWidth: 115 },
                   }}
               >
-                <AppImage
-                    alt={`${nom} logo`}
-                    src={url}
-                    width={115}
-                    height={40}
-                    loadMode="md"
-                />
+                {slug ? (
+                    <AppLink href={`/b/${slug}`}>
+                      <AppImage
+                        alt={`${nom} logo`}
+                        src={url}
+                        width={115}
+                        height={40}
+                        loadMode="md"
+                    />
+                    </AppLink>
+                  ) : (
+                    <AppImage
+                        alt={`${nom} logo`}
+                        src={url}
+                        width={115}
+                        height={40}
+                        loadMode="md"
+                    />
+                  )}
               </Grid>
           );
         })}

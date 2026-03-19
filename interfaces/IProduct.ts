@@ -7,11 +7,10 @@ export interface IProduct {
   documentId: string;
   titre: string;
   designer: string | null;
-  producteur: string | null;
   dimensions: string | null;
   annee: number | null;
   description: string | null;
-  brand: Pick<IBrand, "documentId" | "nom" | "slug"> | null;
+  marque: Pick<IBrand, "documentId" | "nom" | "slug"> | null;
   image: IImage | null;
   medias: IImage[] | null;
   rank: number;

@@ -28,7 +28,7 @@ export default async function Page({
 
   const { couleur, couleurBoutonDemandeInformations } = pageData;
   const pageName = product.titre;
-  const relationBrandSlug = product.brand?.slug?.trim();
+  const relationBrandSlug = product.marque?.slug?.trim();
   const brandHref = relationBrandSlug ? `/b/${relationBrandSlug}` : null;
   const collection = product.collections?.[0];
   const typology = product.typologies?.[0];

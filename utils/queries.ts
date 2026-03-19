@@ -56,11 +56,10 @@ export const queryProduct = (slug: string) => gql`
       documentId
       titre
       designer
-      producteur
       dimensions
       annee
       description
-      brand {
+      marque {
         documentId
         nom
         slug
@@ -99,11 +98,10 @@ export const queryProducts = (collection: string, typology: string) => gql`
       documentId
       titre
       designer
-      producteur
       dimensions
       annee
       description
-      brand {
+      marque {
         documentId
         nom
         slug
@@ -130,18 +128,17 @@ export const queryProducts = (collection: string, typology: string) => gql`
 export const queryProductsByBrandSlug = (brandSlug: string) => gql`
   {
     products(
-      filters: { brand: { slug: { eq: "${gqlString(brandSlug)}" } } }
+      filters: { marque: { slug: { eq: "${gqlString(brandSlug)}" } } }
       pagination: { pageSize: 500 }
       sort: ["rank:ASC"]
     ) {
       documentId
       titre
       designer
-      producteur
       dimensions
       annee
       description
-      brand {
+      marque {
         documentId
         nom
         slug
@@ -202,11 +199,7 @@ const BRAND_DATA_QUERY = `
   nom
   slug
   premium
-  description
   logo {
-    ${IMAGE_DATA_QUERY}
-  }
-  banner {
     ${IMAGE_DATA_QUERY}
   }
 `;
@@ -269,13 +262,9 @@ export const queryHome = () => gql`
       documentId
       titre
       description
-      image {
-        ${IMAGE_DATA_QUERY}
-      }
       medias {
         ${IMAGE_DATA_QUERY}
       }
-      couleur
       rank
       slug
       date
@@ -295,13 +284,9 @@ const PROJECT_DATA_QUERY = `
   documentId
   titre
   description
-  image {
-    ${IMAGE_DATA_QUERY}
-  }
   medias {
     ${IMAGE_DATA_QUERY}
   }
-  couleur
   rank
   slug
   date

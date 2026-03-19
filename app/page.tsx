@@ -86,7 +86,7 @@ export default async function Home() {
               }}
             />
           </div>
-          <ScrollDown />
+          {/* <ScrollDown /> */}
         </>
       )}
 

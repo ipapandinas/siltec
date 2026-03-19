@@ -8,6 +8,32 @@ import {
 } from "#/utils/queries";
 import { IProject, IProjectSinglePage } from "#/interfaces/IProject";
 
+type GraphqlProjectsResponse<TProject> = {
+  data?: { projects?: TProject[] };
+  errors?: Array<{ message?: string }>;
+};
+
+type ProjectQueryResult = Omit<IProject, "image">;
+
+function withFallbackImage(project: ProjectQueryResult): IProject {
+  return {
+    ...project,
+    image: project.medias?.[0] ?? null,
+  };
+}
+
+function extractProjects<TProject>(content: GraphqlProjectsResponse<TProject>): TProject[] {
+  if (content.errors?.length) {
+    throw new Error(
+      `GraphQL errors: ${content.errors
+        .map(({ message }) => message || "Unknown GraphQL error")
+        .join(" | ")}`
+    );
+  }
+
+  return content.data?.projects ?? [];
+}
+
 export const getProjects = cache(async () => {
   try {
     const query = queryProjects();
@@ -20,9 +46,8 @@ export const getProjects = cache(async () => {
       }),
     })
       .then((response) => response.json())
-      .then(
-        (content: { data: { projects: IProject[] } }) =>
-          content.data.projects
+      .then((content: GraphqlProjectsResponse<ProjectQueryResult>) =>
+        extractProjects(content).map(withFallbackImage)
       );
   } catch (err: any) {
     console.error(
@@ -30,6 +55,8 @@ export const getProjects = cache(async () => {
         err?.message ? err.message : JSON.stringify(err)
       }`
     );
+
+    return [];
   }
 });
 
@@ -45,16 +72,18 @@ export const getProject = cache(async (slug: string) => {
       }),
     })
       .then((response) => response.json())
-      .then(
-        (content: { data: { projects: IProject[] } }) =>
-          content.data.projects[0] ?? null
-      );
+      .then((content: GraphqlProjectsResponse<ProjectQueryResult>) => {
+        const project = extractProjects(content)[0];
+        return project ? withFallbackImage(project) : null;
+      });
   } catch (err: any) {
     console.error(
       `Project could not have been fetched - Detail: ${
         err?.message ? err.message : JSON.stringify(err)
       }`
     );
+
+    return null;
   }
 });
 

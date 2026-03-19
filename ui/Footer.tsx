@@ -15,7 +15,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import AppImage from "./AppImage";
 import AppLink from "./AppLink";
 
-const FOOTER_CTA_TEXT = "Un projet d’aménagement ? Parlons-en.";
+const FOOTER_CTA_TEXT = "Contactez nous pour toute demande générale.";
 
 const SocialButton = (props: {
   ariaLabel: string;

@@ -15,7 +15,7 @@ type HomepageConfig = {
   couleurBoutonVoirPlus?: string | null;
 };
 
-type HomeContent = {
+type HomeContentResponse = {
   brands: IBrand[];
   carroussel: {
     documentId: string;
@@ -23,6 +23,10 @@ type HomeContent = {
   };
   collections: ICollection[];
   homepage?: HomepageConfig | null;
+  projects: Array<Omit<IProject, "image">>;
+};
+
+type HomeContent = Omit<HomeContentResponse, "projects"> & {
   projects: IProject[];
 };
 
@@ -39,7 +43,7 @@ export const getHome = cache(async () => {
       }),
     })
       .then((response) => response.json())
-      .then((content: { data?: HomeContent; errors?: Array<{ message?: string }> }) => {
+      .then((content: { data?: HomeContentResponse; errors?: Array<{ message?: string }> }) => {
         if (content.errors !== undefined && content.errors.length > 0) {
           throw new Error(
             `GraphQL errors: ${content.errors
@@ -48,7 +52,17 @@ export const getHome = cache(async () => {
           );
         }
 
-        return content.data;
+        if (!content.data) return content.data;
+
+        const normalizedData: HomeContent = {
+          ...content.data,
+          projects: (content.data.projects || []).map((project) => ({
+            ...project,
+            image: project.medias?.[0] ?? null,
+          })),
+        };
+
+        return normalizedData;
       });
   } catch (err: any) {
     console.error(
