@@ -33,10 +33,14 @@ type CanonicalModel =
 type RevalidationTarget = {
   paths: string[];
   revalidateLayout: boolean;
+  revalidatePage: boolean;
 };
 
 const MODEL_ALIASES: Record<string, CanonicalModel> = {
   news: "new",
+  homepages: "homepage",
+  "home-page": "homepage",
+  carroussels: "carroussel",
   hubdecollection: "hub-de-collection",
   hubderealisation: "hub-de-realisation",
   hubdactualite: "hub-d-actualite",
@@ -106,6 +110,7 @@ function extractSlug(payload: RevalidationPayload): string | null {
 function getTargets(model: CanonicalModel, slug: string | null): RevalidationTarget {
   const paths = new Set<string>();
   let revalidateLayout = false;
+  let revalidatePage = false;
 
   switch (model) {
     case "product":
@@ -152,6 +157,8 @@ function getTargets(model: CanonicalModel, slug: string | null): RevalidationTar
     case "homepage":
     case "carroussel":
       paths.add("/");
+      revalidatePage = true;
+      revalidateLayout = true;
       break;
 
     case "hub-de-collection":
@@ -174,6 +181,7 @@ function getTargets(model: CanonicalModel, slug: string | null): RevalidationTar
   return {
     paths: Array.from(paths).sort(),
     revalidateLayout,
+    revalidatePage,
   };
 }
 
@@ -252,17 +260,29 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  const { paths, revalidateLayout } = getTargets(model, slug);
+  const { paths, revalidateLayout, revalidatePage } = getTargets(model, slug);
 
   for (const path of paths) {
-    revalidatePath(path);
+    if (path.includes("[")) {
+      revalidatePath(path, "page");
+    } else {
+      revalidatePath(path);
+    }
+  }
+
+  if (revalidatePage) {
+    revalidatePath("/", "page");
   }
 
   if (revalidateLayout) {
     revalidatePath("/", "layout");
   }
 
-  const revalidated = revalidateLayout ? [...paths, "/ (layout)"] : paths;
+  const revalidated = [
+    ...paths,
+    ...(revalidatePage ? ["/ (page)"] : []),
+    ...(revalidateLayout ? ["/ (layout)"] : []),
+  ];
 
   logInfo("Webhook revalidation completed", {
     model,

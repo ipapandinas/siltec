@@ -58,7 +58,6 @@ export const queryProduct = (slug: string) => gql`
       designer
       dimensions
       annee
-      description
       marque {
         documentId
         nom
@@ -100,7 +99,6 @@ export const queryProducts = (collection: string, typology: string) => gql`
       designer
       dimensions
       annee
-      description
       marque {
         documentId
         nom
@@ -125,6 +123,34 @@ export const queryProducts = (collection: string, typology: string) => gql`
   }
 `;
 
+const PRODUCT_CARD_DATA_QUERY = `
+  documentId
+  titre
+  designer
+  dimensions
+  annee
+  marque {
+    documentId
+    nom
+    slug
+  }
+  medias {
+    ${IMAGE_DATA_QUERY}
+  }
+  rank
+  slug
+  collections {
+    documentId
+    titre
+    slug
+  }
+  typologies {
+    documentId
+    titre
+    slug
+  }
+`;
+
 export const queryProductsByBrandSlug = (brandSlug: string) => gql`
   {
     products(
@@ -132,32 +158,15 @@ export const queryProductsByBrandSlug = (brandSlug: string) => gql`
       pagination: { pageSize: 500 }
       sort: ["rank:ASC"]
     ) {
-      documentId
-      titre
-      designer
-      dimensions
-      annee
-      description
-      marque {
-        documentId
-        nom
-        slug
-      }
-      medias {
-        ${IMAGE_DATA_QUERY}
-      }
-      rank
-      slug
-      collections {
-        documentId
-        titre
-        slug
-      }
-      typologies {
-        documentId
-        titre
-        slug
-      }
+      ${PRODUCT_CARD_DATA_QUERY}
+    }
+  }
+`;
+
+export const queryProductsForBrandFallback = () => gql`
+  {
+    products(pagination: { pageSize: 500 }, sort: ["rank:ASC"]) {
+      ${PRODUCT_CARD_DATA_QUERY}
     }
   }
 `;

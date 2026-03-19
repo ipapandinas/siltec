@@ -2,7 +2,12 @@ import { cache } from "react";
 
 import { IProduct } from "#/interfaces/IProduct";
 import { GRAPHQL_API_URL, REVALIDATE_CONTENT } from "#/utils/constants";
-import { queryProduct, queryProducts, queryProductsByBrandSlug } from "#/utils/queries";
+import {
+  queryProduct,
+  queryProducts,
+  queryProductsByBrandSlug,
+  queryProductsForBrandFallback,
+} from "#/utils/queries";
 
 type GraphqlProductsResponse<TProduct> = {
   data?: { products?: TProduct[] };
@@ -56,7 +61,24 @@ export const getProductsByBrand = cache(async (brandSlug: string) => {
       .then((response) => response.json())
       .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
 
-    return products;
+    if (products.length > 0) return products;
+
+    const fallbackQuery = queryProductsForBrandFallback();
+
+    const fallbackProducts = await fetch(GRAPHQL_API_URL, {
+      next: { revalidate: REVALIDATE_CONTENT },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: fallbackQuery }),
+    })
+      .then((response) => response.json())
+      .then((content: GraphqlProductsResponse<IProduct>) => extractProducts(content));
+
+    const normalizedBrandSlug = brandSlug.trim().toLowerCase();
+
+    return fallbackProducts.filter(
+      (product) => product?.marque?.slug?.trim()?.toLowerCase() === normalizedBrandSlug
+    );
   } catch (err: any) {
     console.error(
       `Products by brand could not have been fetched - Detail: ${
