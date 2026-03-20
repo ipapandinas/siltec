@@ -47,6 +47,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="en" className={raleway.className}>
+      <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
+      </head>
       <body>
         <ClientShell navigation={navigation}>{children}</ClientShell>
       </body>

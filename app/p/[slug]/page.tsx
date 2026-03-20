@@ -1,12 +1,15 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { notFound } from "next/navigation";
 
 import { getCollectionSinglePage, getCollections } from "#/lib/getCollections";
+import { getHome } from "#/lib/getHome";
 import { getProduct, getProducts } from "#/lib/getProducts";
 import { buildMediaCarouselUrls, resolveImageUrl } from "#/utils/media";
+import { COLOR_PRIMARY_MAIN } from "#/utils/constants";
 import Breadcrumbs from "#/ui/Breadcrumbs";
 import Container from "#/ui/Container";
-import Card from "#/ui/Card";
+import Explore from "#/ui/Explore";
+import AppLink from "#/ui/AppLink";
 import Product from "#/ui/Product";
 
 export default async function Page({
@@ -15,9 +18,12 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const pageData = await getCollectionSinglePage();
-  const product = await getProduct(slug);
-  const collections = await getCollections();
+  const [pageData, product, collections, home] = await Promise.all([
+    getCollectionSinglePage(),
+    getProduct(slug),
+    getCollections(),
+    getHome(),
+  ]);
 
   if (!pageData || !product) notFound();
 
@@ -26,6 +32,14 @@ export default async function Page({
   if (!hasRenderableMedia) notFound();
 
   const { couleur, couleurBoutonDemandeInformations } = pageData;
+
+  const isHexColor = (value: unknown): value is string =>
+    typeof value === "string" && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value);
+
+  const voirPlusColorValue = home?.homepage?.couleurBoutonVoirPlus;
+  const resolvedVoirPlusColor = isHexColor(voirPlusColorValue)
+    ? voirPlusColorValue
+    : COLOR_PRIMARY_MAIN;
   const pageName = product.titre;
   const relationBrandSlug = product.marque?.slug?.trim();
   const brandHref = relationBrandSlug ? `/b/${relationBrandSlug}` : null;
@@ -69,10 +83,23 @@ export default async function Page({
         ? `Explorer ${typology.titre}`
         : "";
 
+  const shuffleCollections = <T,>(list: T[]) => {
+    const copy = [...list];
+
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+
+    return copy;
+  };
+
   const collectionCards =
-    collections
-      ?.filter((item) => item.slug !== collection?.slug)
-      .slice(0, 5) ?? [];
+    shuffleCollections(
+      (collections ?? [])
+        .filter((item) => item.slug !== collection?.slug)
+        .slice(0, 5)
+    ).slice(0, 3);
 
   return (
     <div>
@@ -120,40 +147,8 @@ export default async function Page({
             >
               {relatedProductsTitle}
             </Typography>
-            <Box
-              sx={{
-                marginTop: { xs: "4rem", lg: "5.6rem" },
-                display: "flex",
-                gap: { xs: "2rem", lg: "3.2rem" },
-                overflowX: { xs: "auto", lg: "visible" },
-                pb: { xs: "1rem", lg: 0 },
-              }}
-            >
-              {relatedProducts.map((relatedProduct) => (
-                <Box
-                  key={relatedProduct.documentId}
-                  sx={{
-                    width: { xs: "280px", lg: "auto" },
-                    flex: { xs: "0 0 auto", lg: "1 1 0" },
-                    minWidth: 0,
-                    ".MuiCard-root": {
-                      height: "100%",
-                    },
-                    ".MuiCardMedia-root": {
-                      height: { xs: 320, lg: 420 },
-                    },
-                  }}
-                >
-                  <Card
-                    href={`/p/${relatedProduct.slug}`}
-                    image={relatedProduct.medias?.[0] ?? null}
-                    imageAlt={relatedProduct.medias?.[0]?.alternativeText ?? relatedProduct.titre}
-                    label={relatedProduct.titre}
-                    title={relatedProduct.titre}
-                    cornerVariant="default"
-                  />
-                </Box>
-              ))}
+            <Box sx={{ marginTop: { xs: "4rem", lg: "5.6rem" } }}>
+              <Explore items={relatedProducts} subPath="p" />
             </Box>
           </Box>
         ) : null}
@@ -163,39 +158,31 @@ export default async function Page({
             <Typography variant="h4" textAlign="center" sx={{ fontWeight: 300, textTransform: "uppercase" }}>
               EXPLORER NOS COLLECTIONS
             </Typography>
-            <Box
-              sx={{
-                marginTop: { xs: "4rem", lg: "5.6rem" },
-                display: "flex",
-                gap: { xs: "2rem", lg: "2.4rem" },
-                overflowX: "auto",
-                pb: "1rem",
-              }}
-            >
-              {collectionCards.map((collectionItem) => (
-                <Box
-                  key={collectionItem.documentId}
+            <Box sx={{ marginTop: { xs: "4rem", lg: "5.6rem" } }}>
+              <Explore items={collectionCards} subPath="c" />
+            </Box>
+
+            <Box sx={{ display: "flex", justifyContent: "center", mt: { xs: "3.2rem", lg: "4rem" } }}>
+              <AppLink href="/collections" title="Voir plus de collections">
+                <Button
+                  disableElevation
+                  variant="contained"
                   sx={{
-                    width: { xs: "280px", lg: "293px" },
-                    flex: "0 0 auto",
-                    ".MuiCard-root": {
-                      height: "100%",
-                    },
-                    ".MuiCardMedia-root": {
-                      height: { xs: 320, lg: 420 },
+                    borderRadius: "3rem",
+                    px: "2.4rem",
+                    py: "1rem",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    bgcolor: resolvedVoirPlusColor,
+                    "&:hover": {
+                      bgcolor: resolvedVoirPlusColor,
+                      opacity: 0.9,
                     },
                   }}
                 >
-                  <Card
-                    href={`/c/${collectionItem.slug}`}
-                    image={collectionItem.image}
-                    imageAlt={collectionItem.image?.alternativeText ?? collectionItem.titre}
-                    label={collectionItem.titre}
-                    title={collectionItem.titre}
-                    cornerVariant="default"
-                  />
-                </Box>
-              ))}
+                  Voir plus
+                </Button>
+              </AppLink>
             </Box>
           </Box>
         ) : null}

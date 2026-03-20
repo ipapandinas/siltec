@@ -148,6 +148,7 @@ function getTargets(model: CanonicalModel, slug: string | null): RevalidationTar
     case "new":
       paths.add(slug ? `/news/${slug}` : "/news/[slug]");
       paths.add("/news");
+      paths.add("/");
       break;
 
     case "navigation":

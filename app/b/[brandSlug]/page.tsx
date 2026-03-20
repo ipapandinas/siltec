@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { getBrandBySlug } from "#/lib/getBrands";
+import { getCollections } from "#/lib/getCollections";
 import { getHome } from "#/lib/getHome";
 import { getProductsByBrand } from "#/lib/getProducts";
 import Band from "#/ui/Band";
@@ -16,12 +17,14 @@ export default async function Page({
   params: Promise<{ brandSlug: string }>;
 }) {
   const { brandSlug } = await params;
-  const brand = await getBrandBySlug(brandSlug);
-  const home = await getHome();
+  const [brand, home, products, collections] = await Promise.all([
+    getBrandBySlug(brandSlug),
+    getHome(),
+    getProductsByBrand(brandSlug),
+    getCollections(),
+  ]);
 
   if (!brand) notFound();
-
-  const products = await getProductsByBrand(brandSlug);
   const bandColor = home?.homepage?.couleurFondPartenaires ?? COLOR_SECONDARY_MAIN;
 
   return (
@@ -35,7 +38,7 @@ export default async function Page({
           />
         </div>
         <div style={{ marginTop: "6rem" }}>
-          <Content products={products ?? []} />
+          <Content products={products ?? []} collections={collections ?? []} />
         </div>
       </Container>
     </div>

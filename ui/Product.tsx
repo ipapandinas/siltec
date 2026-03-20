@@ -239,6 +239,7 @@ export default function Product({ product, quoteButtonColor, brandHref }: IProps
                   alt={`carroussel-thumbnail-${idx}`}
                   src={src}
                   fill
+                  loadMode="sm"
                   sizes="80px"
                   style={{ objectFit: "cover" }}
                 />

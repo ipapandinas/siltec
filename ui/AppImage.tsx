@@ -1,3 +1,5 @@
+"use client";
+
 import {
   cloudinaryResponsiveTransform,
   injectCloudinaryTransforms,
@@ -15,6 +17,7 @@ const SMALL_IMAGE_SIZES =
 
 interface Props extends ImageProps {
   loadMode?: "sm" | "md" | "lg";
+  disableCloudinaryTransform?: boolean;
 }
 
 export default function AppImage(props: Props) {
@@ -27,6 +30,7 @@ export default function AppImage(props: Props) {
 
   const copy = { ...props };
   delete copy.loadMode;
+  delete copy.disableCloudinaryTransform;
 
   const widthForTransform =
     typeof props.width === "number"
@@ -38,7 +42,9 @@ export default function AppImage(props: Props) {
           : 1200;
 
   const transformedSrc =
-    typeof props.src === "string" && isCloudinaryUrl(props.src)
+    typeof props.src === "string" &&
+    isCloudinaryUrl(props.src) &&
+    !props.disableCloudinaryTransform
       ? injectCloudinaryTransforms(
           props.src,
           cloudinaryResponsiveTransform(
@@ -64,6 +70,12 @@ export default function AppImage(props: Props) {
       ? (props.blurDataURL ?? defaultBlurDataURL)
       : undefined;
 
+  const mergedStyle = {
+    opacity: resolvedPlaceholder === "blur" ? 1 : 0,
+    transition: "opacity 320ms ease",
+    ...(props.style ?? {}),
+  };
+
   return (
     <Image
       {...copy}
@@ -75,6 +87,15 @@ export default function AppImage(props: Props) {
       sizes={props.sizes !== undefined ? props.sizes : defaultSizes}
       priority={props.priority !== undefined ? props.priority : false}
       draggable={props.draggable !== undefined ? props.draggable : false}
+      style={mergedStyle}
+      onLoad={(event) => {
+        event.currentTarget.style.opacity = "1";
+        props.onLoad?.(event);
+      }}
+      onError={(event) => {
+        event.currentTarget.style.opacity = "1";
+        props.onError?.(event);
+      }}
     />
   );
 }

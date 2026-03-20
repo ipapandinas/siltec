@@ -25,12 +25,78 @@ export function isCloudinaryUrl(url: string): boolean {
   }
 }
 
+const CLOUDINARY_TRANSFORM_KEYS = new Set([
+  "a",
+  "ac",
+  "af",
+  "ar",
+  "b",
+  "bo",
+  "c",
+  "co",
+  "d",
+  "dl",
+  "dpr",
+  "e",
+  "f",
+  "fl",
+  "fn",
+  "g",
+  "h",
+  "ki",
+  "l",
+  "o",
+  "p",
+  "pg",
+  "q",
+  "r",
+  "so",
+  "sp",
+  "t",
+  "u",
+  "vc",
+  "w",
+  "x",
+  "y",
+  "z",
+]);
+
+function isLikelyTransformSegment(segment: string): boolean {
+  const normalized = segment.trim();
+  if (!normalized) return false;
+
+  if (!normalized.includes("_")) return false;
+
+  const parts = normalized.split(",").map((part) => part.trim()).filter(Boolean);
+  if (parts.length === 0) return false;
+
+  return parts.every((part) => {
+    const separatorIndex = part.indexOf("_");
+    if (separatorIndex <= 0) return false;
+
+    const key = part.slice(0, separatorIndex);
+    return CLOUDINARY_TRANSFORM_KEYS.has(key);
+  });
+}
+
 function hasExistingTransformSegment(pathAfterUpload: string): boolean {
-  const firstSegment = pathAfterUpload.split("/")[0]?.trim();
+  const segments = pathAfterUpload.split("/").map((segment) => segment.trim());
+  const firstSegment = segments[0] ?? "";
+  const secondSegment = segments[1] ?? "";
 
   if (!firstSegment) return false;
 
-  return !/^v\d+$/.test(firstSegment);
+  // /upload/v123/public_id => no transform segment yet
+  if (/^v\d+$/.test(firstSegment)) return false;
+
+  // /upload/public_id => no transform segment yet
+  if (segments.length === 1) return false;
+
+  // Be conservative to avoid treating public IDs as transforms.
+  const hasCommaSeparatedOps = firstSegment.includes(",");
+  const hasVersionAfterFirst = /^v\d+$/.test(secondSegment);
+
+  return isLikelyTransformSegment(firstSegment) && (hasCommaSeparatedOps || hasVersionAfterFirst);
 }
 
 export function injectCloudinaryTransforms(url: string, transforms: string): string {

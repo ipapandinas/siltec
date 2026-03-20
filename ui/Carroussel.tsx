@@ -55,6 +55,7 @@ export default function Carroussel(props: Props) {
     dots: dots && hasMultipleImages,
     infinite: hasMultipleImages,
     autoplay: hasMultipleImages,
+    lazyLoad: "ondemand" as const,
     speed: 1000,
     autoplaySpeed: 4000,
     slidesToShow: 1,
@@ -66,17 +67,12 @@ export default function Carroussel(props: Props) {
   };
 
   const cropSrc = (src: string) => {
-    const decodedString = decodeURIComponent(src);
+    if (!isCloudinaryUrl(src)) return src;
 
-    const uploadIndex = decodedString.indexOf("upload/");
-    if (uploadIndex >= 0) {
-      const newString =
-        decodedString.substring(0, uploadIndex + 7) +
-        `c_crop,h_${height ?? 800},q_80,w_${width ?? 1800}/` +
-        decodedString.substring(uploadIndex + 7);
-      return newString;
-    }
-    return src;
+    return injectCloudinaryTransforms(
+      src,
+      `f_auto,q_auto:good,c_crop,g_auto,h_${height ?? 800},w_${width ?? 1400}`
+    );
   };
 
   const arrowStyles: MuiBoxProps["sx"] = arrows && hasMultipleImages
@@ -161,6 +157,8 @@ export default function Carroussel(props: Props) {
               unoptimized={isHero}
               placeholder="blur"
               blurDataURL={rgbDataURL(233, 243, 240)}
+              priority={idx === 0}
+              loading={idx === 0 ? "eager" : "lazy"}
             />
           </Box>
         ))}

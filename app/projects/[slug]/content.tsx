@@ -197,6 +197,7 @@ export default function Content({ titre, date, description, medias }: Props) {
                   alt={`carroussel-thumbnail-${idx}`}
                   src={src}
                   fill
+                  loadMode="sm"
                   sizes="80px"
                   style={{ objectFit: "cover" }}
                 />

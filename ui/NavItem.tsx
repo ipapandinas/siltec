@@ -82,6 +82,7 @@ export default function NavItem({
                     height={imageHeight}
                     style={logoStyle}
                     loadMode="md"
+                    disableCloudinaryTransform
                 />
             ) : null}
         </Box>
